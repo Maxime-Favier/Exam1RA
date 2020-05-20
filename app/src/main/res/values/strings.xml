@@ -27,4 +27,16 @@
     <string name="theme_synoptiques">Synoptiques d\'émetteurs et de récepteurs</string>
     <string name="theme_transfo">Transformateurs, ampli op, filtres RC LC RLC</string>
 
+    <string name="commencer">Commencer</string>
+    <string name="tout_cocher">Tout cocher</string>
+    <string name="tout_decocher">Tout décocher</string>
+
+    <string name="reglages">Réglages de l\'examen</string>
+    <string name="nbr_de_questions">Nombre de questions</string>
+    <string name="show_responses">Afficher les réponses</string>
+    <string name="show_comments">Afficher les commentaires</string>
+    <string name="auto_next_Q">Question suivante automatiquement</string>
+    <string name="malus">Malus pour les mauvaises reponses</string>
+    <string name="timer_onOff">Activer le compte à rebours</string>
+    <string name="tps_lim">Temps limite</string>
 </resources>

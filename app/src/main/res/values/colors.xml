@@ -5,4 +5,5 @@
     <color name="colorAccent">#03DAC5</color>
     <color name="colorText">#000000</color>
     <color name="colorSecondary">#81abbc</color>
+    <color name="colorBtnDanger">#795548</color>
 </resources>
