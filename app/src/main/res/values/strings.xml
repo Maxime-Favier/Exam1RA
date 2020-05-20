@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">Exam\'1 Radioamateur</string>
+    <string name="chose_thema">Choix des thèmes</string>
+
+    <string name="legislation">Législation</string>
+    <string name="technique">Technique</string>
+
+    <string name="theme_codeQ">Abréviations en code Q</string>
+    <string name="theme_adaptation">Adaptation, ROS, affaiblissement linéique, calcul</string>
+    <string name="theme_antennes">Caractéristiques des antennes, longueur d\'onde-fréquence</string>
+    <string name="theme_emission">Définition et autorisation des classes d’émission </string>
+    <string name="theme_cem">Gammes d’onde, décibels, CEM, protection</string>
+    <string name="theme_indicatifs">Indicatifs d\'appel français et préfixes européens</string>
+    <string name="theme_entrainement">Questions entrainement</string>
+    <string name="theme_sanctions">Sanctions, examen, perturbation, bande passante</string>
+    <string name="theme_epellation">Table d\'épellation internationale</string>
+    <string name="theme_messages">Teneur des messages, matériel obligatoire, exposition</string>
+
+    <string name="theme_lignes">Antennes, couplage, propagation, ligne de transmission</string>
+    <string name="theme_resistancesCouleurs">Code des couleurs des résistances</string>
+    <string name="theme_condoBob">Condensateurs et bobines (séparés)</string>
+    <string name="theme_alternatif">Courants alternatifs</string>
+    <string name="theme_ampli">Diodes et transistors, classes d\'amplification</string>
+    <string name="theme_electricite">Électricité de base</string>
+    <string name="theme_resistancesGroupes">Groupements de résistances</string>
+    <string name="theme_etagesRF">Rôle des différents étages RF, haut-parleur, micro</string>
+    <string name="theme_synoptiques">Synoptiques d\'émetteurs et de récepteurs</string>
+    <string name="theme_transfo">Transformateurs, ampli op, filtres RC LC RLC</string>
+
+</resources>
