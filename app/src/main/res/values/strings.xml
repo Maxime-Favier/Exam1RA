@@ -8,7 +8,7 @@
     <string name="theme_codeQ">Abréviations en code Q</string>
     <string name="theme_adaptation">Adaptation, ROS, affaiblissement linéique, calcul</string>
     <string name="theme_antennes">Caractéristiques des antennes, longueur d\'onde-fréquence</string>
-    <string name="theme_emission">Définition et autorisation des classes d’émission </string>
+    <string name="theme_emission">Définition et autorisation des classes d’émission</string>
     <string name="theme_cem">Gammes d’onde, décibels, CEM, protection</string>
     <string name="theme_indicatifs">Indicatifs d\'appel français et préfixes européens</string>
     <string name="theme_entrainement">Questions entrainement</string>
@@ -39,4 +39,11 @@
     <string name="malus">Malus pour les mauvaises reponses</string>
     <string name="timer_onOff">Activer le compte à rebours</string>
     <string name="tps_lim">Temps limite</string>
+    <string name="min">min</string>
+    <string name="num20">20</string>
+
+    <string name="numQ_invalid">Entrez un nombre de question valide</string>
+
+    <string name="remerciement">remerciements</string>
+    <string name="opensource">Licences open source</string>
 </resources>

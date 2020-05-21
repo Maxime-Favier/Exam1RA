@@ -179,7 +179,7 @@
                                 <TableRow
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent" android:id="@+id/techniqueRow"
-                                        android:visibility="gone">
+                                        android:visibility="visible">
                                     <TableLayout
                                             android:layout_width="match_parent"
                                             android:layout_height="match_parent" android:layout_weight="1">
@@ -315,8 +315,8 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content" android:id="@+id/startButton"
                                         style="@style/Widget.AppCompat.Button.Colored"
-                                        android:backgroundTint="@color/colorBtnDanger" android:layout_weight="1"
-                                />
+                                        android:backgroundTint="@color/colorPrimary" android:layout_weight="1"
+                                        android:layout_marginStart="10sp" android:layout_marginEnd="10sp"/>
                             </TableRow>
                         </TableLayout>
                     </TableRow>
@@ -328,7 +328,8 @@
             <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" android:layout_marginTop="5sp" android:paddingBottom="2sp"
-                    android:paddingStart="2sp" android:layout_marginStart="3sp" android:layout_marginEnd="3sp">
+                    android:paddingStart="2sp" android:layout_marginStart="3sp" android:layout_marginEnd="3sp"
+                    android:paddingEnd="2sp">
                 <TableLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent" android:layout_marginStart="5sp"
@@ -352,8 +353,8 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:inputType="number"
-                                android:ems="10"
-                                android:id="@+id/questionEditText" android:layout_weight="16" android:hint="20"/>
+                                android:id="@+id/questionEditText" android:layout_weight="16"
+                                android:hint="@string/num20"/>
                     </TableRow>
                     <TableRow android:layout_width="match_parent" android:layout_height="match_parent">
                         <Switch
@@ -413,8 +414,8 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:inputType="number"
-                                android:ems="10"
-                                android:id="@+id/tempsEditText" android:hint="min" android:layout_weight="16"/>
+                                android:id="@+id/tempsEditText" android:hint="@string/min" android:layout_weight="16"
+                                android:autofillHints=""/>
                     </TableRow>
                 </TableLayout>
             </androidx.cardview.widget.CardView>
