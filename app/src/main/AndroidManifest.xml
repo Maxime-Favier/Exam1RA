@@ -9,6 +9,17 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
+
+        <activity android:name=".OpenSource">
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value=".MainActivity" />
+        </activity>
+        <activity android:name=".Remerciements">
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value=".MainActivity" />
+        </activity>
         <activity android:name=".ExamenActivity">
         </activity>
         <activity android:name=".MainActivity">

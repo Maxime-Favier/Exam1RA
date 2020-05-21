@@ -44,6 +44,16 @@
 
     <string name="numQ_invalid">Entrez un nombre de question valide</string>
 
-    <string name="remerciement">remerciements</string>
+    <string name="remerciement">Remerciements</string>
     <string name="opensource">Licences open source</string>
+
+    <string name="F6KGL">Le radioclub F6KGL-F5KFF</string>
+    <string name="remerciement_F6GPX">Avec Jean-Luc F6GPX qui met à jour la base de questions en plus de publier un
+        cours complet sur internet pour passer l\'examen
+    </string>
+    <string name="GarageIsep">Garage Isep</string>
+    <string name="remerciement_Garage">Garage Isep, l\'association d\'innovation de l\'isep pour avoir relu et testé l\'application</string>
+    <string name="remerciement_autres">Et bien d\'autres...</string>
+    <string name="remerciement_F4HHV">Valentin F4HVV pour sa version web</string>
+    <string name="remerciement_F5AXG">René F5AXG pour la version PC</string>
 </resources>

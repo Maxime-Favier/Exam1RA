@@ -7,8 +7,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.*;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -295,5 +297,20 @@ public class MainActivity extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main_activity_menu, menu);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.remerciementItem:
+                Intent intent = new Intent(getBaseContext(), Remerciements.class);
+                startActivity(intent);
+                return true;
+            case R.id.opensourceItem:
+                Intent intent1 = new Intent(getBaseContext(), OpenSource.class);
+                startActivity(intent1);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

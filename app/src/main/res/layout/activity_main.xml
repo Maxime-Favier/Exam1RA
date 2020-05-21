@@ -14,11 +14,11 @@
             <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginStart="5dp" android:layout_marginEnd="5dp"
-                    app:layout_constraintStart_toStartOf="parent" android:layout_marginLeft="5dp"
+                    android:layout_marginTop="8sp"
+                    android:layout_marginStart="5sp" android:layout_marginEnd="5sp"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" app:layout_constraintEnd_toEndOf="parent"
-                    android:layout_marginRight="5dp" android:paddingBottom="3sp">
+                    android:paddingBottom="3sp">
                 <TableLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
@@ -83,7 +83,8 @@
                                             <CheckBox
                                                     android:text="@string/theme_emission"
                                                     android:layout_width="wrap_content"
-                                                    android:layout_height="wrap_content" android:id="@+id/emissionCheckBox"
+                                                    android:layout_height="wrap_content"
+                                                    android:id="@+id/emissionCheckBox"
                                                     android:layout_weight="1" android:textSize="18sp"/>
                                         </TableRow>
                                         <TableRow android:layout_width="match_parent"
@@ -91,7 +92,8 @@
                                             <CheckBox
                                                     android:text="@string/theme_adaptation"
                                                     android:layout_width="wrap_content"
-                                                    android:layout_height="wrap_content" android:id="@+id/adaptationCheckBox"
+                                                    android:layout_height="wrap_content"
+                                                    android:id="@+id/adaptationCheckBox"
                                                     android:textSize="18sp" android:layout_weight="1"/>
                                         </TableRow>
                                         <TableRow android:layout_width="match_parent"
@@ -99,7 +101,8 @@
                                             <CheckBox
                                                     android:text="@string/theme_epellation"
                                                     android:layout_width="wrap_content"
-                                                    android:layout_height="wrap_content" android:id="@+id/epellationCheckBox"
+                                                    android:layout_height="wrap_content"
+                                                    android:id="@+id/epellationCheckBox"
                                                     android:layout_weight="1" android:textSize="18sp"/>
                                         </TableRow>
                                         <TableRow android:layout_width="match_parent"
@@ -115,7 +118,8 @@
                                             <CheckBox
                                                     android:text="@string/theme_antennes"
                                                     android:layout_width="wrap_content"
-                                                    android:layout_height="wrap_content" android:id="@+id/antennesCheckBox"
+                                                    android:layout_height="wrap_content"
+                                                    android:id="@+id/antennesCheckBox"
                                                     android:layout_weight="1" android:textSize="18sp"/>
                                         </TableRow>
                                         <TableRow android:layout_width="match_parent"
@@ -123,7 +127,8 @@
                                             <CheckBox
                                                     android:text="@string/theme_sanctions"
                                                     android:layout_width="wrap_content"
-                                                    android:layout_height="wrap_content" android:id="@+id/sanctionsCheckBox"
+                                                    android:layout_height="wrap_content"
+                                                    android:id="@+id/sanctionsCheckBox"
                                                     android:layout_weight="1" android:textSize="18sp"/>
                                         </TableRow>
                                         <TableRow android:layout_width="match_parent"
@@ -131,7 +136,8 @@
                                             <CheckBox
                                                     android:text="@string/theme_messages"
                                                     android:layout_width="wrap_content"
-                                                    android:layout_height="wrap_content" android:id="@+id/messagesCheckBox"
+                                                    android:layout_height="wrap_content"
+                                                    android:id="@+id/messagesCheckBox"
                                                     android:layout_weight="1" android:textSize="18sp"/>
                                         </TableRow>
                                         <TableRow android:layout_width="match_parent"
@@ -139,7 +145,8 @@
                                             <CheckBox
                                                     android:text="@string/theme_indicatifs"
                                                     android:layout_width="wrap_content"
-                                                    android:layout_height="wrap_content" android:id="@+id/indicatifsCheckBox"
+                                                    android:layout_height="wrap_content"
+                                                    android:id="@+id/indicatifsCheckBox"
                                                     android:layout_weight="1" android:textSize="18sp"/>
                                         </TableRow>
                                         <TableRow android:layout_width="match_parent"
@@ -147,7 +154,8 @@
                                             <CheckBox
                                                     android:text="@string/theme_entrainement"
                                                     android:layout_width="wrap_content"
-                                                    android:layout_height="wrap_content" android:id="@+id/entrainementCheckBox"
+                                                    android:layout_height="wrap_content"
+                                                    android:id="@+id/entrainementCheckBox"
                                                     android:layout_weight="1" android:textSize="18sp"/>
                                         </TableRow>
                                     </TableLayout>
