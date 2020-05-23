@@ -7,4 +7,80 @@
         android:layout_height="match_parent"
         tools:context=".OpenSource">
 
+    <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginStart="3sp" android:layout_marginEnd="3sp" android:layout_marginTop="3sp"
+            android:paddingStart="1sp" android:layout_marginBottom="3sp" android:paddingEnd="1sp" android:paddingTop="1sp" android:paddingRight="1sp">
+        <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+            <TextView
+                    android:text="@string/licences"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/textView3"
+                    android:textColor="@color/colorText" android:textSize="24sp"
+                    android:gravity="center_horizontal|center_vertical"/>
+            <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" android:layout_marginStart="3sp"
+                    android:layout_marginEnd="3sp" android:layout_marginTop="3sp" android:layout_marginBottom="3sp"
+                    android:paddingStart="1sp" android:paddingEnd="1sp" android:paddingTop="1sp"
+                    android:paddingBottom="1sp">
+                <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                    <TextView
+                            android:text="@string/app_name"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" android:id="@+id/textView4"
+                            android:textColor="@color/colorText" android:textSize="18sp"/>
+                    <androidx.constraintlayout.widget.Guideline
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" android:id="@+id/guideline"/>
+                    <TextView
+                            android:text="@string/licence_Exam1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" android:id="@+id/textView15"
+                            android:textColor="@color/colorText" android:layout_marginStart="3sp"
+                            android:layout_marginEnd="3sp"/>
+                    <TextView
+                            android:text="@string/licence_gnuV3"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" android:id="@+id/textView16"
+                            android:layout_marginStart="5sp" android:layout_marginEnd="5sp"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" android:layout_marginStart="3sp"
+                    android:layout_marginTop="3sp" android:layout_marginEnd="3sp" android:layout_marginBottom="3sp"
+                    android:paddingStart="1sp" android:paddingEnd="1sp" android:paddingTop="1sp"
+                    android:paddingBottom="1sp">
+                <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                    <TextView
+                            android:text="@string/licence_materialIcons"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" android:id="@+id/textView17"
+                            android:textColor="@color/colorText" android:textSize="18sp"/>
+                    <androidx.constraintlayout.widget.Guideline
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" android:id="@+id/guideline2"/>
+                    <TextView
+                            android:text="@string/licence_apache"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" android:id="@+id/textView18"
+                            android:layout_marginStart="5sp" android:layout_marginEnd="5sp"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

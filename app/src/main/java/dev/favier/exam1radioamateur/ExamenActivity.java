@@ -9,10 +9,13 @@ import java.util.zip.Inflater;
 
 public class ExamenActivity extends AppCompatActivity {
 
+    Examen examen;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_examen);
+        examen = new Examen(this);
     }
 
     @Override
