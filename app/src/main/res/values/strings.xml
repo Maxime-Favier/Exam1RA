@@ -81,4 +81,11 @@
         WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
         See the License for the specific language governing permissions and
         limitations under the License.</string>
+
+    <string name="next">Suivant</string>
+    <string name="prev">Précédant</string>
+    <string name="aide">Aide</string>
+    <string name="cours">Cours</string>
+    <string name="del_resp">Effacer la réponse</string>
+    <string name="reponse">Réponse</string>
 </resources>

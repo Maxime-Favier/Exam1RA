@@ -6,4 +6,5 @@
     <color name="colorText">#000000</color>
     <color name="colorSecondary">#81abbc</color>
     <color name="colorBtnDanger">#795548</color>
+    <color name="colorOk">#28a745</color>
 </resources>

@@ -54,7 +54,7 @@
                                 </TableRow>
                                 <TableRow
                                         android:layout_width="match_parent"
-                                        android:layout_height="match_parent" android:visibility="visible"
+                                        android:layout_height="match_parent" android:visibility="gone"
                                         android:id="@+id/legislationRow" android:animateLayoutChanges="true"
                                         android:animationCache="false">
                                     <TableLayout
@@ -307,13 +307,17 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content" android:id="@+id/allThemeButton"
                                         android:layout_weight="1" android:layout_marginStart="10sp"
-                                        android:layout_marginEnd="10sp" style="@style/Widget.AppCompat.Button.Colored"/>
+                                        android:layout_marginEnd="10sp"
+                                        style="@android:style/Widget.Material.Light.Button"
+                                        android:backgroundTint="@color/colorAccent"/>
                                 <Button
                                         android:text="@string/tout_decocher"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content" android:id="@+id/noThemeButton"
                                         android:layout_weight="1" android:layout_marginStart="10sp"
-                                        android:layout_marginEnd="10sp" style="@style/Widget.AppCompat.Button.Colored"/>
+                                        android:layout_marginEnd="10sp"
+                                        style="@android:style/Widget.Material.Light.Button"
+                                        android:backgroundTint="@color/colorAccent"/>
                             </TableRow>
                             <TableRow
                                     android:layout_width="match_parent"
@@ -322,9 +326,10 @@
                                         android:text="@string/commencer"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content" android:id="@+id/startButton"
-                                        style="@style/Widget.AppCompat.Button.Colored"
+                                        style="@android:style/Widget.Material.Button"
                                         android:backgroundTint="@color/colorPrimary" android:layout_weight="1"
-                                        android:layout_marginStart="10sp" android:layout_marginEnd="10sp"/>
+                                        android:layout_marginStart="10sp" android:layout_marginEnd="10sp"
+                                        android:textColor="@android:color/white"/>
                             </TableRow>
                         </TableLayout>
                     </TableRow>
@@ -372,14 +377,7 @@
                                 android:layout_weight="1" android:textSize="18sp" android:splitTrack="false"
                                 android:thumbTint="@color/colorPrimary" android:checked="true"/>
                     </TableRow>
-                    <TableRow android:layout_width="match_parent" android:layout_height="match_parent">
-                        <Switch
-                                android:text="@string/show_comments"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content" android:id="@+id/commentsSwitch"
-                                android:layout_weight="1" android:thumbTint="@color/colorPrimary"
-                                android:textSize="18sp" android:checked="true"/>
-                    </TableRow>
+                    <TableRow android:layout_width="match_parent" android:layout_height="match_parent"/>
                     <TableRow
                             android:layout_width="match_parent"
                             android:layout_height="match_parent">

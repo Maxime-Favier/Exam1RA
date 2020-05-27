@@ -1,15 +1,16 @@
 package dev.favier.exam1radioamateur;
 
 import android.content.Context;
-import android.content.res.XmlResourceParser;
-import android.util.Log;
-import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.XmlPullParserException;
 
-import java.io.IOException;
+import android.util.Log;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Map;
-import java.util.concurrent.ThreadLocalRandom;
+
 
 public class Examen {
     /**
@@ -19,12 +20,13 @@ public class Examen {
     private ArrayList<Integer> themesList; // la liste des themes
     private Context context;
 
+    AppDatabase appDb;
+
     // les settings de l'examen
     private boolean malusEnable; // active le malus de -1 à chaque question fausse
     private int nbrQuestionParTheme; // le nombre de question de l'examen pour chaque theme
     private boolean showReponse; // active l'affichage des réponses
-    private boolean showCommentaires; // active l'affichage des commentaires
-    private boolean timerEnable; // active le compte à rebous
+    private boolean timerEnable; // active le compte à rebour
     private int timer; // le temps en seconde restant
 
     // les themes de l'examen
@@ -49,8 +51,13 @@ public class Examen {
     public static final int adaptation = 309;
     public static final int cem = 310;
 
-    public Examen(Context context) {
+    public Examen(Context context, ArrayList<Integer> themesList, int nbrQuestionParTheme, boolean malusEnable) {
         this.context = context;
+        this.themesList = themesList;
+        this.nbrQuestionParTheme = nbrQuestionParTheme;
+        this.malusEnable = malusEnable;
+        questions = new ArrayList<>();
+        appDb = AppDatabase.getInstance(context);
     }
 
     /**
@@ -75,154 +82,89 @@ public class Examen {
         return points;
     }
 
-    private void questionGenerator() {
-        ArrayList<Question> AllQuestions = new ArrayList<>();
+    public void populateDbFromJson() throws IOException, JSONException {
 
-        int codeCouleursNumber, groupementsDeResistancesNumber, diodesEtTransistorsNumber, synoptiquesNumber,
-                etagesRFNumber, electriciteDeBaseNumber, courantsAlternatifsNumber, condensateursetBobinesNumber,
-                transformateursAmpliNumber, ligneDeTransmisNumber, classesEmissionNumber, indicatifsNumber, codeQNumber,
-                epellationNumber, questionsEntrainementNumber, sanctionsNumber, expositionNumber, longueurOndeNumber,
-                adaptationNumber, cemNumber;
-        codeCouleursNumber = groupementsDeResistancesNumber = diodesEtTransistorsNumber = synoptiquesNumber =
-                etagesRFNumber = electriciteDeBaseNumber = courantsAlternatifsNumber = condensateursetBobinesNumber =
-                        transformateursAmpliNumber = ligneDeTransmisNumber = classesEmissionNumber = indicatifsNumber = codeQNumber =
-                                epellationNumber = questionsEntrainementNumber = sanctionsNumber = expositionNumber = longueurOndeNumber =
-                                        adaptationNumber = cemNumber = 0;
-        // load all questions from the xml
+        //AppDatabase appDb = AppDatabase.getInstance(context);
+        appDb.questionDao().clearQuestions();
+        InputStream is = context.getResources().openRawResource(R.raw.questions);
+        Writer writer = new StringWriter();
+        char[] buffer = new char[1024];
         try {
-            XmlResourceParser xpp = context.getResources().getXml(R.xml.out);
-            xpp.next();
-            int eventType = xpp.getEventType();
-            String elemtext = "";
-
-            while (eventType != XmlPullParser.END_DOCUMENT) {
-                if (eventType == XmlPullParser.START_TAG) {
-                    String elemName = xpp.getName();
-                    if (elemName.equals("question")) {
-                        AllQuestions.add(new Question());
-                    }
-                    if (elemName.equals("num")) {
-                        elemtext = "num";
-                    }
-                    if (elemName.equals("question")) {
-                        elemtext = "question";
-                    }
-                    if (elemName.equals("proposition")) {
-                        elemtext = "proposition";
-                    }
-                    if (elemName.equals("reponse")) {
-                        elemtext = "reponse";
-                    }
-                    if (elemName.equals("themeNum")) {
-                        elemtext = "themeNum";
-                    }
-                    if (elemName.equals("commentaire")) {
-                        elemtext = "commentaire";
-                    }
-                    if (elemName.equals("cours")) {
-                        elemtext = "cours";
-                    }
-                } else if (eventType == XmlPullParser.TEXT) {
-                    Question currentQuestion = AllQuestions.get(AllQuestions.size() - 1);
-                    if (elemtext.equals("num")) {
-                        currentQuestion.setNumero(Integer.parseInt(xpp.getText()));
-                    }
-                    if (elemtext.equals("question")) {
-                        currentQuestion.setQuestion(xpp.getText());
-                    }
-                    if (elemtext.equals("proposition")) {
-                        currentQuestion.addProposition(xpp.getText());
-                    }
-                    if (elemtext.equals("reponse")) {
-                        currentQuestion.setReponse(Integer.parseInt(xpp.getText()));
-                    }
-                    if (elemtext.equals("themeNum")) {
-                        switch (Integer.parseInt(xpp.getText())) {
-                            case codeCouleurs:
-                                codeCouleursNumber++;
-                                break;
-                            case groupementsDeResistances:
-                                groupementsDeResistancesNumber++;
-                                break;
-                            case diodesEtTransistors:
-                                diodesEtTransistorsNumber++;
-                                break;
-                            case synoptiques:
-                                synoptiquesNumber++;
-                                break;
-                            case etagesRF:
-                                etagesRFNumber++;
-                                break;
-                            case electriciteDeBase:
-                                electriciteDeBaseNumber++;
-                                break;
-                            case courantsAlternatifs:
-                                courantsAlternatifsNumber++;
-                                break;
-                            case condensateursetBobines:
-                                condensateursetBobinesNumber++;
-                                break;
-                            case transformateursAmpli:
-                                transformateursAmpliNumber++;
-                                break;
-                            case ligneDeTransmis:
-                                ligneDeTransmisNumber++;
-                                break;
-                            case classesEmission:
-                                classesEmissionNumber++;
-                                break;
-                            case indicatifs:
-                                indicatifsNumber++;
-                                break;
-                            case codeQ:
-                                codeQNumber++;
-                                break;
-                            case epellation:
-                                epellationNumber++;
-                                break;
-                            case questionsEntrainement:
-                                questionsEntrainementNumber++;
-                                break;
-                            case sanctions:
-                                sanctionsNumber++;
-                                break;
-                            case exposition:
-                                expositionNumber++;
-                                break;
-                            case longueurOnde:
-                                longueurOndeNumber++;
-                                break;
-                            case adaptation:
-                                adaptationNumber++;
-                                break;
-                            case cem:
-                                cemNumber++;
-                                break;
-                        }
-                        currentQuestion.setThemeID(Integer.parseInt(xpp.getText()));
-                    }
-                    if (elemtext.equals("commentaire")) {
-                        currentQuestion.setCommentaire(xpp.getText());
-                    }
-                    if (elemtext.equals("cours")) {
-                        currentQuestion.setCoursUrl(xpp.getText());
-                    }
-                    AllQuestions.set(AllQuestions.size() - 1, currentQuestion);
-                }
-                eventType = xpp.next();
+            Reader reader = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
+            int n;
+            while ((n = reader.read(buffer)) != -1) {
+                writer.write(buffer, 0, n);
             }
-        } catch (XmlPullParserException e) {
-            Log.w("Error", "Error parsing xml");
-            e.printStackTrace();
         } catch (IOException e) {
-            Log.w("Error", "Error loading xml");
             e.printStackTrace();
+        } finally {
+            is.close();
         }
-        for(int theme:themesList){
-            ThreadLocalRandom.current().nextInt(0, 10 );
+
+        JSONObject mainJSObject = new JSONObject(writer.toString());
+        JSONArray questionsJsonObject = mainJSObject.getJSONArray("questions");
+
+        Question question;
+
+        for (int i = 0; i < questionsJsonObject.length(); i++) {
+            JSONObject questionObj = questionsJsonObject.getJSONObject(i);
+
+            question = new Question();
+            question.setNumero(questionObj.getInt("num"));
+            question.setQuestion(questionObj.getString("question"));
+
+            JSONArray propositionArray = questionObj.getJSONArray("propositions");
+            for (int j = 0; j < propositionArray.length(); j++) {
+                question.addProposition(propositionArray.getString(j));
+            }
+
+            question.setReponse(questionObj.getInt("reponse"));
+            question.setThemeID(questionObj.getInt("themeNum"));
+            question.setCommentaire(questionObj.getString("commentaire"));
+            question.setCoursUrl(questionObj.getString("cours"));
+
+            //question.demo();
+
+            appDb.questionDao().insertQuestion(question);
         }
+
+        //appDb.close();
 
     }
 
+    /**
+     * Genène les question de l'examen aléatoirement
+     */
+    public void genrateQuestions(){
+        //Log.w("debug", String.valueOf(nbrQuestionParTheme));
+        for(int theme: themesList){
+            //Log.w("debug", String.valueOf(theme));
+            questions.addAll(appDb.questionDao().getRandomQuestion(theme, nbrQuestionParTheme));
+        }
+        Log.w("debug", "nbr de questions "+String.valueOf(questions.size()));
+    }
 
+    public void debug(){
+        ArrayList<Question> tes = new ArrayList<>();
+        tes = (ArrayList<Question>) appDb.questionDao().getRandomQuestion(303, 5);
+        for (Question q: tes) {
+            q.demo();
+        }
+    }
+
+    public void setReponse(int index ,int userReponse){
+        Question currentQuestion = questions.get(index);
+        currentQuestion.setUserReponse(userReponse);
+        questions.set(index, currentQuestion);
+    }
+
+    public Question getQuestion(int index){
+        return questions.get(index);
+    }
+
+    public void setReponseAsked(int index){
+        Question currentQuestion = questions.get(index);
+        currentQuestion.setReponseAsked(true);
+        questions.set(index, currentQuestion);
+    }
 }

@@ -10,12 +10,12 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
 
-        <activity android:name=".OpenSource">
+        <activity android:name=".OpenSource" android:label="@string/opensource">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
                     android:value=".MainActivity" />
         </activity>
-        <activity android:name=".Remerciements">
+        <activity android:name=".Remerciements" android:label="@string/remerciement">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
                     android:value=".MainActivity" />
