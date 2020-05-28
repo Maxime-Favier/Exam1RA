@@ -62,24 +62,24 @@ public class Question {
         reponseAsked = false;
     }
 
-    public Question(){
+    public Question() {
         userReponse = -1;
         reponseAsked = false;
     }
 
     /**
      * Retourne comment l'utilisateur à repondu
+     *
      * @return 0:pas de réponse, 1:réponse fausse, 2:réponse bonne
      */
-    public int goodResponse(){
-        if (userReponse != -1){
-            if(userReponse == reponse) {
+    public int goodResponse() {
+        if (userReponse != -1) {
+            if (userReponse == reponse) {
                 return bonneReponse;
-            }
-            else {
+            } else {
                 return mauvaiseReponse;
             }
-        }else {
+        } else {
             return noReponse;
         }
 
@@ -115,18 +115,19 @@ public class Question {
         this.propositions.add(proposition);
     }*/
 
-    public ArrayList<String> getPropositions(){
+    public ArrayList<String> getPropositions() {
         Gson gson = new Gson();
-        Type arrayListType = new TypeToken<ArrayList<String>>(){}.getType();
+        Type arrayListType = new TypeToken<ArrayList<String>>() {
+        }.getType();
         return gson.fromJson(this.propositionsJson, arrayListType);
     }
 
-    public void setPropositions(ArrayList<String> propositions){
+    public void setPropositions(ArrayList<String> propositions) {
         Gson gson = new Gson();
         this.propositionsJson = gson.toJson(propositions);
     }
 
-    public void addProposition(String proposition){
+    public void addProposition(String proposition) {
         ArrayList<String> adder = getPropositions() == null ? new ArrayList<String>() : getPropositions();
         adder.add(proposition);
         setPropositions(adder);
@@ -189,8 +190,8 @@ public class Question {
         this.propositionsJson = propositionsJson;
     }
 
-    public void demo(){
-        Log.w("debug", numero + "-" +question);
+    public void demo() {
+        Log.w("debug", numero + "-" + question);
     }
 
     public void setReponseAsked(boolean reponseAsked) {

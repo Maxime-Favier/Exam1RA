@@ -54,7 +54,7 @@
                                 </TableRow>
                                 <TableRow
                                         android:layout_width="match_parent"
-                                        android:layout_height="match_parent" android:visibility="gone"
+                                        android:layout_height="match_parent" android:visibility="visible"
                                         android:id="@+id/legislationRow" android:animateLayoutChanges="true"
                                         android:animationCache="false">
                                     <TableLayout
@@ -76,7 +76,8 @@
                                                     android:text="@string/theme_codeQ"
                                                     android:layout_width="wrap_content"
                                                     android:layout_height="wrap_content" android:id="@+id/codeQCheckBox"
-                                                    android:textSize="18sp" android:layout_weight="1"/>
+                                                    android:textSize="18sp" android:layout_weight="1"
+                                                    android:onClick="updateNbrofQSpinner"/>
                                         </TableRow>
                                         <TableRow android:layout_width="match_parent"
                                                   android:layout_height="match_parent">
@@ -85,7 +86,8 @@
                                                     android:layout_width="wrap_content"
                                                     android:layout_height="wrap_content"
                                                     android:id="@+id/emissionCheckBox"
-                                                    android:layout_weight="1" android:textSize="18sp"/>
+                                                    android:layout_weight="1" android:textSize="18sp"
+                                                    android:onClick="updateNbrofQSpinner"/>
                                         </TableRow>
                                         <TableRow android:layout_width="match_parent"
                                                   android:layout_height="match_parent">
@@ -94,7 +96,8 @@
                                                     android:layout_width="wrap_content"
                                                     android:layout_height="wrap_content"
                                                     android:id="@+id/adaptationCheckBox"
-                                                    android:textSize="18sp" android:layout_weight="1"/>
+                                                    android:textSize="18sp" android:layout_weight="1"
+                                                    android:onClick="updateNbrofQSpinner"/>
                                         </TableRow>
                                         <TableRow android:layout_width="match_parent"
                                                   android:layout_height="match_parent">
@@ -103,7 +106,8 @@
                                                     android:layout_width="wrap_content"
                                                     android:layout_height="wrap_content"
                                                     android:id="@+id/epellationCheckBox"
-                                                    android:layout_weight="1" android:textSize="18sp"/>
+                                                    android:layout_weight="1" android:textSize="18sp"
+                                                    android:onClick="updateNbrofQSpinner"/>
                                         </TableRow>
                                         <TableRow android:layout_width="match_parent"
                                                   android:layout_height="match_parent">
@@ -111,7 +115,8 @@
                                                     android:text="@string/theme_cem"
                                                     android:layout_width="wrap_content"
                                                     android:layout_height="wrap_content" android:id="@+id/cemCheckBox"
-                                                    android:textSize="18sp" android:layout_weight="1"/>
+                                                    android:textSize="18sp" android:layout_weight="1"
+                                                    android:onClick="updateNbrofQSpinner"/>
                                         </TableRow>
                                         <TableRow android:layout_width="match_parent"
                                                   android:layout_height="match_parent">
@@ -120,7 +125,8 @@
                                                     android:layout_width="wrap_content"
                                                     android:layout_height="wrap_content"
                                                     android:id="@+id/antennesCheckBox"
-                                                    android:layout_weight="1" android:textSize="18sp"/>
+                                                    android:layout_weight="1" android:textSize="18sp"
+                                                    android:onClick="updateNbrofQSpinner"/>
                                         </TableRow>
                                         <TableRow android:layout_width="match_parent"
                                                   android:layout_height="match_parent">
@@ -129,7 +135,8 @@
                                                     android:layout_width="wrap_content"
                                                     android:layout_height="wrap_content"
                                                     android:id="@+id/sanctionsCheckBox"
-                                                    android:layout_weight="1" android:textSize="18sp"/>
+                                                    android:layout_weight="1" android:textSize="18sp"
+                                                    android:onClick="updateNbrofQSpinner"/>
                                         </TableRow>
                                         <TableRow android:layout_width="match_parent"
                                                   android:layout_height="match_parent">
@@ -138,7 +145,8 @@
                                                     android:layout_width="wrap_content"
                                                     android:layout_height="wrap_content"
                                                     android:id="@+id/messagesCheckBox"
-                                                    android:layout_weight="1" android:textSize="18sp"/>
+                                                    android:layout_weight="1" android:textSize="18sp"
+                                                    android:onClick="updateNbrofQSpinner"/>
                                         </TableRow>
                                         <TableRow android:layout_width="match_parent"
                                                   android:layout_height="match_parent">
@@ -147,7 +155,8 @@
                                                     android:layout_width="wrap_content"
                                                     android:layout_height="wrap_content"
                                                     android:id="@+id/indicatifsCheckBox"
-                                                    android:layout_weight="1" android:textSize="18sp"/>
+                                                    android:layout_weight="1" android:textSize="18sp"
+                                                    android:onClick="updateNbrofQSpinner"/>
                                         </TableRow>
                                         <TableRow android:layout_width="match_parent"
                                                   android:layout_height="match_parent">
@@ -156,7 +165,8 @@
                                                     android:layout_width="wrap_content"
                                                     android:layout_height="wrap_content"
                                                     android:id="@+id/entrainementCheckBox"
-                                                    android:layout_weight="1" android:textSize="18sp"/>
+                                                    android:layout_weight="1" android:textSize="18sp"
+                                                    android:onClick="updateNbrofQSpinner"/>
                                         </TableRow>
                                     </TableLayout>
                                 </TableRow>
@@ -207,7 +217,8 @@
                                                     android:layout_width="wrap_content"
                                                     android:layout_height="wrap_content"
                                                     android:id="@+id/lignesCheckBox"
-                                                    android:layout_weight="1" android:textSize="18sp"/>
+                                                    android:layout_weight="1" android:textSize="18sp"
+                                                    android:onClick="updateNbrofQSpinner"/>
                                         </TableRow>
                                         <TableRow android:layout_width="match_parent"
                                                   android:layout_height="match_parent">
@@ -216,7 +227,8 @@
                                                     android:layout_width="wrap_content"
                                                     android:layout_height="wrap_content"
                                                     android:id="@+id/etagesRFCheckBox"
-                                                    android:layout_weight="1" android:textSize="18sp"/>
+                                                    android:layout_weight="1" android:textSize="18sp"
+                                                    android:onClick="updateNbrofQSpinner"/>
                                         </TableRow>
                                         <TableRow android:layout_width="match_parent"
                                                   android:layout_height="match_parent">
@@ -225,7 +237,8 @@
                                                     android:layout_width="wrap_content"
                                                     android:layout_height="wrap_content"
                                                     android:id="@+id/resistancesGroupesCheckBox"
-                                                    android:layout_weight="1" android:textSize="18sp"/>
+                                                    android:layout_weight="1" android:textSize="18sp"
+                                                    android:onClick="updateNbrofQSpinner"/>
                                         </TableRow>
                                         <TableRow android:layout_width="match_parent"
                                                   android:layout_height="match_parent">
@@ -233,7 +246,8 @@
                                                     android:text="@string/theme_ampli"
                                                     android:layout_width="wrap_content"
                                                     android:layout_height="wrap_content" android:id="@+id/ampliCheckBox"
-                                                    android:layout_weight="1" android:textSize="18sp"/>
+                                                    android:layout_weight="1" android:textSize="18sp"
+                                                    android:onClick="updateNbrofQSpinner"/>
                                         </TableRow>
                                         <TableRow android:layout_width="match_parent"
                                                   android:layout_height="match_parent">
@@ -242,7 +256,8 @@
                                                     android:layout_width="wrap_content"
                                                     android:layout_height="wrap_content"
                                                     android:id="@+id/transfoCheckBox"
-                                                    android:layout_weight="1" android:textSize="18sp"/>
+                                                    android:layout_weight="1" android:textSize="18sp"
+                                                    android:onClick="updateNbrofQSpinner"/>
                                         </TableRow>
                                         <TableRow android:layout_width="match_parent"
                                                   android:layout_height="match_parent">
@@ -251,7 +266,8 @@
                                                     android:layout_width="wrap_content"
                                                     android:layout_height="wrap_content"
                                                     android:id="@+id/alternatifCheckBox"
-                                                    android:layout_weight="1" android:textSize="18sp"/>
+                                                    android:layout_weight="1" android:textSize="18sp"
+                                                    android:onClick="updateNbrofQSpinner"/>
                                         </TableRow>
                                         <TableRow android:layout_width="match_parent"
                                                   android:layout_height="match_parent">
@@ -260,7 +276,8 @@
                                                     android:layout_width="wrap_content"
                                                     android:layout_height="wrap_content"
                                                     android:id="@+id/synoptiquesCheckBox"
-                                                    android:layout_weight="1" android:textSize="18sp"/>
+                                                    android:layout_weight="1" android:textSize="18sp"
+                                                    android:onClick="updateNbrofQSpinner"/>
                                         </TableRow>
                                         <TableRow android:layout_width="match_parent"
                                                   android:layout_height="match_parent">
@@ -269,7 +286,8 @@
                                                     android:layout_width="wrap_content"
                                                     android:layout_height="wrap_content"
                                                     android:id="@+id/resistancesCouleursCheckBox"
-                                                    android:layout_weight="1" android:textSize="18sp"/>
+                                                    android:layout_weight="1" android:textSize="18sp"
+                                                    android:onClick="updateNbrofQSpinner"/>
                                         </TableRow>
                                         <TableRow android:layout_width="match_parent"
                                                   android:layout_height="match_parent">
@@ -278,7 +296,8 @@
                                                     android:layout_width="wrap_content"
                                                     android:layout_height="wrap_content"
                                                     android:id="@+id/electriciteCheckBox"
-                                                    android:layout_weight="1" android:textSize="18sp"/>
+                                                    android:layout_weight="1" android:textSize="18sp"
+                                                    android:onClick="updateNbrofQSpinner"/>
                                         </TableRow>
                                         <TableRow android:layout_width="match_parent"
                                                   android:layout_height="match_parent">
@@ -287,7 +306,8 @@
                                                     android:layout_width="wrap_content"
                                                     android:layout_height="wrap_content"
                                                     android:id="@+id/condoBobCheckBox"
-                                                    android:layout_weight="1" android:textSize="18sp"/>
+                                                    android:layout_weight="1" android:textSize="18sp"
+                                                    android:onClick="updateNbrofQSpinner"/>
                                         </TableRow>
                                     </TableLayout>
                                 </TableRow>
@@ -354,7 +374,7 @@
                                 android:text="@string/reglages"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content" android:id="@+id/textView8" android:textSize="30sp"
-                                android:textColor="@color/colorText"/>
+                                android:textColor="@color/colorText" android:layout_weight="1"/>
                     </TableRow>
                     <TableRow android:layout_width="match_parent" android:layout_height="match_parent">
                         <TextView
@@ -362,12 +382,10 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content" android:id="@+id/textView9"
                                 android:textSize="18sp" android:layout_weight="1" android:textColor="@color/colorText"/>
-                        <EditText
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:inputType="number"
-                                android:id="@+id/questionEditText" android:layout_weight="16"
-                                android:hint="@string/num20"/>
+                        <Spinner
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content" android:id="@+id/nbrQSpinner"
+                                android:layout_weight="1" android:spinnerMode="dropdown"/>
                     </TableRow>
                     <TableRow android:layout_width="match_parent" android:layout_height="match_parent">
                         <Switch
@@ -378,16 +396,6 @@
                                 android:thumbTint="@color/colorPrimary" android:checked="true"/>
                     </TableRow>
                     <TableRow android:layout_width="match_parent" android:layout_height="match_parent"/>
-                    <TableRow
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent">
-                        <Switch
-                                android:text="@string/auto_next_Q"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content" android:id="@+id/nextQSwitch"
-                                android:layout_weight="1" android:checked="false"
-                                android:thumbTint="@color/colorPrimary" android:textSize="18sp"/>
-                    </TableRow>
                     <TableRow
                             android:layout_width="match_parent"
                             android:layout_height="match_parent">
@@ -420,7 +428,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:inputType="number"
-                                android:id="@+id/tempsEditText" android:hint="@string/min" android:layout_weight="16"
+                                android:id="@+id/tempsEditText" android:hint="@string/min" android:layout_weight="1"
                                 android:autofillHints=""/>
                     </TableRow>
                 </TableLayout>

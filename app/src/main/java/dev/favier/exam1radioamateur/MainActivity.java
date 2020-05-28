@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -18,6 +19,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -28,8 +30,9 @@ public class MainActivity extends AppCompatActivity {
             sanctionsCheckBox, messagesCheckBox, indicatifsCheckBox, entrainementCheckBox;
     CheckBox lignesCheckBox, etagesRFCheckBox, resistancesGroupesCheckBox, ampliCheckBox, transfoCheckBox,
             alternatifCheckBox, synoptiquesCheckBox, resistancesCouleursCheckBox, electriciteCheckBox, condoBobCheckBox;
-    EditText questionEditText, tempsEditText;
-    Switch showRespSwitch, nextQSwitch, malusSwitch, timerSwitch;
+    EditText tempsEditText;
+    Spinner nbrQSpinner;
+    Switch showRespSwitch, malusSwitch, timerSwitch;
 
     ArrayList<Integer> ThemeList;
     SharedPreferences sharedPref = null;
@@ -51,8 +54,11 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         if (sharedPref.getBoolean("firstrun", true)) {
             // first run
+            Log.w("debug", "first run!");
             firstRun = true;
             sharedPref.edit().putBoolean("firstrun", false).commit();
+        } else {
+            firstRun = false;
         }
     }
 
@@ -66,11 +72,11 @@ public class MainActivity extends AppCompatActivity {
         noThemeButton = findViewById(R.id.noThemeButton);
         startButton = findViewById(R.id.startButton);
         // setting edutText
-        questionEditText = findViewById(R.id.questionEditText);
+        //questionEditText = findViewById(R.id.questionEditText);
+        nbrQSpinner = findViewById(R.id.nbrQSpinner);
         tempsEditText = findViewById(R.id.tempsEditText);
         // setting switch
         showRespSwitch = findViewById(R.id.showRespSwitch);
-        nextQSwitch = findViewById(R.id.nextQSwitch);
         malusSwitch = findViewById(R.id.malusSwitch);
         timerSwitch = findViewById(R.id.timerSwitch);
         // register theme checkbox
@@ -102,10 +108,9 @@ public class MainActivity extends AppCompatActivity {
         boolean techniqueShow = sharedPref.getBoolean("techniqueShow", true);
         techniqueRow.setVisibility(techniqueShow ? View.VISIBLE : View.GONE);
         // exam settings prefs
-        int numberOfQuestions = sharedPref.getInt("numberOfQuestions", 20);
-        questionEditText.setText(String.valueOf(numberOfQuestions));
+        //int numberOfQuestions = sharedPref.getInt("numberOfQuestions", 20);
+        //questionEditText.setText(String.valueOf(numberOfQuestions));
         showRespSwitch.setChecked(sharedPref.getBoolean("showResponces", false));
-        nextQSwitch.setChecked(sharedPref.getBoolean("autoNextQ", false));
         malusSwitch.setChecked(sharedPref.getBoolean("malusEnable", true));
         timerSwitch.setChecked(sharedPref.getBoolean("timerEnable", false));
         int examTime = sharedPref.getInt("examTime", 20);
@@ -114,9 +119,10 @@ public class MainActivity extends AppCompatActivity {
 
         String Themejson = sharedPref.getString("ThemeJson", "[]");
         ThemeList = new ArrayList<>();
-        ThemeList = new Gson().fromJson(Themejson, new TypeToken<ArrayList<Integer>>(){}.getType());
-        for(int theme: ThemeList){
-            switch (theme){
+        ThemeList = new Gson().fromJson(Themejson, new TypeToken<ArrayList<Integer>>() {
+        }.getType());
+        for (int theme : ThemeList) {
+            switch (theme) {
                 case Examen.codeQ:
                     codeQCheckBox.setChecked(true);
                     break;
@@ -154,10 +160,10 @@ public class MainActivity extends AppCompatActivity {
                 case Examen.etagesRF:
                     etagesRFCheckBox.setChecked(true);
                     break;
-                case  Examen.groupementsDeResistances:
+                case Examen.groupementsDeResistances:
                     resistancesGroupesCheckBox.setChecked(true);
                     break;
-                case  Examen.diodesEtTransistors:
+                case Examen.diodesEtTransistors:
                     ampliCheckBox.setChecked(true);
                     break;
                 case Examen.transformateursAmpli:
@@ -180,7 +186,7 @@ public class MainActivity extends AppCompatActivity {
                     break;
             }
         }
-
+        updateNbrofQSpinner();
 
         // shared preference writer
         final SharedPreferences.Editor sharedEditor = sharedPref.edit();
@@ -287,12 +293,11 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 // set exams setting prefs for the next exam
-                int numberOfQuestions = Integer.parseInt(questionEditText.getText().toString());
-                sharedEditor.putInt("numberOfQuestions", numberOfQuestions);
+                //int numberOfQuestions = Integer.parseInt(questionEditText.getText().toString());
+                //sharedEditor.putInt("numberOfQuestions", numberOfQuestions);
                 boolean showResponces = showRespSwitch.isChecked();
                 sharedEditor.putBoolean("showResponces", showResponces);
-                boolean autoNextQ = nextQSwitch.isChecked();
-                sharedEditor.putBoolean("autoNextQ", autoNextQ);
+
                 boolean malusEnable = malusSwitch.isChecked();
                 sharedEditor.putBoolean("malusEnable", malusEnable);
                 boolean timerEnable = timerSwitch.isChecked();
@@ -300,68 +305,67 @@ public class MainActivity extends AppCompatActivity {
                 int examTime = Integer.parseInt(tempsEditText.getText().toString());
                 sharedEditor.putInt("examTime", examTime);
 
-
                 //  set exams themes prefs for the next exam
                 ThemeList = new ArrayList<>();
                 if (codeQCheckBox.isChecked()) {
                     ThemeList.add(Examen.codeQ);
                 }
-                if(emissionCheckBox.isChecked()){
+                if (emissionCheckBox.isChecked()) {
                     ThemeList.add(Examen.classesEmission);
                 }
-                if(adaptationCheckBox.isChecked()){
+                if (adaptationCheckBox.isChecked()) {
                     ThemeList.add(Examen.adaptation);
                 }
-                if(epellationCheckBox.isChecked()){
+                if (epellationCheckBox.isChecked()) {
                     ThemeList.add(Examen.epellation);
                 }
-                if(cemCheckBox.isChecked()){
+                if (cemCheckBox.isChecked()) {
                     ThemeList.add(Examen.cem);
                 }
-                if(antennesCheckBox.isChecked()){
+                if (antennesCheckBox.isChecked()) {
                     ThemeList.add(Examen.longueurOnde);
                 }
-                if(sanctionsCheckBox.isChecked()){
+                if (sanctionsCheckBox.isChecked()) {
                     ThemeList.add(Examen.sanctions);
                 }
-                if(messagesCheckBox.isChecked()){
+                if (messagesCheckBox.isChecked()) {
                     ThemeList.add(Examen.exposition);
                 }
-                if(indicatifsCheckBox.isChecked()){
+                if (indicatifsCheckBox.isChecked()) {
                     ThemeList.add(Examen.indicatifs);
                 }
-                if(entrainementCheckBox.isChecked()){
+                if (entrainementCheckBox.isChecked()) {
                     ThemeList.add(Examen.questionsEntrainement);
                 }
 
-                if(lignesCheckBox.isChecked()){
+                if (lignesCheckBox.isChecked()) {
                     ThemeList.add(Examen.ligneDeTransmis);
                 }
-                if(etagesRFCheckBox.isChecked()){
+                if (etagesRFCheckBox.isChecked()) {
                     ThemeList.add(Examen.etagesRF);
                 }
-                if(resistancesGroupesCheckBox.isChecked()){
+                if (resistancesGroupesCheckBox.isChecked()) {
                     ThemeList.add(Examen.groupementsDeResistances);
                 }
-                if(ampliCheckBox.isChecked()){
+                if (ampliCheckBox.isChecked()) {
                     ThemeList.add(Examen.diodesEtTransistors);
                 }
-                if(transfoCheckBox.isChecked()){
+                if (transfoCheckBox.isChecked()) {
                     ThemeList.add(Examen.transformateursAmpli);
                 }
-                if(alternatifCheckBox.isChecked()){
+                if (alternatifCheckBox.isChecked()) {
                     ThemeList.add(Examen.courantsAlternatifs);
                 }
-                if(synoptiquesCheckBox.isChecked()){
+                if (synoptiquesCheckBox.isChecked()) {
                     ThemeList.add(Examen.synoptiques);
                 }
-                if(resistancesCouleursCheckBox.isChecked()){
+                if (resistancesCouleursCheckBox.isChecked()) {
                     ThemeList.add(Examen.codeCouleurs);
                 }
-                if(electriciteCheckBox.isChecked()){
+                if (electriciteCheckBox.isChecked()) {
                     ThemeList.add(Examen.electriciteDeBase);
                 }
-                if(condoBobCheckBox.isChecked()){
+                if (condoBobCheckBox.isChecked()) {
                     ThemeList.add(Examen.condensateursetBobines);
                 }
 
@@ -369,19 +373,181 @@ public class MainActivity extends AppCompatActivity {
                 // apply preferences
                 sharedEditor.apply();
 
-                if(ThemeList.size() >= 1) {
+                if (ThemeList.size() >= 1) {
                     // start new intent examen
                     Intent intent = new Intent(getBaseContext(), ExamenActivity.class);
                     intent.putIntegerArrayListExtra("ThemeList", ThemeList);
                     intent.putExtra("malusEnable", malusEnable);
-                    intent.putExtra("numberOfQuestions", numberOfQuestions);
+                    intent.putExtra("numberOfQuestions", Integer.parseInt(nbrQSpinner.getSelectedItem().toString()));
                     intent.putExtra("firstRun", firstRun);
+
                     startActivity(intent);
-                }else {
+                } else {
                     Toast.makeText(MainActivity.this, "Selectionnez un theme", Toast.LENGTH_SHORT).show();
                 }
             }
         });
+
+    }
+
+    public void updateNbrofQSpinner(View view) {
+
+        int themeRegistered = 0;
+        if (codeQCheckBox.isChecked()) {
+            themeRegistered++;
+        }
+        if (emissionCheckBox.isChecked()) {
+            themeRegistered++;
+        }
+        if (adaptationCheckBox.isChecked()) {
+            themeRegistered++;
+        }
+        if (epellationCheckBox.isChecked()) {
+            themeRegistered++;
+        }
+        if (cemCheckBox.isChecked()) {
+            themeRegistered++;
+        }
+        if (antennesCheckBox.isChecked()) {
+            themeRegistered++;
+        }
+        if (sanctionsCheckBox.isChecked()) {
+            themeRegistered++;
+        }
+        if (messagesCheckBox.isChecked()) {
+            themeRegistered++;
+        }
+        if (indicatifsCheckBox.isChecked()) {
+            themeRegistered++;
+        }
+        if (entrainementCheckBox.isChecked()) {
+            themeRegistered++;
+        }
+        if (lignesCheckBox.isChecked()) {
+            themeRegistered++;
+        }
+        if (etagesRFCheckBox.isChecked()) {
+            themeRegistered++;
+        }
+        if (resistancesGroupesCheckBox.isChecked()) {
+            themeRegistered++;
+        }
+        if (ampliCheckBox.isChecked()) {
+            themeRegistered++;
+        }
+        if (transfoCheckBox.isChecked()) {
+            themeRegistered++;
+        }
+        if (alternatifCheckBox.isChecked()) {
+            themeRegistered++;
+        }
+        if (synoptiquesCheckBox.isChecked()) {
+            themeRegistered++;
+        }
+        if (resistancesCouleursCheckBox.isChecked()) {
+            themeRegistered++;
+        }
+        if (electriciteCheckBox.isChecked()) {
+            themeRegistered++;
+        }
+        if (condoBobCheckBox.isChecked()) {
+            themeRegistered++;
+        }
+
+        Log.w("debug", String.valueOf(themeRegistered) + " themes sont cochés");
+        if(themeRegistered == 3){
+            themeRegistered = 6;
+        }
+        if (themeRegistered < 4) {
+            themeRegistered = 4;
+        }
+        List<String> spinnerArray = new ArrayList<>();
+        for (int i = 1; i < 6; i++) {
+            spinnerArray.add(String.valueOf(i * themeRegistered));
+        }
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, spinnerArray);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        nbrQSpinner.setAdapter(adapter);
+
+    }
+    public void updateNbrofQSpinner() {
+
+        int themeRegistered = 0;
+        if (codeQCheckBox.isChecked()) {
+            themeRegistered++;
+        }
+        if (emissionCheckBox.isChecked()) {
+            themeRegistered++;
+        }
+        if (adaptationCheckBox.isChecked()) {
+            themeRegistered++;
+        }
+        if (epellationCheckBox.isChecked()) {
+            themeRegistered++;
+        }
+        if (cemCheckBox.isChecked()) {
+            themeRegistered++;
+        }
+        if (antennesCheckBox.isChecked()) {
+            themeRegistered++;
+        }
+        if (sanctionsCheckBox.isChecked()) {
+            themeRegistered++;
+        }
+        if (messagesCheckBox.isChecked()) {
+            themeRegistered++;
+        }
+        if (indicatifsCheckBox.isChecked()) {
+            themeRegistered++;
+        }
+        if (entrainementCheckBox.isChecked()) {
+            themeRegistered++;
+        }
+        if (lignesCheckBox.isChecked()) {
+            themeRegistered++;
+        }
+        if (etagesRFCheckBox.isChecked()) {
+            themeRegistered++;
+        }
+        if (resistancesGroupesCheckBox.isChecked()) {
+            themeRegistered++;
+        }
+        if (ampliCheckBox.isChecked()) {
+            themeRegistered++;
+        }
+        if (transfoCheckBox.isChecked()) {
+            themeRegistered++;
+        }
+        if (alternatifCheckBox.isChecked()) {
+            themeRegistered++;
+        }
+        if (synoptiquesCheckBox.isChecked()) {
+            themeRegistered++;
+        }
+        if (resistancesCouleursCheckBox.isChecked()) {
+            themeRegistered++;
+        }
+        if (electriciteCheckBox.isChecked()) {
+            themeRegistered++;
+        }
+        if (condoBobCheckBox.isChecked()) {
+            themeRegistered++;
+        }
+
+        Log.w("debug", String.valueOf(themeRegistered) + " themes sont cochés");
+        if(themeRegistered == 3){
+            themeRegistered = 6;
+        }
+        if (themeRegistered < 4) {
+            themeRegistered = 4;
+        }
+        List<String> spinnerArray = new ArrayList<>();
+        for (int i = 1; i < 6; i++) {
+            spinnerArray.add(String.valueOf(i * themeRegistered));
+        }
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, spinnerArray);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        nbrQSpinner.setAdapter(adapter);
 
     }
 

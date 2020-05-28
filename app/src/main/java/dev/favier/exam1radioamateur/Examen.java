@@ -135,34 +135,34 @@ public class Examen {
     /**
      * Genène les question de l'examen aléatoirement
      */
-    public void genrateQuestions(){
+    public void genrateQuestions() {
         //Log.w("debug", String.valueOf(nbrQuestionParTheme));
-        for(int theme: themesList){
+        for (int theme : themesList) {
             //Log.w("debug", String.valueOf(theme));
             questions.addAll(appDb.questionDao().getRandomQuestion(theme, nbrQuestionParTheme));
         }
-        Log.w("debug", "nbr de questions "+String.valueOf(questions.size()));
+        Log.w("debug", "nbr de questions " + String.valueOf(questions.size()));
     }
 
-    public void debug(){
+    public void debug() {
         ArrayList<Question> tes = new ArrayList<>();
         tes = (ArrayList<Question>) appDb.questionDao().getRandomQuestion(303, 5);
-        for (Question q: tes) {
+        for (Question q : tes) {
             q.demo();
         }
     }
 
-    public void setReponse(int index ,int userReponse){
+    public void setReponse(int index, int userReponse) {
         Question currentQuestion = questions.get(index);
         currentQuestion.setUserReponse(userReponse);
         questions.set(index, currentQuestion);
     }
 
-    public Question getQuestion(int index){
+    public Question getQuestion(int index) {
         return questions.get(index);
     }
 
-    public void setReponseAsked(int index){
+    public void setReponseAsked(int index) {
         Question currentQuestion = questions.get(index);
         currentQuestion.setReponseAsked(true);
         questions.set(index, currentQuestion);

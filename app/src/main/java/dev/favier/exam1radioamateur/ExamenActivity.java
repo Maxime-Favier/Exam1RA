@@ -16,7 +16,6 @@ import org.json.JSONException;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.zip.Inflater;
 
 public class ExamenActivity extends AppCompatActivity {
 
@@ -32,6 +31,7 @@ public class ExamenActivity extends AppCompatActivity {
     int indexMaxQuestion;
     String coursUrl;
     boolean firstRun;
+    boolean autoNextQ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,8 +40,7 @@ public class ExamenActivity extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
         ArrayList<Integer> themeList = bundle.getIntegerArrayList("ThemeList");
-        //Log.w("themeList", themeList.toString());
-        indexMaxQuestion = 20 - 1; //bundle.getInt("numberOfQuestions")
+        indexMaxQuestion = bundle.getInt("numberOfQuestions") -1;
         int numberOfQuestionParTheme = (indexMaxQuestion + 1) / themeList.size();
 
         boolean malusEnable = bundle.getBoolean("malusEnable");
@@ -55,11 +54,13 @@ public class ExamenActivity extends AppCompatActivity {
         AsyncTask.execute(new Runnable() {
             @Override
             public void run() {
-                try {
-                    Log.w("debug", "populate db");
-                    examen.populateDbFromJson();
-                } catch (IOException | JSONException e) {
-                    e.printStackTrace();
+                if (firstRun) {
+                    try {
+                        Log.w("debug", "populate db");
+                        examen.populateDbFromJson();
+                    } catch (IOException | JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
 
                 examen.genrateQuestions();
@@ -106,7 +107,6 @@ public class ExamenActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (indexQuestion <= indexMaxQuestion) {
-
                     indexQuestion++;
                     showQuestion();
                     checkEnableBtn();
@@ -127,7 +127,6 @@ public class ExamenActivity extends AppCompatActivity {
         propoRadioGroupe.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-
                 switch (checkedId) {
                     case R.id.propo1RadioButton:
                         //Log.w("debug", String.valueOf(0) + " set reposne");
@@ -213,7 +212,7 @@ public class ExamenActivity extends AppCompatActivity {
         Question currentQuestion = examen.getQuestion(indexQuestion);
 
         // set previous response
-        switch (currentQuestion.getUserReponse()){
+        switch (currentQuestion.getUserReponse()) {
             case 0:
                 propo1RadioButton.setChecked(true);
                 break;
@@ -245,7 +244,7 @@ public class ExamenActivity extends AppCompatActivity {
         //set cours url
         coursUrl = currentQuestion.getCoursUrl();
         //set theme
-        switch (currentQuestion.getThemeID()){
+        switch (currentQuestion.getThemeID()) {
             case Examen.codeCouleurs:
                 themeQTextView.setText(R.string.theme_resistancesCouleurs);
                 break;
@@ -327,7 +326,6 @@ public class ExamenActivity extends AppCompatActivity {
             printResponse();
         }
     }
-
 
     public void gotoCours(View view) {
         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(coursUrl));

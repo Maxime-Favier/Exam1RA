@@ -19,13 +19,13 @@ public class Remerciements extends AppCompatActivity {
     }
 
     // open f6kgl website
-    public void openF6KGL(View v){
+    public void openF6KGL(View v) {
         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://f6kgl-f5kff.fr/"));
         startActivity(browserIntent);
     }
 
     // open garageisep website
-    public void openGarageIsep(View v){
+    public void openGarageIsep(View v) {
         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://garageisep.com/"));
         startActivity(browserIntent);
     }
