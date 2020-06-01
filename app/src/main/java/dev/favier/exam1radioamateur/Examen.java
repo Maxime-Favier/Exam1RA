@@ -61,27 +61,18 @@ public class Examen {
     }
 
     /**
-     * retourne le nombre de points de l'examen
-     *
-     * @return nombre de point à l'examen
+     * retourne l'obj de calcul de résulatats
+     * @return
      */
-    public int pointCalculation() {
-        int points = 0;
-        for (Question question : questions) {
-            if (question.goodResponse() == Question.mauvaiseReponse) {
-                // cas mauvaise reponse
-                if (malusEnable) {
-                    // enleve -1 point
-                    points -= 1;
-                }
-            } else if (question.goodResponse() == Question.bonneReponse) {
-                // ajoute 3 points
-                points += 3;
-            }
-        }
-        return points;
+    public ResultCalculator getResults(){
+        return new ResultCalculator(questions, themesList, nbrQuestionParTheme, malusEnable);
     }
 
+    /**
+     * Ajoute les questions dans la bdd depuis un json
+     * @throws IOException
+     * @throws JSONException
+     */
     public void populateDbFromJson() throws IOException, JSONException {
 
         //AppDatabase appDb = AppDatabase.getInstance(context);
@@ -144,24 +135,38 @@ public class Examen {
         Log.w("debug", "nbr de questions " + String.valueOf(questions.size()));
     }
 
-    public void debug() {
+    /*public void debug() {
         ArrayList<Question> tes = new ArrayList<>();
         tes = (ArrayList<Question>) appDb.questionDao().getRandomQuestion(303, 5);
         for (Question q : tes) {
             q.demo();
         }
-    }
+    }*/
 
+    /**
+     * defini la réponse donné par l'utilisateur d'une question de l"examen
+     * @param index index de la question.
+     * @param userReponse numéro de la réponse de l'utilsateur de 0 à 3
+     */
     public void setReponse(int index, int userReponse) {
         Question currentQuestion = questions.get(index);
         currentQuestion.setUserReponse(userReponse);
         questions.set(index, currentQuestion);
     }
 
+    /**
+     * retourne la question depuis un index
+     * @param index index de la question
+     * @return obj {@link Question}
+     */
     public Question getQuestion(int index) {
         return questions.get(index);
     }
 
+    /**
+     * defini comme quoi la reponse à ete demandé pour la question à un index
+     * @param index index de la question
+     */
     public void setReponseAsked(int index) {
         Question currentQuestion = questions.get(index);
         currentQuestion.setReponseAsked(true);

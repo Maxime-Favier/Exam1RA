@@ -1,10 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ExamenResults">
+        tools:context=".ExamenResults" android:orientation="vertical">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                      android:orientation="vertical">
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/examStatusTextView" android:textSize="24sp"
+                    android:gravity="center_horizontal|center_vertical"/>
+            <TextView
+                    android:text="@string/exam_Conclu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/examConcluTextView"
+                    android:textSize="18sp" android:textColor="@color/colorText"/>
+            <TextView
+                    android:text="@string/ptsBonneRep"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/textView24"
+                    android:textColor="@color/colorOk" android:layout_marginStart="30sp"
+                    android:layout_marginEnd="30sp"/>
+            <TextView
+                    android:text="@string/ptsRepVide"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/textView25"
+                    android:textColor="@color/colorPrimary" android:layout_marginStart="30sp"
+                    android:layout_marginEnd="30sp"/>
+            <TextView
+                    android:text="@string/ptsRepMauvaise"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/textView26"
+                    android:textColor="@color/colorBtnDanger" android:layout_marginStart="30sp"
+                    android:layout_marginEnd="30sp"/>
+            <TextView
+                    android:text="@string/total"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/totalTextView"
+                    android:textSize="18sp" android:textColor="@color/colorText"/>
+            <TextView
+                    android:text="@string/corrects"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/totalCorrectTextView"
+                    android:layout_marginStart="10sp" android:textColor="@color/colorOk"/>
+            <TextView
+                    android:text="@string/ss_Rep"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/totalSsRepTextView"
+                    android:layout_marginStart="10sp" android:textColor="@color/colorPrimary"/>
+            <TextView
+                    android:text="@string/incorrects"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/totalIncorrectsTextView"
+                    android:layout_marginStart="10sp" android:textColor="@color/colorBtnDanger"/>
+            <TextView
+                    android:text="@string/totalLeg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/totalLegTextView"
+                    android:layout_marginStart="10sp" android:layout_marginEnd="10sp"/>
+            <TextView
+                    android:text="@string/totalTech"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/totalTechTextView"
+                    android:layout_marginStart="10sp" android:layout_marginEnd="10sp"/>
+            <TextView
+                    android:text="@string/temps"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:id="@+id/totalTempsTextView"
+                    android:layout_marginStart="10sp" android:layout_marginEnd="10sp"/>
+            <com.github.mikephil.charting.charts.PieChart
+                    android:id="@+id/pieChart" android:layout_height="250sp"
+                    android:layout_width="match_parent"/>
+            <com.google.android.flexbox.FlexboxLayout android:layout_height="match_parent"
+                                                      android:layout_width="match_parent"
+            app:flexWrap="wrap" app:alignItems="center" app:alignContent="space_around"
+            app:flexDirection="row" android:id="@+id/flexResult">
+
+            </com.google.android.flexbox.FlexboxLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

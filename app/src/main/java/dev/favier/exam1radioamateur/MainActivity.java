@@ -379,6 +379,8 @@ public class MainActivity extends AppCompatActivity {
                     intent.putIntegerArrayListExtra("ThemeList", ThemeList);
                     intent.putExtra("malusEnable", malusEnable);
                     intent.putExtra("numberOfQuestions", Integer.parseInt(nbrQSpinner.getSelectedItem().toString()));
+                    intent.putExtra("examTimerEnable", timerEnable);
+                    intent.putExtra("timer", examTime);
                     intent.putExtra("firstRun", firstRun);
 
                     startActivity(intent);

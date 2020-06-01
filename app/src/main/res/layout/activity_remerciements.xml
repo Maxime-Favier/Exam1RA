@@ -38,7 +38,8 @@
                                 android:layout_marginEnd="5sp" android:layout_marginTop="3sp"
                                 android:layout_marginBottom="3sp" android:layout_weight="1" android:paddingStart="1sp"
                                 android:paddingEnd="1sp" android:paddingTop="1sp" android:paddingBottom="1sp"
-                                android:id="@+id/f6kglCard" android:clickable="true" android:onClick="openF6KGL">
+                                android:id="@+id/f6kglCard" android:clickable="false" android:onClick="openF6KGL"
+                        >
                             <LinearLayout
                                     android:orientation="vertical"
                                     android:layout_width="match_parent"
@@ -54,7 +55,7 @@
                                         android:layout_height="245dp" app:srcCompat="@drawable/f5kff"
                                         android:id="@+id/imageView2" android:layout_marginStart="5sp"
                                         android:layout_marginEnd="5sp" android:layout_weight="1"
-                                />
+                                        android:scaleType="fitXY" android:contentDescription="@string/qsl_F6KGL"/>
                                 <TextView
                                         android:text="@string/remerciement_F6GPX"
                                         android:layout_width="match_parent"
@@ -84,8 +85,9 @@
                                         android:textColor="@color/colorText"/>
                                 <ImageView
                                         android:layout_width="wrap_content"
-                                        android:layout_height="100dp" app:srcCompat="@drawable/logogarageisep"
-                                        android:id="@+id/imageView3"/>
+                                        android:layout_height="95dp" app:srcCompat="@drawable/logogarageisep"
+                                        android:id="@+id/imageView3"
+                                        android:contentDescription="@string/logoGarageIsep"/>
                                 <TextView
                                         android:text="@string/remerciement_Garage"
                                         android:layout_width="match_parent"

@@ -48,10 +48,12 @@
     <string name="opensource">Licences open source</string>
 
     <string name="F6KGL">Le radioclub F6KGL-F5KFF</string>
+    <string name="qsl_F6KGL">carte QSL de F6KGL-F5KFF</string>
     <string name="remerciement_F6GPX">Avec Jean-Luc F6GPX qui met à jour la base de questions en plus de publier un
         cours complet sur internet pour passer l\'examen
     </string>
     <string name="GarageIsep">Garage Isep</string>
+    <string name="logoGarageIsep">Logo Garage Isep</string>
     <string name="remerciement_Garage">Garage Isep, l\'association d\'innovation de l\'isep pour avoir relu et testé
         l\'application
     </string>
@@ -85,11 +87,35 @@
         See the License for the specific language governing permissions and
         limitations under the License.
     </string>
+    <string name="MPChart">MPAndroidChart</string>
+    <string name="C_MPChart">© 2020 Philipp Jahoda</string>
 
     <string name="next">Suivant</string>
-    <string name="prev">Précédant</string>
+    <string name="prev">Précédent</string>
     <string name="aide">Aide</string>
     <string name="cours">Cours</string>
     <string name="del_resp">Effacer la réponse</string>
     <string name="reponse">Réponse</string>
+    <string name="terminer">Terminer l\'examen</string>
+
+    <string name="resultats">Résultats</string>
+    <string name="exam_Conclu">Nombre de points obtenus pour les %1$d questions</string>
+    <string name="questions">questions</string>
+    <string name="ptsBonneRep">3 points par bonnes réponses</string>
+    <string name="ptsRepVide">0 point pour les réponses vides</string>
+    <string name="ptsRepMauvaise">-1 point par mauvaises réponses</string>
+    <string name="examReussi">Examen réussi !</string>
+    <string name="examRate">Examen raté :(</string>
+    <string name="listeQuestions">Liste des questions</string>
+    
+    <string name="total">Total : %1$d / %2$d</string>
+    <string name="totalLeg">Total legislation : %1$d</string>
+    <string name="totalTech">Total technique : %1$d</string>
+    <string name="temps">Temps : %1$d: %2$d</string>
+    <string name="corrects">Corrects : %1$d</string>
+    <string name="incorrects">Incorrects : %1$d</string>
+    <string name="ss_Rep">Sans réponses : %1$d</string>
+
+    <string name="gotoHome">Retourner au menu principal</string>
+
 </resources>

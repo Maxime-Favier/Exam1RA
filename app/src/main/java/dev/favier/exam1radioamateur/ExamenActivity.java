@@ -4,11 +4,14 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.*;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import androidx.core.content.ContextCompat;
@@ -16,22 +19,29 @@ import org.json.JSONException;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class ExamenActivity extends AppCompatActivity {
 
     Button delRespButton, coursQButton, reponseQButton, prevQButton, nextQButton;
-    TextView themeQTextView, numQTextView, numberOfQtextView, commentTextView;
+    TextView themeQTextView, numQTextView, numberOfQtextView, commentTextView, timerTextView;
     RadioGroup propoRadioGroupe;
     RadioButton propo1RadioButton, propo2RadioButton, propo3RadioButton, propo4RadioButton;
     ImageView questionImageView;
     LinearLayout commentLinearLayout;
 
     Examen examen;
+    CountDownTimer countDownTimer;
+    Timer timer;
     int indexQuestion;
     int indexMaxQuestion;
     String coursUrl;
     boolean firstRun;
-    boolean autoNextQ;
+    boolean examTimerEnable;
+    int examTime;
+    long timeLeft = 0;
+    long timeSpent = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,11 +50,13 @@ public class ExamenActivity extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
         ArrayList<Integer> themeList = bundle.getIntegerArrayList("ThemeList");
-        indexMaxQuestion = bundle.getInt("numberOfQuestions") -1;
+        indexMaxQuestion = bundle.getInt("numberOfQuestions") - 1;
         int numberOfQuestionParTheme = (indexMaxQuestion + 1) / themeList.size();
 
         boolean malusEnable = bundle.getBoolean("malusEnable");
         firstRun = bundle.getBoolean("firstRun");
+        examTimerEnable = bundle.getBoolean("examTimerEnable");
+        examTime = bundle.getInt("timer");
 
         examen = new Examen(this, themeList, numberOfQuestionParTheme, malusEnable);
         setupControls();
@@ -92,6 +104,34 @@ public class ExamenActivity extends AppCompatActivity {
         propo4RadioButton = findViewById(R.id.propo4RadioButton);
         commentLinearLayout = findViewById(R.id.commentLinearLayout);
         commentTextView = findViewById(R.id.commentTextView);
+        timerTextView = findViewById(R.id.timerTextView);
+
+        // setup timer
+        if (examTimerEnable) {
+
+            //Log.w("debug", String.valueOf(timerInMillis) + "timer time");
+            countDownTimer = new CountDownTimer((examTime * 60000), 1000) {
+                //examTime * 60000, 1000
+                @Override
+                public void onTick(long millisUntilFinished) {
+                    timerTextView.setText(String.valueOf((millisUntilFinished / 1000) / 60) + ":" + String.valueOf((int) ((millisUntilFinished / 1000) % 60)));
+                    timeLeft = millisUntilFinished;
+                }
+
+                @Override
+                public void onFinish() {
+                    stopExam();
+                }
+            };
+            countDownTimer.start();
+        }
+        timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                timeSpent++;
+            }
+        }, 0, 1000);
 
         // uncheck proposition
         delRespButton.setOnClickListener(new View.OnClickListener() {
@@ -227,11 +267,13 @@ public class ExamenActivity extends AppCompatActivity {
                 break;
             case -1:
                 propoRadioGroupe.clearCheck();
+                examen.setReponse(indexQuestion, -1);
                 break;
         }
 
         //set image
         questionImageView.setImageResource(getResources().getIdentifier("q_" + String.valueOf(currentQuestion.getNumero()), "drawable", getPackageName()));
+        questionImageView.setContentDescription(currentQuestion.getQuestion());
         //set proposition
         ArrayList<String> propositions = currentQuestion.getPropositions();
         propo1RadioButton.setText(propositions.get(0));
@@ -340,4 +382,26 @@ public class ExamenActivity extends AppCompatActivity {
         return true;
     }
 
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.terminerItem:
+                stopExam();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    public void stopExam() {
+        if(examTimerEnable){
+            countDownTimer.cancel();
+        }
+
+        Log.w("debug", "examen terminé");
+        Intent intent = new Intent(getBaseContext(), ExamenResults.class);
+        intent.putExtra("exam", examen.getResults());
+        intent.putExtra("timeSpent", timeSpent);
+        //intent.putExtra("exam", examen);
+        startActivity(intent);
+    }
 }

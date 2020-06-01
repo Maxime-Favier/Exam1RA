@@ -9,7 +9,7 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity android:name=".ExamenResults">
+        <activity android:name=".ExamenResults" android:label="@string/resultats">
         </activity>
         <activity
                 android:name=".OpenSource"
