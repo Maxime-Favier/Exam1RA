@@ -129,7 +129,7 @@ public class ExamenResults extends AppCompatActivity {
         int marginpx = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 20, getApplicationContext().getResources().getDisplayMetrics());
         int marginTppx = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 5, getApplicationContext().getResources().getDisplayMetrics());
         for (int i = 0; i < resultCalculator.getNbrOfQuestions(); i++) {
-            Question question = resultCalculator.getQuestion(i);
+            final Question question = resultCalculator.getQuestion(i);
 
             TextView textView = new TextView(this);
             //textView.setId(i);
@@ -140,6 +140,15 @@ public class ExamenResults extends AppCompatActivity {
             textView.setLayoutParams(layoutParams);
             textView.setText(String.valueOf(i + 1));
             textView.setTextColor(Color.WHITE);
+            textView.setContentDescription(question.getQuestion());
+            textView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getBaseContext(), QuestionViewer.class);
+                    intent.putExtra("question", question);
+                    startActivity(intent);
+                }
+            });
             if(question.goodResponse() == Question.bonneReponse){
                 textView.setBackgroundTintList(ContextCompat.getColorStateList(this, R.color.colorOk));
             }else if(question.goodResponse() == Question.mauvaiseReponse){

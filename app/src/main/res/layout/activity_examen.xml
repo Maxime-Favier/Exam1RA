@@ -59,7 +59,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" android:id="@+id/commentTextView" android:layout_weight="1"
                 android:background="@drawable/border_left" android:layout_marginStart="10sp"
-                android:layout_marginEnd="10sp" android:paddingStart="5sp"/>
+                android:layout_marginEnd="10sp" android:paddingStart="5sp" android:textColor="@color/colorText"/>
     </LinearLayout>
     <LinearLayout
             android:orientation="horizontal"
