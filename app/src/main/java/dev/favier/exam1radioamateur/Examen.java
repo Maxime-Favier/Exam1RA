@@ -73,7 +73,7 @@ public class Examen {
      * @throws IOException
      * @throws JSONException
      */
-    public void populateDbFromJson() throws IOException, JSONException {
+    /*public void populateDbFromJson() throws IOException, JSONException {
 
         //AppDatabase appDb = AppDatabase.getInstance(context);
         appDb.questionDao().clearQuestions();
@@ -121,7 +121,7 @@ public class Examen {
 
         //appDb.close();
 
-    }
+    }*/
 
     /**
      * Genène les question de l'examen aléatoirement

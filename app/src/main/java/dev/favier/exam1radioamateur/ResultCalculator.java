@@ -102,11 +102,11 @@ public class ResultCalculator implements Serializable {
      * @return examen réussi state
      */
     public boolean examGood() {
-        Log.w("debug", String.valueOf(pointCalculation()) + "nbr de poinst");
-        Log.w("debug", String.valueOf(maxPoints()) + "max points");
+        //Log.w("debug", String.valueOf(pointCalculation()) + "nbr de poinst");
+        //Log.w("debug", String.valueOf(maxPoints()) + "max points");
         double d = ((double) pointCalculation()) / maxPoints();
 
-        Log.w("debug", String.valueOf(d));
+        //Log.w("debug", String.valueOf(d));
         return d >= 0.5;
     }
 

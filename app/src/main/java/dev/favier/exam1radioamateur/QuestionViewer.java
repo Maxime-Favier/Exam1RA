@@ -14,6 +14,9 @@ import androidx.core.content.ContextCompat;
 
 import java.util.ArrayList;
 
+/**
+ * Affiche une des question via {@link ExamenResults}
+ */
 public class QuestionViewer extends AppCompatActivity {
 
     TextView themeViewerTextView, commentViewTextView, questionIdViewTextView;
@@ -34,6 +37,9 @@ public class QuestionViewer extends AppCompatActivity {
         printQuestion();
     }
 
+    /**
+     * configuration des variable du layout
+     */
     private void setupControls(){
         themeViewerTextView = findViewById(R.id.themeViewerTextView);
         questionIdViewTextView = findViewById(R.id.questionIdViewTextView);
@@ -46,6 +52,9 @@ public class QuestionViewer extends AppCompatActivity {
         coursViewerButton = findViewById(R.id.coursViewerButton);
     }
 
+    /**
+     * Affichage de la question
+     */
     private void printQuestion(){
         //set theme
         switch (question.getThemeID()){

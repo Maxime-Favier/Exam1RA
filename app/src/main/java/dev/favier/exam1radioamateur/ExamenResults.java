@@ -3,12 +3,9 @@ package dev.favier.exam1radioamateur;
 import android.content.Intent;
 import android.graphics.Color;
 import android.util.Log;
-//import android.util.TypedValue;
 import android.util.TypedValue;
 import android.view.*;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-//import android.widget.LinearLayout.LayoutParams;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
@@ -116,6 +113,7 @@ public class ExamenResults extends AppCompatActivity {
         PieDataSet pieDataSet = new PieDataSet(dataVals, "");
         pieDataSet.setColors(colorArray);
         PieData pieData = new PieData(pieDataSet);
+        pieData.setValueTextSize(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 10, getApplicationContext().getResources().getDisplayMetrics()));
         pieChart.setData(pieData);
         pieChart.setDrawEntryLabels(false);
         pieChart.getDescription().setEnabled(false);
@@ -181,5 +179,11 @@ public class ExamenResults extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        // empeche de retouner au question d'examens
+        //super.onBackPressed();
     }
 }

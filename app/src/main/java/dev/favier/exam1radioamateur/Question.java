@@ -191,9 +191,9 @@ public class Question implements Serializable {
         this.propositionsJson = propositionsJson;
     }
 
-    public void demo() {
+    /*public void demo() {
         Log.w("debug", numero + "-" + question);
-    }
+    }*/
 
     public void setReponseAsked(boolean reponseAsked) {
         this.reponseAsked = reponseAsked;

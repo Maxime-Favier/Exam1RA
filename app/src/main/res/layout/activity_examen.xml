@@ -7,105 +7,113 @@
         android:layout_height="match_parent"
         tools:context=".ExamenActivity" android:orientation="vertical">
 
-    <TextView
+    <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:id="@+id/themeQTextView" android:textSize="18sp"
-            android:textColor="@color/colorText"/>
-    <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:id="@+id/numQTextView" android:layout_weight="1"/>
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:id="@+id/numberOfQtextView" android:layout_weight="1"/>
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:id="@+id/timerTextView" android:layout_weight="1"/>
-    </LinearLayout>
-    <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="200dp" app:srcCompat="@drawable/empty_question"
-            android:id="@+id/questionImageView"
-            android:scaleType="fitXY"/>
-    <RadioGroup
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:layout_marginTop="20sp"
-            android:layout_marginStart="3sp" android:layout_marginEnd="3sp" android:id="@+id/propoRadioGroupe">
-        <RadioButton
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" android:id="@+id/propo1RadioButton"
-                android:layout_marginBottom="5sp"/>
-        <RadioButton
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" android:id="@+id/propo2RadioButton"
-                android:layout_marginBottom="5sp"/>
-        <RadioButton
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" android:id="@+id/propo3RadioButton"
-                android:layout_marginBottom="5sp"/>
-        <RadioButton
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" android:id="@+id/propo4RadioButton"
-                android:layout_marginBottom="5sp"/>
-    </RadioGroup>
-    <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:id="@+id/commentLinearLayout" android:visibility="gone">
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:id="@+id/commentTextView" android:layout_weight="1"
-                android:background="@drawable/border_left" android:layout_marginStart="10sp"
-                android:layout_marginEnd="10sp" android:paddingStart="5sp" android:textColor="@color/colorText"/>
-    </LinearLayout>
-    <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:layout_marginStart="30sp" android:layout_marginEnd="30sp"
-            android:layout_marginTop="10sp">
-        <Button
-                android:text="@string/del_resp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:id="@+id/delRespButton" android:layout_weight="1"
-                android:drawableStart="@drawable/ic_clear_24dp"/>
-    </LinearLayout>
-    <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:layout_marginStart="30sp" android:layout_marginEnd="30sp"
-            android:layout_marginTop="5sp">
-        <Button
-                android:text="@string/cours"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:id="@+id/coursQButton" android:layout_weight="1"
-                android:drawableStart="@drawable/ic_launch_24dp"
-                style="@android:style/Widget.Material.Light.Button.Small" android:onClick="gotoCours"/>
-        <Button
-                android:text="@string/reponse"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:id="@+id/reponseQButton" android:layout_weight="1"
-                android:drawableStart="@drawable/ic_help_outline_24dp"/>
-    </LinearLayout>
-    <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:layout_marginStart="10sp" android:layout_marginEnd="10sp"
-            android:layout_marginTop="20sp">
-        <Button
-                android:text="@string/prev"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:id="@+id/prevQButton" android:layout_weight="1"
-                android:drawableLeft="@drawable/ic_navigate_before_24dp" android:layout_marginEnd="50sp"
-                android:backgroundTint="@color/colorSecondary" style="@android:style/Widget.Material.Button"/>
-        <Button
-                android:text="@string/next"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:id="@+id/nextQButton" android:layout_weight="1"
-                android:drawableRight="@drawable/ic_navigate_next_24dp" android:layout_marginStart="50sp"
-                android:backgroundTint="@color/colorPrimary" android:textColor="@android:color/white"
-                style="@android:style/Widget.Material.Button"/>
-    </LinearLayout>
+            android:layout_height="match_parent">
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                      android:orientation="vertical">
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/themeQTextView" android:textSize="18sp"
+                    android:textColor="@color/colorText"/>
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:id="@+id/numQTextView" android:layout_weight="1"/>
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:id="@+id/numberOfQtextView" android:layout_weight="1"/>
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:id="@+id/timerTextView" android:layout_weight="1"/>
+            </LinearLayout>
+            <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp" app:srcCompat="@drawable/empty_question"
+                    android:id="@+id/questionImageView"
+                    android:scaleType="fitXY"/>
+            <RadioGroup
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:layout_marginTop="20sp"
+                    android:layout_marginStart="3sp" android:layout_marginEnd="3sp" android:id="@+id/propoRadioGroupe">
+                <RadioButton
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" android:id="@+id/propo1RadioButton"
+                        android:layout_marginBottom="5sp"/>
+                <RadioButton
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" android:id="@+id/propo2RadioButton"
+                        android:layout_marginBottom="5sp"/>
+                <RadioButton
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" android:id="@+id/propo3RadioButton"
+                        android:layout_marginBottom="5sp"/>
+                <RadioButton
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" android:id="@+id/propo4RadioButton"
+                        android:layout_marginBottom="5sp"/>
+            </RadioGroup>
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/commentLinearLayout" android:visibility="gone">
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:id="@+id/commentTextView" android:layout_weight="1"
+                        android:background="@drawable/border_left" android:layout_marginStart="10sp"
+                        android:layout_marginEnd="10sp" android:paddingStart="5sp" android:textColor="@color/colorText"/>
+            </LinearLayout>
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:layout_marginStart="30sp" android:layout_marginEnd="30sp"
+                    android:layout_marginTop="10sp">
+                <Button
+                        android:text="@string/del_resp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:id="@+id/delRespButton" android:layout_weight="1"
+                        android:drawableStart="@drawable/ic_clear_24dp"/>
+            </LinearLayout>
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:layout_marginStart="30sp" android:layout_marginEnd="30sp"
+                    android:layout_marginTop="5sp">
+                <Button
+                        android:text="@string/cours"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:id="@+id/coursQButton" android:layout_weight="1"
+                        android:drawableStart="@drawable/ic_launch_24dp"
+                        style="@android:style/Widget.Material.Light.Button.Small" android:onClick="gotoCours"/>
+                <Button
+                        android:text="@string/reponse"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:id="@+id/reponseQButton" android:layout_weight="1"
+                        android:drawableStart="@drawable/ic_help_outline_24dp"/>
+            </LinearLayout>
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:layout_marginStart="10sp" android:layout_marginEnd="10sp"
+                    android:layout_marginTop="20sp">
+                <Button
+                        android:text="@string/prev"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:id="@+id/prevQButton" android:layout_weight="1"
+                        android:drawableLeft="@drawable/ic_navigate_before_24dp" android:layout_marginEnd="50sp"
+                        android:backgroundTint="@color/colorSecondary" style="@android:style/Widget.Material.Button"/>
+                <Button
+                        android:text="@string/next"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:id="@+id/nextQButton" android:layout_weight="1"
+                        android:drawableRight="@drawable/ic_navigate_next_24dp" android:layout_marginStart="50sp"
+                        android:backgroundTint="@color/colorPrimary" android:textColor="@android:color/white"
+                        style="@android:style/Widget.Material.Button"/>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
 </LinearLayout>

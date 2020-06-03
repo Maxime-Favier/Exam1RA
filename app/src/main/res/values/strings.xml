@@ -113,8 +113,8 @@
     <string name="totalTech">Total technique : %1$d</string>
     <string name="temps">Temps : %1$d: %2$d</string>
     <string name="corrects">Corrects : %1$d</string>
-    <string name="incorrects">Incorrects : %1$d</string>
-    <string name="ss_Rep">Sans réponses : %1$d</string>
+    <string name="incorrects">Incorrect : %1$d</string>
+    <string name="ss_Rep">Sans réponse : %1$d</string>
 
     <string name="gotoHome">Retourner au menu principal</string>
 

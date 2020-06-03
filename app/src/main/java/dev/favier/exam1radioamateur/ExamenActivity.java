@@ -22,6 +22,9 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
+/**
+ * Affiche l'interface des question de l'examen
+ */
 public class ExamenActivity extends AppCompatActivity {
 
     Button delRespButton, coursQButton, reponseQButton, prevQButton, nextQButton;
@@ -39,6 +42,7 @@ public class ExamenActivity extends AppCompatActivity {
     String coursUrl;
     boolean firstRun;
     boolean examTimerEnable;
+    boolean showResponces;
     int examTime;
     long timeLeft = 0;
     long timeSpent = 0;
@@ -57,18 +61,18 @@ public class ExamenActivity extends AppCompatActivity {
         firstRun = bundle.getBoolean("firstRun");
         examTimerEnable = bundle.getBoolean("examTimerEnable");
         examTime = bundle.getInt("timer");
+        showResponces = bundle.getBoolean("showResponces");
 
         examen = new Examen(this, themeList, numberOfQuestionParTheme, malusEnable);
         setupControls();
 
         indexQuestion = 0;
-        // TODO: populate db on fist start
         AsyncTask.execute(new Runnable() {
             @Override
             public void run() {
                 if (firstRun) {
                     try {
-                        Log.w("debug", "populate db");
+                        Log.i("debug", "populate db");
                         examen.populateDbFromJson();
                     } catch (IOException | JSONException e) {
                         e.printStackTrace();
@@ -87,6 +91,9 @@ public class ExamenActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * register layout variable and buttons event
+     */
     private void setupControls() {
         delRespButton = findViewById(R.id.delRespButton);
         coursQButton = findViewById(R.id.coursQButton);
@@ -106,7 +113,11 @@ public class ExamenActivity extends AppCompatActivity {
         commentTextView = findViewById(R.id.commentTextView);
         timerTextView = findViewById(R.id.timerTextView);
 
-        // setup timer
+        // desactivate showResponces fx
+        if(!showResponces){
+            reponseQButton.setEnabled(false);
+        }
+        // setup event time limit
         if (examTimerEnable) {
 
             //Log.w("debug", String.valueOf(timerInMillis) + "timer time");
@@ -125,6 +136,7 @@ public class ExamenActivity extends AppCompatActivity {
             };
             countDownTimer.start();
         }
+        // setup timer of exam
         timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
@@ -199,6 +211,9 @@ public class ExamenActivity extends AppCompatActivity {
         checkEnableBtn();
     }
 
+    /**
+     * active/désactive les btn dans le cas de la première/derniere question
+     */
     private void checkEnableBtn() {
         // enable/disable btn
         if (indexQuestion == indexMaxQuestion) {
@@ -213,6 +228,9 @@ public class ExamenActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Affiche le commentaire et la réponse à la question
+     */
     private void printResponse() {
         Question currentQuestion = examen.getQuestion(indexQuestion);
         if (!currentQuestion.getCommentaire().equals("null")) {
@@ -229,7 +247,7 @@ public class ExamenActivity extends AppCompatActivity {
         propo3RadioButton.setTextColor(Color.RED);
         propo4RadioButton.setTextColor(Color.RED);
 
-        Log.w("debug", String.valueOf(currentQuestion.getReponse()));
+        //Log.w("debug", String.valueOf(currentQuestion.getReponse()));
         switch (currentQuestion.getReponse()) {
             case 0:
                 propo1RadioButton.setTextColor(ContextCompat.getColor(getBaseContext(), R.color.colorOk));
@@ -248,6 +266,9 @@ public class ExamenActivity extends AppCompatActivity {
         examen.setReponseAsked(indexQuestion);
     }
 
+    /**
+     * Affiche la question
+     */
     private void showQuestion() {
         Question currentQuestion = examen.getQuestion(indexQuestion);
 
@@ -369,11 +390,20 @@ public class ExamenActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * boutton vers le cours sur internet de f6kgl
+     * @param view
+     */
     public void gotoCours(View view) {
         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(coursUrl));
         startActivity(browserIntent);
     }
 
+    /**
+     * ajoute le menu top bar
+     * @param menu
+     * @return
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // setup top Menu
@@ -382,6 +412,11 @@ public class ExamenActivity extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * envenment top bar
+     * @param item
+     * @return
+     */
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
@@ -392,12 +427,14 @@ public class ExamenActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * fini l'examen et envois vers la page des résultats
+     */
     public void stopExam() {
         if(examTimerEnable){
             countDownTimer.cancel();
         }
-
-        Log.w("debug", "examen terminé");
+        //Log.w("debug", "examen terminé");
         Intent intent = new Intent(getBaseContext(), ExamenResults.class);
         intent.putExtra("exam", examen.getResults());
         intent.putExtra("timeSpent", timeSpent);

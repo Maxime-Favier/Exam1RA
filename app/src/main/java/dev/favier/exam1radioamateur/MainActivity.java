@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         if (sharedPref.getBoolean("firstrun", true)) {
             // first run
-            Log.w("debug", "first run!");
+            Log.i("debug", "first run!");
             firstRun = true;
             sharedPref.edit().putBoolean("firstrun", false).commit();
         } else {
@@ -255,6 +255,7 @@ public class MainActivity extends AppCompatActivity {
                 resistancesCouleursCheckBox.setChecked(true);
                 electriciteCheckBox.setChecked(true);
                 condoBobCheckBox.setChecked(true);
+                updateNbrofQSpinner();
             }
         });
 
@@ -284,6 +285,7 @@ public class MainActivity extends AppCompatActivity {
                 resistancesCouleursCheckBox.setChecked(false);
                 electriciteCheckBox.setChecked(false);
                 condoBobCheckBox.setChecked(false);
+                updateNbrofQSpinner();
             }
         });
 
@@ -378,6 +380,7 @@ public class MainActivity extends AppCompatActivity {
                     Intent intent = new Intent(getBaseContext(), ExamenActivity.class);
                     intent.putIntegerArrayListExtra("ThemeList", ThemeList);
                     intent.putExtra("malusEnable", malusEnable);
+                    intent.putExtra("showResponces", showResponces);
                     intent.putExtra("numberOfQuestions", Integer.parseInt(nbrQSpinner.getSelectedItem().toString()));
                     intent.putExtra("examTimerEnable", timerEnable);
                     intent.putExtra("timer", examTime);
@@ -456,7 +459,7 @@ public class MainActivity extends AppCompatActivity {
             themeRegistered++;
         }
 
-        Log.w("debug", String.valueOf(themeRegistered) + " themes sont cochés");
+        //Log.w("debug", String.valueOf(themeRegistered) + " themes sont cochés");
         if(themeRegistered == 3){
             themeRegistered = 6;
         }
@@ -536,7 +539,7 @@ public class MainActivity extends AppCompatActivity {
             themeRegistered++;
         }
 
-        Log.w("debug", String.valueOf(themeRegistered) + " themes sont cochés");
+        //Log.w("debug", String.valueOf(themeRegistered) + " themes sont cochés");
         if(themeRegistered == 3){
             themeRegistered = 6;
         }
