@@ -17,7 +17,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import org.json.JSONException;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,7 +38,6 @@ public class MainActivity extends AppCompatActivity {
 
     ArrayList<Integer> ThemeList;
     SharedPreferences sharedPref = null;
-    boolean firstRun = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,12 +55,31 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         if (sharedPref.getBoolean("firstrun", true)) {
             // first run
-            Log.i("debug", "first run!");
-            firstRun = true;
+            Log.w("debug", "first run!");
+            startButton.setEnabled(false);
+            startButton.setText(R.string.chargementEnCours);
+            AsyncTask.execute(new Runnable() {
+                @Override
+                public void run() {
+                    //Log.w("debug", "populate start");
+                    try {
+                        DbPopulator dbPopulator = new DbPopulator(getApplicationContext());
+                    } catch (IOException | JSONException e) {
+                        e.printStackTrace();
+                    }
+                    //Log.w("debug", "populate end");
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            startButton.setEnabled(true);
+                            startButton.setText(R.string.commencer);
+                        }
+                    });
+                }
+            });
             sharedPref.edit().putBoolean("firstrun", false).commit();
-        } else {
-            firstRun = false;
         }
+
     }
 
     private void setupControls() {
@@ -100,6 +120,7 @@ public class MainActivity extends AppCompatActivity {
         resistancesCouleursCheckBox = findViewById(R.id.resistancesCouleursCheckBox);
         electriciteCheckBox = findViewById(R.id.electriciteCheckBox);
         condoBobCheckBox = findViewById(R.id.condoBobCheckBox);
+        Log.w("debug", "setup controls");
 
 
         // dropdown prefs
@@ -384,8 +405,6 @@ public class MainActivity extends AppCompatActivity {
                     intent.putExtra("numberOfQuestions", Integer.parseInt(nbrQSpinner.getSelectedItem().toString()));
                     intent.putExtra("examTimerEnable", timerEnable);
                     intent.putExtra("timer", examTime);
-                    intent.putExtra("firstRun", firstRun);
-
                     startActivity(intent);
                 } else {
                     Toast.makeText(MainActivity.this, "Selectionnez un theme", Toast.LENGTH_SHORT).show();

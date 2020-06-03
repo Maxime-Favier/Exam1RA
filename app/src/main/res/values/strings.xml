@@ -41,6 +41,7 @@
     <string name="tps_lim">Temps limite</string>
     <string name="min">min</string>
     <string name="num20">20</string>
+    <string name="chargementEnCours">Chargement en cours…</string>
 
     <string name="numQ_invalid">Entrez un nombre de question valide</string>
 
@@ -111,7 +112,7 @@
     <string name="total">Total : %1$d / %2$d</string>
     <string name="totalLeg">Total legislation : %1$d</string>
     <string name="totalTech">Total technique : %1$d</string>
-    <string name="temps">Temps : %1$d: %2$d</string>
+    <string name="temps">Temps : %1$d\' %2$s"</string>
     <string name="corrects">Corrects : %1$d</string>
     <string name="incorrects">Incorrect : %1$d</string>
     <string name="ss_Rep">Sans réponse : %1$d</string>

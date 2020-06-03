@@ -16,6 +16,7 @@ import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
+import com.google.android.flexbox.AlignItems;
 import com.google.android.flexbox.FlexboxLayout;
 
 import java.util.ArrayList;
@@ -87,7 +88,13 @@ public class ExamenResults extends AppCompatActivity {
         examConcluTextView.setText(getResources().getString(R.string.exam_Conclu, resultCalculator.getNbrOfQuestions()));
         totalTextView.setText(getResources().getString(R.string.total, resultCalculator.pointCalculation(), resultCalculator.maxPoints()));
 
-        totalTempsTextView.setText(getResources().getString(R.string.temps, (int) (timeSpent / 60), (int) (timeSpent % 60)));
+        String sec;
+        if(timeSpent % 60 <= 9){
+            sec = "0" + (timeSpent%60);
+        }else {
+            sec = String.valueOf(timeSpent % 60);
+        }
+        totalTempsTextView.setText(getResources().getString(R.string.temps, (int) (timeSpent / 60), sec));
         totalLegTextView.setText(getResources().getString(R.string.totalLeg, resultCalculator.pointsLegislation()));
         totalTechTextView.setText(getResources().getString(R.string.totalTech, resultCalculator.pointsTechnique()));
         totalCorrectTextView.setText(getResources().getString(R.string.corrects, resultCalculator.getNbrOfCorrect()));
@@ -130,14 +137,13 @@ public class ExamenResults extends AppCompatActivity {
             final Question question = resultCalculator.getQuestion(i);
 
             TextView textView = new TextView(this);
-            //textView.setId(i);
 
             FlexboxLayout.LayoutParams layoutParams = new FlexboxLayout.LayoutParams(px, px);
-
             layoutParams.setMargins(marginpx, marginTppx, marginpx, 0);
             textView.setLayoutParams(layoutParams);
             textView.setText(String.valueOf(i + 1));
             textView.setTextColor(Color.WHITE);
+
             textView.setContentDescription(question.getQuestion());
             textView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -183,7 +189,7 @@ public class ExamenResults extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        // empeche de retouner au question d'examens
+        // empeche de retouner aux question d'examens
         //super.onBackPressed();
     }
 }

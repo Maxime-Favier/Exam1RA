@@ -40,7 +40,6 @@ public class ExamenActivity extends AppCompatActivity {
     int indexQuestion;
     int indexMaxQuestion;
     String coursUrl;
-    boolean firstRun;
     boolean examTimerEnable;
     boolean showResponces;
     int examTime;
@@ -58,7 +57,7 @@ public class ExamenActivity extends AppCompatActivity {
         int numberOfQuestionParTheme = (indexMaxQuestion + 1) / themeList.size();
 
         boolean malusEnable = bundle.getBoolean("malusEnable");
-        firstRun = bundle.getBoolean("firstRun");
+        //firstRun = bundle.getBoolean("firstRun");
         examTimerEnable = bundle.getBoolean("examTimerEnable");
         examTime = bundle.getInt("timer");
         showResponces = bundle.getBoolean("showResponces");
@@ -70,15 +69,6 @@ public class ExamenActivity extends AppCompatActivity {
         AsyncTask.execute(new Runnable() {
             @Override
             public void run() {
-                if (firstRun) {
-                    try {
-                        Log.i("debug", "populate db");
-                        examen.populateDbFromJson();
-                    } catch (IOException | JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-
                 examen.genrateQuestions();
                 runOnUiThread(new Runnable() {
                     @Override
@@ -114,7 +104,7 @@ public class ExamenActivity extends AppCompatActivity {
         timerTextView = findViewById(R.id.timerTextView);
 
         // desactivate showResponces fx
-        if(!showResponces){
+        if (!showResponces) {
             reponseQButton.setEnabled(false);
         }
         // setup event time limit
@@ -125,7 +115,19 @@ public class ExamenActivity extends AppCompatActivity {
                 //examTime * 60000, 1000
                 @Override
                 public void onTick(long millisUntilFinished) {
-                    timerTextView.setText(String.valueOf((millisUntilFinished / 1000) / 60) + ":" + String.valueOf((int) ((millisUntilFinished / 1000) % 60)));
+                    int min = (int) (millisUntilFinished / 1000) / 60;
+                    int sec = (int) (millisUntilFinished / 1000) % 60;
+                    if(min == 1 && sec == 0){
+                        timerTextView.setTextColor(Color.WHITE);
+                        timerTextView.setBackgroundColor(Color.RED);
+                    }
+                    String secStr;
+                    if(sec <= 9){
+                        secStr = "0" + sec;
+                    }else {
+                        secStr = String.valueOf(sec);
+                    }
+                    timerTextView.setText(String.valueOf(min) + "'" + secStr + '"');
                     timeLeft = millisUntilFinished;
                 }
 
@@ -392,6 +394,7 @@ public class ExamenActivity extends AppCompatActivity {
 
     /**
      * boutton vers le cours sur internet de f6kgl
+     *
      * @param view
      */
     public void gotoCours(View view) {
@@ -401,6 +404,7 @@ public class ExamenActivity extends AppCompatActivity {
 
     /**
      * ajoute le menu top bar
+     *
      * @param menu
      * @return
      */
@@ -414,6 +418,7 @@ public class ExamenActivity extends AppCompatActivity {
 
     /**
      * envenment top bar
+     *
      * @param item
      * @return
      */
@@ -431,7 +436,7 @@ public class ExamenActivity extends AppCompatActivity {
      * fini l'examen et envois vers la page des résultats
      */
     public void stopExam() {
-        if(examTimerEnable){
+        if (examTimerEnable) {
             countDownTimer.cancel();
         }
         //Log.w("debug", "examen terminé");

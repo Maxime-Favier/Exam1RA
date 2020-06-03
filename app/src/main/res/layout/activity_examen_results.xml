@@ -77,12 +77,18 @@
             <com.github.mikephil.charting.charts.PieChart
                     android:id="@+id/pieChart" android:layout_height="250sp"
                     android:layout_width="match_parent"/>
-            <com.google.android.flexbox.FlexboxLayout android:layout_height="match_parent"
-                                                      android:layout_width="match_parent"
-            app:flexWrap="wrap" app:alignItems="center" app:alignContent="space_around"
-            app:flexDirection="row" android:id="@+id/flexResult">
+            <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" android:gravity="center_horizontal|center_vertical">
+                <com.google.android.flexbox.FlexboxLayout android:layout_height="match_parent"
+                                                          android:layout_width="match_parent"
+                                                          app:flexWrap="wrap" app:alignItems="center"
+                                                          app:alignContent="space_around"
+                                                          app:flexDirection="row" android:id="@+id/flexResult">
 
-            </com.google.android.flexbox.FlexboxLayout>
+                </com.google.android.flexbox.FlexboxLayout>
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>
