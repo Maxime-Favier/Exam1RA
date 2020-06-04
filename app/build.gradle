@@ -6,10 +6,10 @@ android {
 
     defaultConfig {
         applicationId "dev.favier.exam1radioamateur"
-        minSdkVersion 23
+        minSdkVersion 22
         targetSdkVersion 29
-        versionCode 2
-        versionName "v0.2-beta"
+        versionCode 3
+        versionName "v0.3-beta"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

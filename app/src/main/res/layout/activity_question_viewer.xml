@@ -50,8 +50,10 @@
             <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" android:id="@+id/commentViewTextView"
-                    android:background="@drawable/border_left" android:paddingLeft="5sp" android:layout_marginStart="10sp"
-                    android:layout_marginEnd="10sp" android:textColor="@color/colorText" android:visibility="gone"/>
+                    android:background="@drawable/border_left" android:paddingLeft="5sp"
+                    android:layout_marginStart="10sp"
+                    android:layout_marginEnd="10sp" android:textColor="@color/colorText" android:visibility="gone"
+            />
             <Button
                     android:text="@string/cours"
                     android:layout_width="match_parent"

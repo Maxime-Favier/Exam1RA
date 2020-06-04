@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.text.InputFilter;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -122,7 +123,8 @@ public class MainActivity extends AppCompatActivity {
         condoBobCheckBox = findViewById(R.id.condoBobCheckBox);
         Log.w("debug", "setup controls");
 
-
+        // set minimum countdown
+        tempsEditText.setFilters(new InputFilter[]{new InputFilterMinMax("1", "90")});
         // dropdown prefs
         boolean legislationShow = sharedPref.getBoolean("legislationShow", true);
         legislationRow.setVisibility(legislationShow ? View.VISIBLE : View.GONE);
@@ -314,19 +316,17 @@ public class MainActivity extends AppCompatActivity {
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 // set exams setting prefs for the next exam
                 //int numberOfQuestions = Integer.parseInt(questionEditText.getText().toString());
                 //sharedEditor.putInt("numberOfQuestions", numberOfQuestions);
+                Log.w("debug", String.valueOf(tempsEditText.getText()));
                 boolean showResponces = showRespSwitch.isChecked();
                 sharedEditor.putBoolean("showResponces", showResponces);
-
                 boolean malusEnable = malusSwitch.isChecked();
                 sharedEditor.putBoolean("malusEnable", malusEnable);
                 boolean timerEnable = timerSwitch.isChecked();
                 sharedEditor.putBoolean("timerEnable", timerEnable);
-                int examTime = Integer.parseInt(tempsEditText.getText().toString());
-                sharedEditor.putInt("examTime", examTime);
+
 
                 //  set exams themes prefs for the next exam
                 ThemeList = new ArrayList<>();
@@ -396,7 +396,9 @@ public class MainActivity extends AppCompatActivity {
                 // apply preferences
                 sharedEditor.apply();
 
-                if (ThemeList.size() >= 1) {
+                if (ThemeList.size() >= 1 && !tempsEditText.getText().toString().equals("")) {
+                    int examTime = Integer.parseInt(tempsEditText.getText().toString());
+                    sharedEditor.putInt("examTime", examTime);
                     // start new intent examen
                     Intent intent = new Intent(getBaseContext(), ExamenActivity.class);
                     intent.putIntegerArrayListExtra("ThemeList", ThemeList);
@@ -407,7 +409,7 @@ public class MainActivity extends AppCompatActivity {
                     intent.putExtra("timer", examTime);
                     startActivity(intent);
                 } else {
-                    Toast.makeText(MainActivity.this, "Selectionnez un theme", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "Selectionnez un theme et un temps valide", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -479,7 +481,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         //Log.w("debug", String.valueOf(themeRegistered) + " themes sont cochés");
-        if(themeRegistered == 3){
+        if (themeRegistered == 3) {
             themeRegistered = 6;
         }
         if (themeRegistered < 4) {
@@ -494,6 +496,7 @@ public class MainActivity extends AppCompatActivity {
         nbrQSpinner.setAdapter(adapter);
 
     }
+
     public void updateNbrofQSpinner() {
 
         int themeRegistered = 0;
@@ -559,7 +562,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         //Log.w("debug", String.valueOf(themeRegistered) + " themes sont cochés");
-        if(themeRegistered == 3){
+        if (themeRegistered == 3) {
             themeRegistered = 6;
         }
         if (themeRegistered < 4) {

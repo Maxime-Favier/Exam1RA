@@ -189,7 +189,8 @@ public class ExamenResults extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        // empeche de retouner aux question d'examens
+        // empeche de retouner aux question d'examens et va à l'accueil
+        navigateUpTo(new Intent(getBaseContext(), MainActivity.class));
         //super.onBackPressed();
     }
 }
