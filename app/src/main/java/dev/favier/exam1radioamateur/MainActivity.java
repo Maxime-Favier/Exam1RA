@@ -1,10 +1,10 @@
 package dev.favier.exam1radioamateur;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.text.InputFilter;
 import android.util.Log;
@@ -47,7 +47,9 @@ public class MainActivity extends AppCompatActivity {
 
         // shared preferences load settings
         Context context = getApplicationContext();
-        sharedPref = context.getSharedPreferences("UIPref", Context.MODE_PRIVATE);
+
+        sharedPref = context.getSharedPreferences("UIPref" + String.valueOf(BuildConfig.VERSION_CODE), Context.MODE_PRIVATE);
+
         setupControls();
     }
 
@@ -57,9 +59,11 @@ public class MainActivity extends AppCompatActivity {
         if (sharedPref.getBoolean("firstrun", true)) {
             // first run
             Log.w("debug", "first run!");
-            startButton.setEnabled(false);
-            startButton.setText(R.string.chargementEnCours);
-            AsyncTask.execute(new Runnable() {
+            //startButton.setEnabled(false);
+            //startButton.setText(R.string.chargementEnCours);
+            Intent intent = new Intent(getBaseContext(), QuestionsDownload.class);
+            startActivity(intent);
+            /*AsyncTask.execute(new Runnable() {
                 @Override
                 public void run() {
                     //Log.w("debug", "populate start");
@@ -79,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
             sharedPref.edit().putBoolean("firstrun", false).commit();
+             */
         }
 
     }

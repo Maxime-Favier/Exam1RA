@@ -8,8 +8,8 @@ android {
         applicationId "dev.favier.exam1radioamateur"
         minSdkVersion 22
         targetSdkVersion 29
-        versionCode 3
-        versionName "v0.3-beta"
+        versionCode 4
+        versionName "v0.4-alpha"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

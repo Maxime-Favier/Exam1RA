@@ -17,6 +17,7 @@ import android.os.Bundle;
 import androidx.core.content.ContextCompat;
 import org.json.JSONException;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Timer;
@@ -117,14 +118,14 @@ public class ExamenActivity extends AppCompatActivity {
                 public void onTick(long millisUntilFinished) {
                     int min = (int) (millisUntilFinished / 1000) / 60;
                     int sec = (int) (millisUntilFinished / 1000) % 60;
-                    if(min == 1 && sec == 0){
+                    if (min == 1 && sec == 0) {
                         timerTextView.setTextColor(Color.WHITE);
                         timerTextView.setBackgroundColor(Color.RED);
                     }
                     String secStr;
-                    if(sec <= 9){
+                    if (sec <= 9) {
                         secStr = "0" + sec;
-                    }else {
+                    } else {
                         secStr = String.valueOf(sec);
                     }
                     timerTextView.setText(String.valueOf(min) + "'" + secStr + '"');
@@ -295,7 +296,9 @@ public class ExamenActivity extends AppCompatActivity {
         }
 
         //set image
-        questionImageView.setImageResource(getResources().getIdentifier("q_" + String.valueOf(currentQuestion.getNumero()), "drawable", getPackageName()));
+        //questionImageView.setImageResource(getResources().getIdentifier("q_" + String.valueOf(currentQuestion.getNumero()), "drawable", getPackageName()));
+        File file = new File(getFilesDir(), String.valueOf(currentQuestion.getNumero()) + ".png");
+        questionImageView.setImageURI(Uri.fromFile(file));
         questionImageView.setContentDescription(currentQuestion.getQuestion());
         //set proposition
         ArrayList<String> propositions = currentQuestion.getPropositions();

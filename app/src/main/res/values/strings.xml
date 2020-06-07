@@ -121,4 +121,15 @@
 
     <string name="question">Question</string>
 
+
+    <string name="downloadQ">Téléchargement des questions</string>
+    <string name="downloadImg">Téléchargement des images ~30Mo. Cela peut prendre beaucoup de temps…</string>
+    <string name="downloadQuestion">Téléchargement des question</string>
+    <string name="unzipProcess">Décompression en cours</string>
+    <string name="bddGen">Génération de la base de données</string>
+    <string name="ajust">Derniers ajustements</string>
+    <string name="errorCode">Un erreur s\'est produite: code %1$b/%2$b/%3$b</string>
+
+    <string name="pbConnect">Verifiez votre connexion et redémarrez l\'application</string>
+    <string name="pbRestart">Essayez de redémarrer l\'application et contactez le développeur si le problème persiste</string>
 </resources>

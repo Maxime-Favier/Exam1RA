@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import androidx.core.content.ContextCompat;
 
+import java.io.File;
 import java.util.ArrayList;
 
 /**
@@ -40,7 +41,7 @@ public class QuestionViewer extends AppCompatActivity {
     /**
      * configuration des variable du layout
      */
-    private void setupControls(){
+    private void setupControls() {
         themeViewerTextView = findViewById(R.id.themeViewerTextView);
         questionIdViewTextView = findViewById(R.id.questionIdViewTextView);
         imageViewerImageView = findViewById(R.id.imageViewerImageView);
@@ -55,9 +56,9 @@ public class QuestionViewer extends AppCompatActivity {
     /**
      * Affichage de la question
      */
-    private void printQuestion(){
+    private void printQuestion() {
         //set theme
-        switch (question.getThemeID()){
+        switch (question.getThemeID()) {
             case Examen.codeCouleurs:
                 themeViewerTextView.setText(R.string.theme_resistancesCouleurs);
                 break;
@@ -123,7 +124,9 @@ public class QuestionViewer extends AppCompatActivity {
         // set id
         questionIdViewTextView.setText("# " + String.valueOf(question.getNumero()));
         //set image
-        imageViewerImageView.setImageResource(getResources().getIdentifier("q_" + String.valueOf(question.getNumero()), "drawable", getPackageName()));
+        File file = new File(getFilesDir(), String.valueOf(question.getNumero()) + ".png");
+        imageViewerImageView.setImageURI(Uri.fromFile(file));
+        //imageViewerImageView.setImageResource(getResources().getIdentifier("q_" + String.valueOf(question.getNumero()), "drawable", getPackageName()));
         imageViewerImageView.setContentDescription(question.getQuestion());
         // set proposition
         ArrayList<String> propositions = question.getPropositions();
@@ -132,7 +135,7 @@ public class QuestionViewer extends AppCompatActivity {
         respViewer3RadioButton.setText(propositions.get(2));
         respViewer4RadioButton.setText(propositions.get(3));
         //set user response
-        switch (question.getUserReponse()){
+        switch (question.getUserReponse()) {
             case 0:
                 respViewer1RadioButton.setChecked(true);
                 break;
@@ -151,7 +154,7 @@ public class QuestionViewer extends AppCompatActivity {
         respViewer2RadioButton.setTextColor(Color.RED);
         respViewer3RadioButton.setTextColor(Color.RED);
         respViewer4RadioButton.setTextColor(Color.RED);
-        switch (question.getReponse()){
+        switch (question.getReponse()) {
             case 0:
                 respViewer1RadioButton.setTextColor(ContextCompat.getColor(getBaseContext(), R.color.colorOk));
                 break;
@@ -166,7 +169,7 @@ public class QuestionViewer extends AppCompatActivity {
                 break;
         }
         // set comment
-        if(!question.getCommentaire().equals("null")){
+        if (!question.getCommentaire().equals("null")) {
             commentViewTextView.setVisibility(View.VISIBLE);
             commentViewTextView.setText(question.getCommentaire());
         }
