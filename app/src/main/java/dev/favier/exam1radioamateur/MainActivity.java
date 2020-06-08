@@ -59,31 +59,8 @@ public class MainActivity extends AppCompatActivity {
         if (sharedPref.getBoolean("firstrun", true)) {
             // first run
             Log.w("debug", "first run!");
-            //startButton.setEnabled(false);
-            //startButton.setText(R.string.chargementEnCours);
             Intent intent = new Intent(getBaseContext(), QuestionsDownload.class);
             startActivity(intent);
-            /*AsyncTask.execute(new Runnable() {
-                @Override
-                public void run() {
-                    //Log.w("debug", "populate start");
-                    try {
-                        DbPopulator dbPopulator = new DbPopulator(getApplicationContext());
-                    } catch (IOException | JSONException e) {
-                        e.printStackTrace();
-                    }
-                    //Log.w("debug", "populate end");
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            startButton.setEnabled(true);
-                            startButton.setText(R.string.commencer);
-                        }
-                    });
-                }
-            });
-            sharedPref.edit().putBoolean("firstrun", false).commit();
-             */
         }
 
     }
@@ -600,6 +577,10 @@ public class MainActivity extends AppCompatActivity {
             case R.id.opensourceItem:
                 Intent intent1 = new Intent(getBaseContext(), OpenSource.class);
                 startActivity(intent1);
+                return true;
+            case R.id.sycroItem:
+                Intent intent2 = new Intent(getBaseContext(), QuestionsDownload.class);
+                startActivity(intent2);
                 return true;
         }
         return super.onOptionsItemSelected(item);

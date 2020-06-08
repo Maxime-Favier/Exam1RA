@@ -38,18 +38,39 @@ public class QuestionsDownload extends AppCompatActivity {
         AsyncTask.execute(new Runnable() {
             @Override
             public void run() {
-                boolean a, b, c;
-                downloadStateTextView.setText(R.string.downloadImg);
+                final boolean a, b, c;
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        downloadStateTextView.setText(R.string.downloadImg);
+                    }
+                });
                 a = dbPopulator.downloadZipImg();
-                downloadStateTextView.setText(R.string.downloadQuestion);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        downloadStateTextView.setText(R.string.downloadQuestion);
+                    }
+                });
                 b = dbPopulator.downloadJson();
                 try {
-                    downloadStateTextView.setText(R.string.bddGen);
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            downloadStateTextView.setText(R.string.bddGen);
+                        }
+                    });
+
                     dbPopulator.populateDbFromJson();
                 } catch (IOException | JSONException e) {
                     e.printStackTrace();
                 }
-                downloadStateTextView.setText(R.string.unzipProcess);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        downloadStateTextView.setText(R.string.unzipProcess);
+                    }
+                });
                 c = dbPopulator.unzipImg();
                 downloadStateTextView.setText(R.string.ajust);
                 if (a && b && c) {
@@ -61,13 +82,19 @@ public class QuestionsDownload extends AppCompatActivity {
                         }
                     });
                 } else {
-                    downloadStateTextView.setText(getResources().getString(R.string.errorCode, a, b, c));
-                    allowBackQuit = true;
-                    if(!a && !b){
-                        errrorInfotextView.setText(R.string.pbConnect);
-                    }else {
-                        errrorInfotextView.setText(R.string.pbRestart);
-                    }
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            downloadStateTextView.setText(getResources().getString(R.string.errorCode, a, b, c));
+                            allowBackQuit = true;
+                            if (!a && !b) {
+                                errrorInfotextView.setText(R.string.pbConnect);
+                            } else {
+                                errrorInfotextView.setText(R.string.pbRestart);
+                            }
+                        }
+                    });
+
                 }
             }
         });
@@ -75,9 +102,9 @@ public class QuestionsDownload extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if(!allowBackQuit){
+        if (!allowBackQuit) {
             Toast.makeText(this, "Veuillez attendre la fin du téléchargement", Toast.LENGTH_SHORT).show();
-        }else {
+        } else {
             finishAffinity();
             System.exit(0);
         }

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <item android:title="@string/syncroQ" android:id="@+id/sycroItem" app:showAsAction="never"/>
     <item android:title="@string/remerciement" android:id="@+id/remerciementItem" app:showAsAction="never"/>
     <item android:title="@string/opensource" android:id="@+id/opensourceItem" app:showAsAction="never"/>
 </menu>
