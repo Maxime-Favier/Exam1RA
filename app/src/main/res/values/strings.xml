@@ -133,4 +133,8 @@
 
     <string name="pbConnect">Verifiez votre connexion et redémarrez l\'application</string>
     <string name="pbRestart">Essayez de redémarrer l\'application et contactez le développeur si le problème persiste</string>
+
+    <string name="stopExam">Arrêter l\'examen</string>
+    <string name="yes">Oui</string>
+    <string name="no">Non</string>
 </resources>

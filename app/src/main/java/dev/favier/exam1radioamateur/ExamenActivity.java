@@ -1,5 +1,6 @@
 package dev.favier.exam1radioamateur;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
@@ -12,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.*;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import androidx.core.content.ContextCompat;
@@ -439,14 +441,51 @@ public class ExamenActivity extends AppCompatActivity {
      * fini l'examen et envois vers la page des résultats
      */
     public void stopExam() {
-        if (examTimerEnable) {
-            countDownTimer.cancel();
-        }
-        //Log.w("debug", "examen terminé");
-        Intent intent = new Intent(getBaseContext(), ExamenResults.class);
-        intent.putExtra("exam", examen.getResults());
-        intent.putExtra("timeSpent", timeSpent);
-        //intent.putExtra("exam", examen);
-        startActivity(intent);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setCancelable(true);
+        builder.setTitle(R.string.terminer);
+        builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //Log.w("debug", "examen terminé");
+                if (examTimerEnable) {
+                    countDownTimer.cancel();
+                }
+                Intent intent = new Intent(getBaseContext(), ExamenResults.class);
+                intent.putExtra("exam", examen.getResults());
+                intent.putExtra("timeSpent", timeSpent);
+                startActivity(intent);
+            }
+        });
+        builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setCancelable(true);
+        builder.setTitle(R.string.stopExam);
+        builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                finish();
+            }
+        });
+        builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 }
