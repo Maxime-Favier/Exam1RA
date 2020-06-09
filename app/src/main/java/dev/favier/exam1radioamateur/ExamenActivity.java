@@ -112,12 +112,13 @@ public class ExamenActivity extends AppCompatActivity {
         }
         // setup event time limit
         if (examTimerEnable) {
-
             //Log.w("debug", String.valueOf(timerInMillis) + "timer time");
+            // countdown exam
             countDownTimer = new CountDownTimer((examTime * 60000), 1000) {
                 //examTime * 60000, 1000
                 @Override
                 public void onTick(long millisUntilFinished) {
+                    // calculate min, sec from millis
                     int min = (int) (millisUntilFinished / 1000) / 60;
                     int sec = (int) (millisUntilFinished / 1000) % 60;
                     if (min == 1 && sec == 0) {
@@ -130,6 +131,7 @@ public class ExamenActivity extends AppCompatActivity {
                     } else {
                         secStr = String.valueOf(sec);
                     }
+                    // set time left
                     timerTextView.setText(String.valueOf(min) + "'" + secStr + '"');
                     timeLeft = millisUntilFinished;
                 }
@@ -441,6 +443,7 @@ public class ExamenActivity extends AppCompatActivity {
      * fini l'examen et envois vers la page des résultats
      */
     public void stopExam() {
+        // confimation dialog
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setCancelable(true);
         builder.setTitle(R.string.terminer);
@@ -470,6 +473,7 @@ public class ExamenActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         //super.onBackPressed();
+        // confirmation dialog
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setCancelable(true);
         builder.setTitle(R.string.stopExam);

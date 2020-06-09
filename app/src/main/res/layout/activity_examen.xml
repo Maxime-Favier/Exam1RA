@@ -32,7 +32,7 @@
             </LinearLayout>
             <ImageView
                     android:layout_width="match_parent"
-                    android:layout_height="200dp" app:srcCompat="@drawable/empty_question"
+                    android:layout_height="220dp" app:srcCompat="@drawable/empty_question"
                     android:id="@+id/questionImageView"
                     android:scaleType="fitXY"/>
             <RadioGroup
@@ -97,19 +97,20 @@
             <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" android:layout_marginStart="10sp" android:layout_marginEnd="10sp"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="20sp">
                 <Button
                         android:text="@string/prev"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" android:id="@+id/prevQButton" android:layout_weight="1"
-                        android:drawableLeft="@drawable/ic_navigate_before_24dp" android:layout_marginEnd="50sp"
-                        android:backgroundTint="@color/colorSecondary" style="@android:style/Widget.Material.Button"/>
+                        android:drawableLeft="@drawable/ic_navigate_before_24dp"
+                        android:backgroundTint="@color/colorSecondary" style="@android:style/Widget.Material.Button"
+                        android:layout_marginEnd="10sp"/>
                 <Button
                         android:text="@string/next"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" android:id="@+id/nextQButton" android:layout_weight="1"
-                        android:drawableRight="@drawable/ic_navigate_next_24dp" android:layout_marginStart="50sp"
+                        android:drawableRight="@drawable/ic_navigate_next_24dp" android:layout_marginStart="10sp"
                         android:backgroundTint="@color/colorPrimary" android:textColor="@android:color/white"
                         style="@android:style/Widget.Material.Button"/>
             </LinearLayout>

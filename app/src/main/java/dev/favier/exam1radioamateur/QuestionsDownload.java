@@ -72,7 +72,13 @@ public class QuestionsDownload extends AppCompatActivity {
                     }
                 });
                 c = dbPopulator.unzipImg();
-                downloadStateTextView.setText(R.string.ajust);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        downloadStateTextView.setText(R.string.ajust);
+                    }
+                });
+
                 if (a && b && c) {
                     dbPopulator.setFirstRunFlag();
                     runOnUiThread(new Runnable() {

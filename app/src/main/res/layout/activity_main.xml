@@ -379,7 +379,7 @@
                     <TableRow android:layout_width="match_parent" android:layout_height="match_parent">
                         <TextView
                                 android:text="@string/nbr_de_questions"
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content" android:id="@+id/textView9"
                                 android:textSize="18sp" android:textColor="@color/colorText" android:layout_weight="1"/>
                         <Spinner
@@ -420,7 +420,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent">
                         <TextView
-                                android:layout_width="wrap_content"
+                                android:layout_width="185dp"
                                 android:layout_height="wrap_content" android:id="@+id/textView11"
                                 android:textSize="18sp" android:textColor="@color/colorText"
                                 android:text="@string/tps_lim" android:layout_weight="1"/>
@@ -429,7 +429,7 @@
                                 android:layout_height="wrap_content"
                                 android:inputType="number"
                                 android:id="@+id/tempsEditText" android:hint="@string/min" android:layout_weight="1"
-                                android:autofillHints=""/>
+                                android:autofillHints="" android:minEms="10"/>
                     </TableRow>
                 </TableLayout>
             </androidx.cardview.widget.CardView>

@@ -139,7 +139,9 @@ public class ExamenResults extends AppCompatActivity {
             TextView textView = new TextView(this);
 
             FlexboxLayout.LayoutParams layoutParams = new FlexboxLayout.LayoutParams(px, px);
-            layoutParams.setMargins(marginpx, marginTppx, marginpx, 0);
+            layoutParams.setMargins(0, marginTppx, 0, 0);
+            layoutParams.setMarginStart(marginpx);
+            layoutParams.setMarginEnd(marginpx);
             textView.setLayoutParams(layoutParams);
             textView.setText(String.valueOf(i + 1));
             textView.setTextColor(Color.WHITE);

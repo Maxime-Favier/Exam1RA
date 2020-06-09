@@ -36,7 +36,6 @@ public class DbPopulator {
      * @throws JSONException
      */
     public void populateDbFromJson() throws IOException, JSONException {
-
         //AppDatabase appDb = AppDatabase.getInstance(context);
         appDb.questionDao().clearQuestions();
         InputStream is = context.openFileInput("questions.json"); //context.getResources().openRawResource(R.raw.questions);
@@ -85,6 +84,10 @@ public class DbPopulator {
 
     }
 
+    /**
+     * download zip from website
+     * @return error state
+     */
     public boolean downloadZipImg() {
         try {
             Log.w("debug", "start dowload question zip");
@@ -94,6 +97,7 @@ public class DbPopulator {
 
             try (InputStream input = new BufferedInputStream(url.openStream(), 8192)) {
                 File file = new File(context.getFilesDir(), "questions.zip");
+                // save to file
                 try (OutputStream output = new FileOutputStream(file)) {
                     byte[] buffer = new byte[8192]; // or other buffer size
                     int read;
@@ -106,9 +110,6 @@ public class DbPopulator {
             }
             Log.w("debug", "downloaded zip");
 
-        } catch (MalformedURLException e) {
-            e.getStackTrace();
-            return false;
         } catch (IOException e) {
             e.printStackTrace();
             return false;
@@ -118,9 +119,13 @@ public class DbPopulator {
 
     }
 
+    /**
+     * download question json
+     * @return
+     */
     public boolean downloadJson() {
         try {
-            Log.w("debug", "start dowload question json");
+            Log.w("debug", "start download question json");
             URL url = new URL("https://exam1.r-e-f.org/assets/questions.json");
             URLConnection connection = url.openConnection();
             connection.connect();
@@ -139,9 +144,6 @@ public class DbPopulator {
             }
             Log.w("debug", "downloaded json");
 
-        } catch (MalformedURLException e) {
-            e.getStackTrace();
-            return false;
         } catch (IOException e) {
             e.printStackTrace();
             return false;

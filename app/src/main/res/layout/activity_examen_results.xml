@@ -81,11 +81,12 @@
                     android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" android:gravity="center_horizontal|center_vertical">
-                <com.google.android.flexbox.FlexboxLayout android:layout_height="match_parent"
+                <com.google.android.flexbox.FlexboxLayout android:layout_height="wrap_content"
                                                           android:layout_width="match_parent"
-                                                          app:flexWrap="wrap" app:alignItems="center"
-                                                          app:alignContent="space_around"
-                                                          app:flexDirection="row" android:id="@+id/flexResult">
+                                                          app:flexWrap="wrap"
+                                                          android:id="@+id/flexResult"
+                                                          app:justifyContent="space_evenly"
+                >
 
                 </com.google.android.flexbox.FlexboxLayout>
             </LinearLayout>
