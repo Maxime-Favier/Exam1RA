@@ -22,30 +22,30 @@
                     android:layout_height="wrap_content" android:id="@+id/questionIdViewTextView"/>
             <ImageView
                     android:layout_width="match_parent"
-                    android:layout_height="200dp" app:srcCompat="@drawable/empty_question"
+                    android:layout_height="151dp" app:srcCompat="@drawable/empty_question"
                     android:id="@+id/imageViewerImageView"
-                    android:scaleType="fitXY" android:layout_marginTop="10dp"
+                    android:scaleType="fitXY"
             />
             <RadioGroup
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" android:id="@+id/respViewerRadioGroup" android:layout_marginTop="10dp"
+                    android:layout_height="wrap_content" android:id="@+id/respViewerRadioGroup"
                     android:layout_marginStart="3sp" android:layout_marginEnd="3sp">
                 <RadioButton
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" android:id="@+id/respViewer1RadioButton"
-                        android:layout_marginBottom="5sp" android:enabled="false"/>
+                        android:enabled="false"/>
                 <RadioButton
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" android:id="@+id/respViewer2RadioButton"
-                        android:layout_marginBottom="5sp" android:enabled="false"/>
+                        android:enabled="false"/>
                 <RadioButton
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" android:id="@+id/respViewer3RadioButton"
-                        android:layout_marginBottom="5sp" android:enabled="false"/>
+                        android:enabled="false"/>
                 <RadioButton
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" android:id="@+id/respViewer4RadioButton"
-                        android:layout_marginBottom="5sp" android:enabled="false"/>
+                        android:enabled="false"/>
             </RadioGroup>
             <TextView
                     android:layout_width="match_parent"
@@ -59,7 +59,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" android:id="@+id/coursViewerButton"
                     android:drawableStart="@drawable/ic_launch_24dp" android:layout_marginStart="40sp"
-                    android:layout_marginEnd="40sp" android:layout_marginTop="10dp"/>
+                    android:layout_marginEnd="40sp" android:layout_marginTop="5sp" android:minWidth="44dip"
+                    android:minHeight="24dip"/>
         </LinearLayout>
     </ScrollView>
 
