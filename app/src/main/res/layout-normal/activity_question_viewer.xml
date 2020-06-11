@@ -22,9 +22,9 @@
                     android:layout_height="wrap_content" android:id="@+id/questionIdViewTextView"/>
             <ImageView
                     android:layout_width="match_parent"
-                    android:layout_height="184dp" app:srcCompat="@drawable/empty_question"
+                    android:layout_height="183dp" app:srcCompat="@drawable/empty_question"
                     android:id="@+id/imageViewerImageView"
-                    android:scaleType="fitCenter" android:layout_marginTop="10dp"
+                    android:scaleType="fitXY" android:layout_marginTop="10dp"
             />
             <RadioGroup
                     android:layout_width="match_parent"
