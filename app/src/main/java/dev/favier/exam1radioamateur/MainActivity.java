@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.text.InputFilter;
 import android.util.Log;
@@ -20,9 +21,11 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import org.json.JSONException;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -33,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
             sanctionsCheckBox, messagesCheckBox, indicatifsCheckBox, entrainementCheckBox;
     CheckBox lignesCheckBox, etagesRFCheckBox, resistancesGroupesCheckBox, ampliCheckBox, transfoCheckBox,
             alternatifCheckBox, synoptiquesCheckBox, resistancesCouleursCheckBox, electriciteCheckBox, condoBobCheckBox;
+    CheckBox techniqueCheckBox, legislationCheckBox;
     EditText tempsEditText;
     Spinner nbrQSpinner;
     Switch showRespSwitch, malusSwitch, timerSwitch;
@@ -103,6 +107,8 @@ public class MainActivity extends AppCompatActivity {
         resistancesCouleursCheckBox = findViewById(R.id.resistancesCouleursCheckBox);
         electriciteCheckBox = findViewById(R.id.electriciteCheckBox);
         condoBobCheckBox = findViewById(R.id.condoBobCheckBox);
+        techniqueCheckBox = findViewById(R.id.techniqueCheckBox);
+        legislationCheckBox = findViewById(R.id.legislationCheckBox);
         Log.w("debug", "setup controls");
 
         // set minimum countdown
@@ -192,6 +198,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         updateNbrofQSpinner();
+
 
         // shared preference writer
         final SharedPreferences.Editor sharedEditor = sharedPref.edit();
@@ -290,6 +297,43 @@ public class MainActivity extends AppCompatActivity {
                 resistancesCouleursCheckBox.setChecked(false);
                 electriciteCheckBox.setChecked(false);
                 condoBobCheckBox.setChecked(false);
+                updateNbrofQSpinner();
+            }
+        });
+
+
+        // select all tech/legisl
+        legislationCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                codeQCheckBox.setChecked(isChecked);
+                emissionCheckBox.setChecked(isChecked);
+                adaptationCheckBox.setChecked(isChecked);
+                epellationCheckBox.setChecked(isChecked);
+                cemCheckBox.setChecked(isChecked);
+                antennesCheckBox.setChecked(isChecked);
+                sanctionsCheckBox.setChecked(isChecked);
+                messagesCheckBox.setChecked(isChecked);
+                indicatifsCheckBox.setChecked(isChecked);
+                entrainementCheckBox.setChecked(isChecked);
+                tempsEditText.setText("15");
+                updateNbrofQSpinner();
+            }
+        });
+        techniqueCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                lignesCheckBox.setChecked(isChecked);
+                etagesRFCheckBox.setChecked(isChecked);
+                resistancesGroupesCheckBox.setChecked(isChecked);
+                ampliCheckBox.setChecked(isChecked);
+                transfoCheckBox.setChecked(isChecked);
+                alternatifCheckBox.setChecked(isChecked);
+                synoptiquesCheckBox.setChecked(isChecked);
+                resistancesCouleursCheckBox.setChecked(isChecked);
+                electriciteCheckBox.setChecked(isChecked);
+                condoBobCheckBox.setChecked(isChecked);
+                tempsEditText.setText("30");
                 updateNbrofQSpinner();
             }
         });
@@ -461,6 +505,10 @@ public class MainActivity extends AppCompatActivity {
         if (condoBobCheckBox.isChecked()) {
             themeRegistered++;
         }
+        legislationCheckBox.setChecked(codeQCheckBox.isChecked() && emissionCheckBox.isChecked() && adaptationCheckBox.isChecked() && epellationCheckBox.isChecked() && cemCheckBox.isChecked()
+                && antennesCheckBox.isChecked() && sanctionsCheckBox.isChecked() && messagesCheckBox.isChecked() && indicatifsCheckBox.isChecked() && entrainementCheckBox.isChecked());
+        techniqueCheckBox.setChecked(lignesCheckBox.isChecked() && etagesRFCheckBox.isChecked() && resistancesGroupesCheckBox.isChecked() && ampliCheckBox.isChecked() && transfoCheckBox.isChecked()
+                && alternatifCheckBox.isChecked() && synoptiquesCheckBox.isChecked() && resistancesCouleursCheckBox.isChecked() && electriciteCheckBox.isChecked() && condoBobCheckBox.isChecked());
 
         //Log.w("debug", String.valueOf(themeRegistered) + " themes sont cochés");
         if (themeRegistered == 3) {
@@ -470,13 +518,21 @@ public class MainActivity extends AppCompatActivity {
             themeRegistered = 4;
         }
         List<String> spinnerArray = new ArrayList<>();
+        int nearTwentyPos = 1;
+        int delta = 100;
         for (int i = 1; i < 6; i++) {
             spinnerArray.add(String.valueOf(i * themeRegistered));
+            if (delta > Math.abs(20 - (i * themeRegistered))) {
+                nearTwentyPos = i - 1;
+                delta = Math.abs(20 - (i * themeRegistered));
+                //Log.w("debug", String.valueOf(nearTwentyPos) + "set position");
+            }
         }
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, spinnerArray);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         nbrQSpinner.setAdapter(adapter);
-
+        //Log.w("DEBUG", String.valueOf(nearTwentyPos) + "position set");
+        nbrQSpinner.setSelection(nearTwentyPos);
     }
 
     public void updateNbrofQSpinner() {
@@ -542,6 +598,10 @@ public class MainActivity extends AppCompatActivity {
         if (condoBobCheckBox.isChecked()) {
             themeRegistered++;
         }
+        legislationCheckBox.setChecked(codeQCheckBox.isChecked() && emissionCheckBox.isChecked() && adaptationCheckBox.isChecked() && epellationCheckBox.isChecked() && cemCheckBox.isChecked()
+                && antennesCheckBox.isChecked() && sanctionsCheckBox.isChecked() && messagesCheckBox.isChecked() && indicatifsCheckBox.isChecked() && entrainementCheckBox.isChecked());
+        techniqueCheckBox.setChecked(lignesCheckBox.isChecked() && etagesRFCheckBox.isChecked() && resistancesGroupesCheckBox.isChecked() && ampliCheckBox.isChecked() && transfoCheckBox.isChecked()
+                && alternatifCheckBox.isChecked() && synoptiquesCheckBox.isChecked() && resistancesCouleursCheckBox.isChecked() && electriciteCheckBox.isChecked() && condoBobCheckBox.isChecked());
 
         //Log.w("debug", String.valueOf(themeRegistered) + " themes sont cochés");
         if (themeRegistered == 3) {
@@ -551,13 +611,23 @@ public class MainActivity extends AppCompatActivity {
             themeRegistered = 4;
         }
         List<String> spinnerArray = new ArrayList<>();
+        int nearTwentyPos = 1;
+        int delta = 100;
         for (int i = 1; i < 6; i++) {
             spinnerArray.add(String.valueOf(i * themeRegistered));
+            if (delta > Math.abs(20 - (i * themeRegistered))) {
+                nearTwentyPos = i - 1;
+                delta = Math.abs(20 - (i * themeRegistered));
+                //Log.w("debug", String.valueOf(nearTwentyPos) + "set position");
+            }
         }
+
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, spinnerArray);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         nbrQSpinner.setAdapter(adapter);
 
+        //Log.w("DEBUG", String.valueOf(nearTwentyPos) + "position set");
+        nbrQSpinner.setSelection(nearTwentyPos);
     }
 
     @Override
@@ -581,6 +651,17 @@ public class MainActivity extends AppCompatActivity {
             case R.id.sycroItem:
                 Intent intent2 = new Intent(getBaseContext(), QuestionsDownload.class);
                 startActivity(intent2);
+                return true;
+            case R.id.gotoCoursItem:
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://f6kgl-f5kff.fr/formationf6gpx"));
+                startActivity(browserIntent);
+                /*File file = new File(getBaseContext().getFilesDir(), "COURS.html");
+                Intent intent4 = new Intent(ACTION_VIEW);
+                intent4.setDataAndType(Uri.fromFile(file), "text/html");*/
+                return true;
+            case R.id.gotoVideoItem:
+                Intent coursIntent3 = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/user/F6KGL"));
+                startActivity(coursIntent3);
                 return true;
         }
         return super.onOptionsItemSelected(item);

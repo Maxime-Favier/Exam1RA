@@ -38,7 +38,7 @@ public class QuestionsDownload extends AppCompatActivity {
         AsyncTask.execute(new Runnable() {
             @Override
             public void run() {
-                final boolean a, b, c;
+                final boolean a, b, c, d;
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -78,8 +78,16 @@ public class QuestionsDownload extends AppCompatActivity {
                         downloadStateTextView.setText(R.string.ajust);
                     }
                 });
+                // en attente du https sur le site de f6kgl
+                /*runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        downloadStateTextView.setText(R.string.downloadCours);
+                    }
+                });
+                d = dbPopulator.downloadCoursHtml();*/
 
-                if (a && b && c) {
+                if (a && b && c /*&& d*/) {
                     dbPopulator.setFirstRunFlag();
                     runOnUiThread(new Runnable() {
                         @Override
@@ -91,7 +99,8 @@ public class QuestionsDownload extends AppCompatActivity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            downloadStateTextView.setText(getResources().getString(R.string.errorCode, a, b, c));
+                            // en attente du https sur le site de f6kgl
+                            downloadStateTextView.setText(getResources().getString(R.string.errorCode, a, b, c/*, d*/));
                             allowBackQuit = true;
                             if (!a && !b) {
                                 errrorInfotextView.setText(R.string.pbConnect);

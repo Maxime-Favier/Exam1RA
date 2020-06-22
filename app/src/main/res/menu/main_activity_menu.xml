@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
-
+    <item android:id="@+id/gotoCoursItem" android:icon="@drawable/ic_school_24dp" app:showAsAction="ifRoom"
+          android:title="@string/gotoCours" android:iconTint="@android:color/white"/>
+    <item android:id="@+id/gotoVideoItem" android:icon="@drawable/ic_ondemand_video_24dp" app:showAsAction="ifRoom"
+          android:title="@string/gotoVideo" android:iconTint="@android:color/white"/>
     <item android:title="@string/syncroQ" android:id="@+id/sycroItem" app:showAsAction="never"/>
     <item android:title="@string/remerciement" android:id="@+id/remerciementItem" app:showAsAction="never"/>
     <item android:title="@string/opensource" android:id="@+id/opensourceItem" app:showAsAction="never"/>

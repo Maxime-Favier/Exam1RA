@@ -151,6 +151,35 @@ public class DbPopulator {
         return true;
     }
 
+    // en attente du https sur le site de f6kgl
+    /*public boolean downloadCoursHtml(){
+        try {
+            Log.w("debug", "start download cours");
+            URL url = new URL("http://f6kgl.free.fr/COURS.html");
+            URLConnection connection = url.openConnection();
+            connection.connect();
+
+            try (InputStream input = new BufferedInputStream(url.openStream(), 8192)) {
+                File file = new File(context.getFilesDir(), "COURS.html");
+                try (OutputStream output = new FileOutputStream(file)) {
+                    byte[] buffer = new byte[8192]; // or other buffer size
+                    int read;
+
+                    while ((read = input.read(buffer)) != -1) {
+                        output.write(buffer, 0, read);
+                    }
+                    output.flush();
+                }
+            }
+            Log.w("debug", "downloaded cours");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }*/
+
     public boolean unzipImg() {
         Log.w("debug", "unzip start");
         try {
