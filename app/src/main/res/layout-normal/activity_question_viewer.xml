@@ -33,19 +33,23 @@
                 <RadioButton
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" android:id="@+id/respViewer1RadioButton"
-                        android:layout_marginBottom="5sp" android:enabled="false"/>
+                        android:layout_marginBottom="5sp" android:enabled="false"
+                        android:buttonTint="@color/colorText"/>
                 <RadioButton
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" android:id="@+id/respViewer2RadioButton"
-                        android:layout_marginBottom="5sp" android:enabled="false"/>
+                        android:layout_marginBottom="5sp" android:enabled="false"
+                        android:buttonTint="@color/colorText"/>
                 <RadioButton
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" android:id="@+id/respViewer3RadioButton"
-                        android:layout_marginBottom="5sp" android:enabled="false"/>
+                        android:layout_marginBottom="5sp" android:enabled="false"
+                        android:buttonTint="@color/colorText"/>
                 <RadioButton
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" android:id="@+id/respViewer4RadioButton"
-                        android:layout_marginBottom="5sp" android:enabled="false"/>
+                        android:layout_marginBottom="5sp" android:enabled="false"
+                        android:buttonTint="@color/colorText"/>
             </RadioGroup>
             <TextView
                     android:layout_width="match_parent"

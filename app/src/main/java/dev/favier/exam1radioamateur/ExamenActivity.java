@@ -138,7 +138,7 @@ public class ExamenActivity extends AppCompatActivity {
 
                 @Override
                 public void onFinish() {
-                    stopExam();
+                    stopExam(true);//crash ici
                 }
             };
             countDownTimer.start();
@@ -433,7 +433,7 @@ public class ExamenActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.terminerItem:
-                stopExam();
+                stopExam(false);
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -442,32 +442,48 @@ public class ExamenActivity extends AppCompatActivity {
     /**
      * fini l'examen et envois vers la page des résultats
      */
-    public void stopExam() {
-        // confimation dialog
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setCancelable(true);
-        builder.setTitle(R.string.terminer);
-        builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                //Log.w("debug", "examen terminé");
-                if (examTimerEnable) {
-                    countDownTimer.cancel();
+    public void stopExam(boolean force) {
+        if(!force){
+            // confimation dialog
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setCancelable(true);
+            builder.setTitle(R.string.terminer);
+            builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    //Log.w("debug", "examen terminé");
+                    dialog.dismiss();
+                    if (examTimerEnable) {
+                        countDownTimer.cancel();
+                    }
+                    Intent intent = new Intent(getBaseContext(), ExamenResults.class);
+                    intent.putExtra("exam", examen.getResults());
+                    intent.putExtra("timeSpent", timeSpent);
+                    startActivity(intent);
                 }
-                Intent intent = new Intent(getBaseContext(), ExamenResults.class);
-                intent.putExtra("exam", examen.getResults());
-                intent.putExtra("timeSpent", timeSpent);
-                startActivity(intent);
+            });
+            builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                }
+            });
+            AlertDialog alertDialog = builder.create();
+            if(!isFinishing()){
+                alertDialog.show();//ici
             }
-        });
-        builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
+
+        }else {
+            //Log.w("debug", "examen terminé");
+            if (examTimerEnable) {
+                countDownTimer.cancel();
             }
-        });
-        AlertDialog alertDialog = builder.create();
-        alertDialog.show();
+            Intent intent = new Intent(getBaseContext(), ExamenResults.class);
+            intent.putExtra("exam", examen.getResults());
+            intent.putExtra("timeSpent", timeSpent);
+            startActivity(intent);
+        }
+
     }
 
     @Override
@@ -480,6 +496,9 @@ public class ExamenActivity extends AppCompatActivity {
         builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                if(examTimerEnable){
+                    countDownTimer.cancel();
+                }
                 finish();
             }
         });
@@ -490,6 +509,9 @@ public class ExamenActivity extends AppCompatActivity {
             }
         });
         AlertDialog alertDialog = builder.create();
-        alertDialog.show();
+        if(!isFinishing()){
+            alertDialog.show();
+        }
+
     }
 }

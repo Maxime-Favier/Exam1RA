@@ -142,4 +142,7 @@
     <string name="gotoCours">Ouvrir le cours</string>
     <string name="gotoVideo">Ouvrir les vidéos de F6KGL</string>
 
+    <string name="newVersion">Nouveautés de la version</string>
+    <string name="nouvautés"> * Maj de la base de question\n* Les réponses de l\'utilisateur sont plus foncés dans l’écran de correction\n* Correction d’un bug lié aux fenêtres de dialogue et au chronomètre</string>
+
 </resources>

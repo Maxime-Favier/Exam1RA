@@ -7,23 +7,42 @@
         android:layout_height="match_parent"
         tools:context=".QuestionsDownload" android:orientation="vertical">
 
-    <TextView
-            android:text="@string/downloadQ"
+    <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:id="@+id/textView22" android:textSize="24sp"
-            android:textColor="@color/colorText"/>
-    <ProgressBar
-            style="?android:attr/progressBarStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/progressBar2" android:layout_marginTop="10sp" android:layout_marginBottom="10sp"/>
-    <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:id="@+id/errrorInfotextView" android:textSize="18sp"
-            android:textColor="@color/colorBtnDanger" android:layout_marginStart="3sp" android:layout_marginEnd="3sp"
-            android:layout_marginBottom="3sp"/>
-    <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:id="@+id/downloadStateTextView"
-            android:layout_marginStart="3sp" android:layout_marginEnd="3sp"/>
+            android:layout_height="match_parent">
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                      android:orientation="vertical">
+            <TextView
+                    android:text="@string/downloadQ"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/textView22" android:textSize="24sp"
+                    android:textColor="@color/colorText"/>
+            <ProgressBar
+                    style="?android:attr/progressBarStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/progressBar2" android:layout_marginTop="10sp" android:layout_marginBottom="10sp"/>
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/errrorInfotextView" android:textSize="18sp"
+                    android:textColor="@color/colorBtnDanger" android:layout_marginStart="3sp"
+                    android:layout_marginEnd="3sp"
+                    android:layout_marginBottom="3sp"/>
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/downloadStateTextView"
+                    android:layout_marginStart="3sp" android:layout_marginEnd="3sp"/>
+            <TextView
+                    android:text="@string/newVersion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/newTexBox" android:textSize="18sp"
+                    android:layout_marginStart="3sp" android:layout_marginEnd="3sp"
+                    android:textColor="@color/colorText" android:layout_marginTop="16sp"/>
+            <TextView
+                    android:text="@string/nouvautés"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:id="@+id/textView27" android:layout_marginStart="3sp"
+                    android:layout_marginEnd="3sp" android:layout_marginTop="8sp"/>
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>
