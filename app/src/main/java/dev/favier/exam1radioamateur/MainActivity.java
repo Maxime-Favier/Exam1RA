@@ -663,6 +663,11 @@ public class MainActivity extends AppCompatActivity {
                 Intent coursIntent3 = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/user/F6KGL"));
                 startActivity(coursIntent3);
                 return true;
+
+            case R.id.gotoCoursHTMLItem:
+                Intent intent3 = new Intent(getBaseContext(), CoursViewer.class);
+                startActivity(intent3);
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }

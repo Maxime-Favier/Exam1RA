@@ -133,16 +133,22 @@
     <string name="errorCode">Un erreur s\'est produite: code %1$b/%2$b/%3$b</string>
 
     <string name="pbConnect">Verifiez votre connexion et redémarrez l\'application</string>
-    <string name="pbRestart">Verifiez si il reste du stockage disponible (70Mo) puis essayez de redémarrer l\'application ou contactez le développeur si le problème persiste</string>
+    <string name="pbRestart">Verifiez si il reste du stockage disponible (70Mo) puis essayez de redémarrer
+        l\'application ou contactez le développeur si le problème persiste
+    </string>
 
     <string name="stopExam">Arrêter l\'examen</string>
     <string name="yes">Oui</string>
     <string name="no">Non</string>
 
-    <string name="gotoCours">Ouvrir le cours</string>
-    <string name="gotoVideo">Ouvrir les vidéos de F6KGL</string>
+    <string name="gotoCours">site de F6KGL</string>
+    <string name="gotoVideo">vidéos de F6KGL</string>
 
     <string name="newVersion">Nouveautés de la version</string>
-    <string name="nouvautés"> * Maj de la base de question\n* Les réponses de l\'utilisateur sont plus foncés dans l’écran de correction\n* Correction d’un bug lié aux fenêtres de dialogue et au chronomètre</string>
+    <string name="nouvautés">* Maj de la base de question\n* Les réponses de l\'utilisateur sont plus foncées dans
+        l’écran de correction\n* Correction d’un bug lié aux fenêtres de dialogue et au chronomètre
+    </string>
+
+    <string name="htmlCours">Cour HTML</string>
 
 </resources>
