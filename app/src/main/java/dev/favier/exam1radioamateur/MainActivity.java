@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
     CheckBox techniqueCheckBox, legislationCheckBox;
     EditText tempsEditText;
     Spinner nbrQSpinner;
-    Switch showRespSwitch, malusSwitch, timerSwitch;
+    Switch showRespSwitch, timerSwitch;
 
     ArrayList<Integer> ThemeList;
     SharedPreferences sharedPref = null;
@@ -84,7 +84,6 @@ public class MainActivity extends AppCompatActivity {
         tempsEditText = findViewById(R.id.tempsEditText);
         // setting switch
         showRespSwitch = findViewById(R.id.showRespSwitch);
-        malusSwitch = findViewById(R.id.malusSwitch);
         timerSwitch = findViewById(R.id.timerSwitch);
         // register theme checkbox
         codeQCheckBox = findViewById(R.id.codeQCheckBox);
@@ -122,7 +121,6 @@ public class MainActivity extends AppCompatActivity {
         //int numberOfQuestions = sharedPref.getInt("numberOfQuestions", 20);
         //questionEditText.setText(String.valueOf(numberOfQuestions));
         showRespSwitch.setChecked(sharedPref.getBoolean("showResponces", false));
-        malusSwitch.setChecked(sharedPref.getBoolean("malusEnable", true));
         timerSwitch.setChecked(sharedPref.getBoolean("timerEnable", false));
         int examTime = sharedPref.getInt("examTime", 20);
         tempsEditText.setText(String.valueOf(examTime));
@@ -348,8 +346,6 @@ public class MainActivity extends AppCompatActivity {
                 Log.w("debug", String.valueOf(tempsEditText.getText()));
                 boolean showResponces = showRespSwitch.isChecked();
                 sharedEditor.putBoolean("showResponces", showResponces);
-                boolean malusEnable = malusSwitch.isChecked();
-                sharedEditor.putBoolean("malusEnable", malusEnable);
                 boolean timerEnable = timerSwitch.isChecked();
                 sharedEditor.putBoolean("timerEnable", timerEnable);
 
@@ -428,7 +424,6 @@ public class MainActivity extends AppCompatActivity {
                     // start new intent examen
                     Intent intent = new Intent(getBaseContext(), ExamenActivity.class);
                     intent.putIntegerArrayListExtra("ThemeList", ThemeList);
-                    intent.putExtra("malusEnable", malusEnable);
                     intent.putExtra("showResponces", showResponces);
                     intent.putExtra("numberOfQuestions", Integer.parseInt(nbrQSpinner.getSelectedItem().toString()));
                     intent.putExtra("examTimerEnable", timerEnable);

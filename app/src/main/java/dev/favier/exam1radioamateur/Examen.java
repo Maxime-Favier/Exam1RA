@@ -23,7 +23,6 @@ public class Examen {
     AppDatabase appDb;
 
     // les settings de l'examen
-    private boolean malusEnable; // active le malus de -1 à chaque question fausse
     private int nbrQuestionParTheme; // le nombre de question de l'examen pour chaque theme
     private boolean showReponse; // active l'affichage des réponses
     private boolean timerEnable; // active le compte à rebour
@@ -51,11 +50,10 @@ public class Examen {
     public static final int adaptation = 309;
     public static final int cem = 310;
 
-    public Examen(Context context, ArrayList<Integer> themesList, int nbrQuestionParTheme, boolean malusEnable) {
+    public Examen(Context context, ArrayList<Integer> themesList, int nbrQuestionParTheme) {
         this.context = context;
         this.themesList = themesList;
         this.nbrQuestionParTheme = nbrQuestionParTheme;
-        this.malusEnable = malusEnable;
         questions = new ArrayList<>();
         appDb = AppDatabase.getInstance(context);
     }
@@ -65,7 +63,7 @@ public class Examen {
      * @return
      */
     public ResultCalculator getResults(){
-        return new ResultCalculator(questions, themesList, nbrQuestionParTheme, malusEnable);
+        return new ResultCalculator(questions, themesList, nbrQuestionParTheme);
     }
 
     /**

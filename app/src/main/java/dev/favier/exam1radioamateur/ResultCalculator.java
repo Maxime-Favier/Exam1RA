@@ -12,7 +12,6 @@ public class ResultCalculator implements Serializable {
     private ArrayList<Question> questions; // la liste de questions posés à l'examen
     private ArrayList<Integer> themesList; // la liste des themes
     private int nbrQuestionParTheme;
-    private boolean malusEnable;
 
     /**
      * retoune le nombre de questions
@@ -38,10 +37,10 @@ public class ResultCalculator implements Serializable {
      */
     public int pointCalculation() {
         int points = 0;
-        points += (getNbrOfCorrect() * 3);
-        if(malusEnable){
+        points += (getNbrOfCorrect() * 1);
+        /*if(malusEnable){
             points -= getNbrOfIncorrect();
-        }
+        }*/
         return points;
     }
 
@@ -54,13 +53,13 @@ public class ResultCalculator implements Serializable {
         for(Question question: questions){
             if(question.getThemeID() <= Examen.ligneDeTransmis){
                 if(question.goodResponse() == Question.bonneReponse){
-                    pts += 3;
+                    pts += 1;
                 }
-                else if(question.goodResponse() == Question.mauvaiseReponse){
+                /*else if(question.goodResponse() == Question.mauvaiseReponse){
                     if(malusEnable){
                         pts--;
                     }
-                }
+                }*/
             }
         }
         return pts;
@@ -75,13 +74,13 @@ public class ResultCalculator implements Serializable {
         for(Question question: questions){
             if(question.getThemeID() >= Examen.classesEmission){
                 if(question.goodResponse() == Question.bonneReponse){
-                    pts += 3;
+                    pts += 1;
                 }
-                else if(question.goodResponse() == Question.mauvaiseReponse){
+                /*else if(question.goodResponse() == Question.mauvaiseReponse){
                     if(malusEnable){
                         pts--;
                     }
-                }
+                }*/
             }
         }
         return pts;
@@ -89,11 +88,11 @@ public class ResultCalculator implements Serializable {
 
     /**
      * retourne le nombre maximal de points de l'exam
-     *
+     * 1pts/bonne réponse
      * @return nbr de points max
      */
     public int maxPoints() {
-        return nbrQuestionParTheme * themesList.size() * 3;
+        return nbrQuestionParTheme * themesList.size() * 1;
     }
 
     /**
@@ -170,11 +169,10 @@ public class ResultCalculator implements Serializable {
      * @param themesList la liste des themes
      * @param nbrQuestionParTheme le nombre de questions par themes
      */
-    public ResultCalculator(ArrayList<Question> questions, ArrayList<Integer> themesList, int nbrQuestionParTheme, boolean malusEnable) {
+    public ResultCalculator(ArrayList<Question> questions, ArrayList<Integer> themesList, int nbrQuestionParTheme) {
         this.questions = questions;
         this.themesList = themesList;
         this.nbrQuestionParTheme = nbrQuestionParTheme;
-        this.malusEnable = malusEnable;
     }
 
 }

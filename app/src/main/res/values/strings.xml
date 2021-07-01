@@ -105,7 +105,7 @@
     <string name="questions">questions</string>
     <string name="ptsBonneRep">3 points par bonnes réponses</string>
     <string name="ptsRepVide">0 point pour les réponses vides</string>
-    <string name="ptsRepMauvaise">-1 point par mauvaises réponses</string>
+    <string name="ptsRepMauvaise">0 point par mauvaises réponses</string>
     <string name="examReussi">Examen réussi !</string>
     <string name="examRate">Examen raté :(</string>
     <string name="listeQuestions">Liste des questions</string>
@@ -145,7 +145,7 @@
     <string name="gotoVideo">vidéos de F6KGL</string>
 
     <string name="newVersion">Nouveautés de la version</string>
-    <string name="nouvautés">* Maj de la base de question\n* Le cour de F6GPX est intégré dans l\'application
+    <string name="nouvautés">* Maj de la base de question\n* Suppression du point négatif
     </string>
 
     <string name="htmlCours">Cour HTML</string>

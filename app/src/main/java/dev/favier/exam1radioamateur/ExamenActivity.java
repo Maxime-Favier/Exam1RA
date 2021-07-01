@@ -59,13 +59,12 @@ public class ExamenActivity extends AppCompatActivity {
         indexMaxQuestion = bundle.getInt("numberOfQuestions") - 1;
         int numberOfQuestionParTheme = (indexMaxQuestion + 1) / themeList.size();
 
-        boolean malusEnable = bundle.getBoolean("malusEnable");
         //firstRun = bundle.getBoolean("firstRun");
         examTimerEnable = bundle.getBoolean("examTimerEnable");
         examTime = bundle.getInt("timer");
         showResponces = bundle.getBoolean("showResponces");
 
-        examen = new Examen(this, themeList, numberOfQuestionParTheme, malusEnable);
+        examen = new Examen(this, themeList, numberOfQuestionParTheme);
         setupControls();
 
         indexQuestion = 0;
@@ -482,6 +481,7 @@ public class ExamenActivity extends AppCompatActivity {
             intent.putExtra("exam", examen.getResults());
             intent.putExtra("timeSpent", timeSpent);
             startActivity(intent);
+            finish();
         }
 
     }

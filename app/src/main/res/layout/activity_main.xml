@@ -409,16 +409,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent">
                         <Switch
-                                android:text="@string/malus"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content" android:id="@+id/malusSwitch"
-                                android:layout_weight="1" android:thumbTint="@color/colorPrimary"
-                                android:textSize="18sp" android:checked="true"/>
-                    </TableRow>
-                    <TableRow
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent">
-                        <Switch
                                 android:text="@string/timer_onOff"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content" android:id="@+id/timerSwitch"
