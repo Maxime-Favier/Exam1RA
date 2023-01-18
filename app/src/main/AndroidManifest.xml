@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="dev.favier.exam1radioamateur"
           android:installLocation="auto">
 
     <uses-permission android:name="android.permission.INTERNET"/>
@@ -13,41 +12,47 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             >
-        <activity android:name=".CoursViewer">
+        <activity android:name=".CoursViewer" android:exported="false">
         </activity>
         <activity android:name=".QuestionsDownload"
-                  android:configChanges="keyboardHidden|orientation|screenSize">
+                  android:configChanges="keyboardHidden|orientation|screenSize"
+                  android:exported="false">
         </activity>
         <activity
                 android:name=".QuestionViewer"
                 android:label="@string/question"
                 android:configChanges="keyboardHidden|orientation|screenSize"
+                android:exported="false"
         />
         <activity
                 android:name=".ExamenResults"
                 android:label="@string/resultats"
-                android:configChanges="keyboardHidden|orientation|screenSize">
+                android:configChanges="keyboardHidden|orientation|screenSize"
+                android:exported="false">
 
         </activity>
         <activity
                 android:name=".OpenSource"
-                android:label="@string/opensource">
+                android:label="@string/opensource"
+                android:exported="false">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
                     android:value=".MainActivity"/>
         </activity>
         <activity
                 android:name=".Remerciements"
-                android:label="@string/remerciement">
+                android:label="@string/remerciement"
+                android:exported="false">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
                     android:value=".MainActivity"/>
         </activity>
         <activity android:name=".ExamenActivity"
                   android:configChanges="keyboardHidden|orientation|screenSize"
+                  android:exported="false"
         >
         </activity>
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity" android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
