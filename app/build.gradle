@@ -5,11 +5,11 @@ apply plugin: 'com.android.application'
 
 android {
     //compileSdkVersion 31
-    compileSdk 33
+    compileSdk 34
     defaultConfig {
         applicationId "dev.favier.exam1radioamateur"
         minSdkVersion 22
-        targetSdkVersion 33
+        targetSdkVersion 34
         versionCode 11
         versionName 'v0.11-beta'
 
