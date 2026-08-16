@@ -5,7 +5,8 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".MainActivity" android:orientation="vertical" android:id="@+id/linearLayout">
+        tools:context=".MainActivity" android:orientation="vertical" android:id="@+id/linearLayout"
+        android:fitsSystemWindows="true">
     <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -54,7 +55,8 @@
                                     <CheckBox
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content" android:id="@+id/legislationCheckBox"
-                                            android:textSize="24sp" android:textColor="@color/colorSecondary"/>
+                                            android:textSize="24sp" android:textColor="@color/colorSecondary"
+                                    />
                                 </TableRow>
                                 <TableRow
                                         android:layout_width="match_parent"

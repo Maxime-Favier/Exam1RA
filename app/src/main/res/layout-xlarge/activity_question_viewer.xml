@@ -5,7 +5,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".QuestionViewer" android:orientation="vertical">
+        tools:context=".QuestionViewer" android:orientation="vertical" android:fitsSystemWindows="true">
 
     <ScrollView
             android:layout_width="match_parent"
@@ -28,7 +28,8 @@
             />
             <RadioGroup
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" android:id="@+id/respViewerRadioGroup" android:layout_marginTop="10dp"
+                    android:layout_height="wrap_content" android:id="@+id/respViewerRadioGroup"
+                    android:layout_marginTop="10dp"
                     android:layout_marginStart="3sp" android:layout_marginEnd="3sp">
                 <RadioButton
                         android:layout_width="match_parent"

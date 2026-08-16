@@ -5,7 +5,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ExamenActivity" android:orientation="vertical">
+        tools:context=".ExamenActivity" android:orientation="vertical" android:fitsSystemWindows="true">
 
     <ScrollView
             android:layout_width="match_parent"
@@ -25,7 +25,8 @@
                         android:layout_height="wrap_content" android:id="@+id/numQTextView" android:layout_weight="1"/>
                 <TextView
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" android:id="@+id/numberOfQtextView" android:layout_weight="1"/>
+                        android:layout_height="wrap_content" android:id="@+id/numberOfQtextView"
+                        android:layout_weight="1"/>
                 <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" android:id="@+id/timerTextView" android:layout_weight="1"/>
@@ -59,12 +60,14 @@
             <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" android:id="@+id/commentLinearLayout" android:visibility="gone">
+                    android:layout_height="wrap_content" android:id="@+id/commentLinearLayout"
+                    android:visibility="gone">
                 <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" android:id="@+id/commentTextView" android:layout_weight="1"
                         android:background="@drawable/border_left" android:layout_marginStart="10sp"
-                        android:layout_marginEnd="10sp" android:paddingStart="5sp" android:textColor="@color/colorText"/>
+                        android:layout_marginEnd="10sp" android:paddingStart="5sp"
+                        android:textColor="@color/colorText"/>
             </LinearLayout>
             <LinearLayout
                     android:orientation="horizontal"
@@ -81,7 +84,8 @@
             <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" android:layout_marginStart="30sp" android:layout_marginEnd="30sp"
+                    android:layout_height="wrap_content" android:layout_marginStart="30sp"
+                    android:layout_marginEnd="30sp"
                     android:layout_marginTop="5sp">
                 <Button
                         android:text="@string/cours"

@@ -11,8 +11,8 @@ android {
         minSdkVersion 22
         //noinspection EditedTargetSdkVersion
         targetSdkVersion 36
-        versionCode 14
-        versionName 'v0.14-beta'
+        versionCode 15
+        versionName 'v0.15-beta'
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
