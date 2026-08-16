@@ -5,14 +5,14 @@ apply plugin: 'com.android.application'
 
 android {
     //compileSdkVersion 31
-    compileSdk 35
+    compileSdk = 36
     defaultConfig {
         applicationId "dev.favier.exam1radioamateur"
         minSdkVersion 22
         //noinspection EditedTargetSdkVersion
-        targetSdkVersion 35
-        versionCode 12
-        versionName 'v0.12-beta'
+        targetSdkVersion 36
+        versionCode 14
+        versionName 'v0.14-beta'
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -26,6 +26,10 @@ android {
             resValue("string", "DB_PASSWORD_PERSON", "pass")
         }*/
     }
+
+    buildFeatures {
+        buildConfig = true
+    }
     namespace 'dev.favier.exam1radioamateur'
 }
 
@@ -34,17 +38,18 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     //debugImplementation 'com.amitshekhar.android:debug-db:1.0.6'
-    def room_version = '2.6.1'
-    implementation 'com.google.android:flexbox:2.0.1'
-    implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    def room_version = '2.7.1'
+    //implementation 'com.google.android:flexbox:3.0.0'
+    implementation 'com.google.android.flexbox:flexbox:3.0.0'
+    implementation 'androidx.appcompat:appcompat:1.7.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.2.1'
     testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    androidTestImplementation 'androidx.test.ext:junit:1.2.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.6.1'
     implementation "androidx.cardview:cardview:1.0.0"
     implementation "androidx.room:room-runtime:$room_version"
     annotationProcessor "androidx.room:room-compiler:$room_version"
-    implementation 'com.google.code.gson:gson:2.10'
+    implementation 'com.google.code.gson:gson:2.10.1'
 
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 
