@@ -153,7 +153,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:layout_marginEnd="8dp"
-                            android:text="Tout cocher"/>
+                            android:text="@string/tout_cocher"/>
 
                     <com.google.android.material.button.MaterialButton
                             android:id="@+id/noThemeButton"
@@ -162,7 +162,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:layout_marginStart="8dp"
-                            android:text="Tout décocher"/>
+                            android:text="@string/tout_decocher"/>
                 </LinearLayout>
 
                 <com.google.android.material.button.MaterialButton
@@ -193,12 +193,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="16dp">
+                    android:padding="16dp"
+                    android:focusableInTouchMode="true">
 
                 <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Réglages"
+                        android:text="@string/reglages"
                         android:textAppearance="?attr/textAppearanceHeadlineSmall"
                         android:layout_marginBottom="16dp"/>
 
