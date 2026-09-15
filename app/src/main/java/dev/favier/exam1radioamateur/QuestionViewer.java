@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import androidx.core.content.ContextCompat;
+import com.google.android.material.color.MaterialColors;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -154,19 +155,26 @@ public class QuestionViewer extends AppCompatActivity {
         respViewer2RadioButton.setTextColor(Color.RED);
         respViewer3RadioButton.setTextColor(Color.RED);
         respViewer4RadioButton.setTextColor(Color.RED);
+
+        // Récupération de la couleur de succès (Tertiary) depuis le thème actif
+        int successColor = MaterialColors.getColor(this, com.google.android.material.R.attr.colorTertiary, Color.GREEN);
+        RadioButton targetButton = null;
         switch (question.getReponse()) {
             case 0:
-                respViewer1RadioButton.setTextColor(ContextCompat.getColor(getBaseContext(), R.color.colorOk));
+                targetButton = respViewer1RadioButton;
                 break;
             case 1:
-                respViewer2RadioButton.setTextColor(ContextCompat.getColor(getBaseContext(), R.color.colorOk));
+                targetButton = respViewer2RadioButton;
                 break;
             case 2:
-                respViewer3RadioButton.setTextColor(ContextCompat.getColor(getBaseContext(), R.color.colorOk));
+                targetButton = respViewer3RadioButton;
                 break;
             case 3:
-                respViewer4RadioButton.setTextColor(ContextCompat.getColor(getBaseContext(), R.color.colorOk));
+                targetButton = respViewer4RadioButton;
                 break;
+        }
+        if (targetButton != null) {
+            targetButton.setTextColor(successColor);
         }
         // set comment
         if (!question.getCommentaire().equals("null")) {

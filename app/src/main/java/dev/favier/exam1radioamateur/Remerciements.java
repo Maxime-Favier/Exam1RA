@@ -24,11 +24,4 @@ public class Remerciements extends AppCompatActivity {
         startActivity(browserIntent);
     }
 
-    // open garageisep website
-    public void openGarageIsep(View v) {
-        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://garageisep.com/"));
-        startActivity(browserIntent);
-    }
-
-
 }

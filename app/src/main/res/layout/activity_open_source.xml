@@ -26,7 +26,7 @@
                             android:text="@string/licences"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content" android:id="@+id/textView3"
-                            android:textColor="@color/colorText" android:textSize="24sp"
+                            android:textColor="?attr/colorOnSurface" android:textSize="24sp"
                             android:gravity="center_horizontal|center_vertical"/>
                     <androidx.cardview.widget.CardView
                             android:layout_width="match_parent"
@@ -43,7 +43,7 @@
                                     android:text="@string/app_name"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content" android:id="@+id/textView4"
-                                    android:textColor="@color/colorText" android:textSize="18sp"/>
+                                    android:textColor="?attr/colorOnSurface" android:textSize="18sp"/>
                             <androidx.constraintlayout.widget.Guideline
                                     android:orientation="horizontal"
                                     android:layout_width="match_parent"
@@ -52,7 +52,7 @@
                                     android:text="@string/licence_Exam1"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content" android:id="@+id/textView15"
-                                    android:textColor="@color/colorText" android:layout_marginStart="3sp"
+                                    android:textColor="?attr/colorOnSurface" android:layout_marginStart="3sp"
                                     android:layout_marginEnd="3sp"/>
                             <TextView
                                     android:text="@string/licence_gnuV3"
@@ -76,7 +76,7 @@
                                     android:text="@string/licence_materialIcons"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content" android:id="@+id/textView17"
-                                    android:textColor="@color/colorText" android:textSize="18sp"/>
+                                    android:textColor="?attr/colorOnSurface" android:textSize="18sp"/>
                             <androidx.constraintlayout.widget.Guideline
                                     android:orientation="horizontal"
                                     android:layout_width="match_parent"
@@ -104,7 +104,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content" android:id="@+id/textView19"
                                     android:textSize="18sp"
-                                    android:textColor="@color/colorText"/>
+                                    android:textColor="?attr/colorOnSurface"/>
                             <androidx.constraintlayout.widget.Guideline
                                     android:orientation="horizontal"
                                     android:layout_width="match_parent"
@@ -113,7 +113,7 @@
                                     android:text="@string/C_MPChart"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content" android:id="@+id/textView20"
-                                    android:textColor="@color/colorText" android:layout_marginStart="3sp"
+                                    android:textColor="?attr/colorOnSurface" android:layout_marginStart="3sp"
                                     android:layout_marginEnd="3sp"/>
                             <TextView
                                     android:text="@string/licence_apache"

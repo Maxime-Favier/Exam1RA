@@ -253,19 +253,24 @@ public class ExamenActivity extends AppCompatActivity {
         propo3RadioButton.setTextColor(Color.RED);
         propo4RadioButton.setTextColor(Color.RED);
 
+        int tertiaryColor = com.google.android.material.color.MaterialColors.getColor(
+                propo1RadioButton,
+                com.google.android.material.R.attr.colorTertiary
+        );
         //Log.w("debug", String.valueOf(currentQuestion.getReponse()));
         switch (currentQuestion.getReponse()) {
             case 0:
-                propo1RadioButton.setTextColor(ContextCompat.getColor(getBaseContext(), R.color.colorOk));
+                propo1RadioButton.setTextColor(tertiaryColor);
+                //propo1RadioButton.setTextColor(ContextCompat.getColor(getBaseContext(), R.color.colorOk));
                 break;
             case 1:
-                propo2RadioButton.setTextColor(ContextCompat.getColor(getBaseContext(), R.color.colorOk));
+                propo2RadioButton.setTextColor(tertiaryColor);
                 break;
             case 2:
-                propo3RadioButton.setTextColor(ContextCompat.getColor(getBaseContext(), R.color.colorOk));
+                propo3RadioButton.setTextColor(tertiaryColor);
                 break;
             case 3:
-                propo4RadioButton.setTextColor(ContextCompat.getColor(getBaseContext(), R.color.colorOk));
+                propo4RadioButton.setTextColor(tertiaryColor);
                 break;
         }
 

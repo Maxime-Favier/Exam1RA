@@ -20,45 +20,45 @@
                     android:text="@string/exam_Conclu"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" android:id="@+id/examConcluTextView"
-                    android:textSize="18sp" android:textColor="@color/colorText"/>
+                    android:textSize="18sp" android:textColor="?attr/colorOnSurface"/>
             <TextView
                     android:text="@string/ptsBonneRep"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" android:id="@+id/textView24"
-                    android:textColor="@color/colorOk" android:layout_marginStart="30sp"
+                    android:textColor="?attr/colorTertiary" android:layout_marginStart="30sp"
                     android:layout_marginEnd="30sp"/>
             <TextView
                     android:text="@string/ptsRepVide"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" android:id="@+id/textView25"
-                    android:textColor="@color/colorPrimary" android:layout_marginStart="30sp"
+                    android:textColor="?attr/colorPrimary" android:layout_marginStart="30sp"
                     android:layout_marginEnd="30sp"/>
             <TextView
                     android:text="@string/ptsRepMauvaise"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" android:id="@+id/textView26"
-                    android:textColor="@color/colorBtnDanger" android:layout_marginStart="30sp"
+                    android:textColor="?attr/colorError" android:layout_marginStart="30sp"
                     android:layout_marginEnd="30sp"/>
             <TextView
                     android:text="@string/total"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" android:id="@+id/totalTextView"
-                    android:textSize="18sp" android:textColor="@color/colorText"/>
+                    android:textSize="18sp" android:textColor="?attr/colorOnSurface"/>
             <TextView
                     android:text="@string/corrects"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" android:id="@+id/totalCorrectTextView"
-                    android:layout_marginStart="10sp" android:textColor="@color/colorOk"/>
+                    android:layout_marginStart="10sp" android:textColor="?attr/colorTertiary"/>
             <TextView
                     android:text="@string/ss_Rep"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" android:id="@+id/totalSsRepTextView"
-                    android:layout_marginStart="10sp" android:textColor="@color/colorPrimary"/>
+                    android:layout_marginStart="10sp" android:textColor="?attr/colorPrimary"/>
             <TextView
                     android:text="@string/incorrects"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" android:id="@+id/totalIncorrectsTextView"
-                    android:layout_marginStart="10sp" android:textColor="@color/colorBtnDanger"/>
+                    android:layout_marginStart="10sp" android:textColor="?attr/colorError"/>
             <TextView
                     android:text="@string/totalLeg"
                     android:layout_width="wrap_content"

@@ -15,7 +15,7 @@
             <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" android:id="@+id/themeQTextView" android:textSize="18sp"
-                    android:textColor="@color/colorText"/>
+                    android:textColor="?attr/colorOnSurface"/>
             <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
@@ -67,7 +67,7 @@
                         android:layout_height="wrap_content" android:id="@+id/commentTextView" android:layout_weight="1"
                         android:background="@drawable/border_left" android:layout_marginStart="10sp"
                         android:layout_marginEnd="10sp" android:paddingStart="5sp"
-                        android:textColor="@color/colorText"/>
+                        android:textColor="?attr/colorOnSurface"/>
             </LinearLayout>
             <LinearLayout
                     android:orientation="horizontal"
@@ -109,14 +109,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent" android:id="@+id/prevQButton" android:layout_weight="1"
                         android:drawableLeft="@drawable/ic_navigate_before_24dp"
-                        android:backgroundTint="@color/colorSecondary" style="@android:style/Widget.Material.Button"
+                        android:backgroundTint="?attr/colorSecondary" style="@android:style/Widget.Material.Button"
                         android:layout_marginRight="20sp" android:maxWidth="88dip"/>
                 <Button
                         android:text="@string/next"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent" android:id="@+id/nextQButton" android:layout_weight="1"
                         android:drawableRight="@drawable/ic_navigate_next_24dp"
-                        android:backgroundTint="@color/colorPrimary" android:textColor="@android:color/white"
+                        android:backgroundTint="?attr/colorPrimary" android:textColor="@android:color/white"
                         style="@android:style/Widget.Material.Button" android:layout_marginLeft="20sp"
                         android:maxWidth="88dip"/>
             </LinearLayout>

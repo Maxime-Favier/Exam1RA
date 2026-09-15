@@ -1,6 +1,8 @@
 package dev.favier.exam1radioamateur;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.util.Log;
 import android.util.TypedValue;
@@ -18,6 +20,7 @@ import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.google.android.flexbox.AlignItems;
 import com.google.android.flexbox.FlexboxLayout;
+import com.google.android.material.color.MaterialColors;
 
 import java.util.ArrayList;
 
@@ -80,7 +83,11 @@ public class ExamenResults extends AppCompatActivity {
         // examen bon ou raté
         if (resultCalculator.examGood()) {
             examStatusTextView.setText(R.string.examReussi);
-            examStatusTextView.setTextColor(ContextCompat.getColor(getBaseContext(), R.color.colorOk));
+            int tertiaryColor = com.google.android.material.color.MaterialColors.getColor(
+                    examStatusTextView,
+                    com.google.android.material.R.attr.colorTertiary
+            );
+            examStatusTextView.setTextColor(tertiaryColor);
         } else {
             examStatusTextView.setText(R.string.examRate);
             examStatusTextView.setTextColor(Color.RED);
@@ -104,17 +111,21 @@ public class ExamenResults extends AppCompatActivity {
         //populate pie chart
         ArrayList<PieEntry> dataVals = new ArrayList<>();
         ArrayList<Integer> colorArray = new ArrayList<>();
+        Context context = this;
         if (resultCalculator.getNbrOfCorrect() > 0) {
             dataVals.add(new PieEntry(resultCalculator.getNbrOfCorrect(), "Correct"));
-            colorArray.add(ContextCompat.getColor(getApplicationContext(), R.color.colorOk));
+            // Couleur de succès / validation (Tertiary ou couleur personnalisée)
+            colorArray.add(MaterialColors.getColor(context, com.google.android.material.R.attr.colorTertiary, Color.GREEN));
         }
         if (resultCalculator.getNbrOfIncorrect() > 0) {
             dataVals.add(new PieEntry(resultCalculator.getNbrOfIncorrect(), "Incorrect"));
-            colorArray.add(ContextCompat.getColor(getApplicationContext(), R.color.colorBtnDanger));
+            // Couleur d'erreur native Material 3
+            colorArray.add(MaterialColors.getColor(context, com.google.android.material.R.attr.colorError, Color.RED));
         }
         if (resultCalculator.getNbrSsRep() > 0) {
             dataVals.add(new PieEntry(resultCalculator.getNbrSsRep(), "sans réponses"));
-            colorArray.add(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary));
+            // Couleur neutre de contour / surface pour l'état non répondu
+            colorArray.add(MaterialColors.getColor(context, com.google.android.material.R.attr.colorOutline, Color.GRAY));
         }
 
         PieDataSet pieDataSet = new PieDataSet(dataVals, "");
@@ -155,13 +166,20 @@ public class ExamenResults extends AppCompatActivity {
                     startActivity(intent);
                 }
             });
-            if(question.goodResponse() == Question.bonneReponse){
-                textView.setBackgroundTintList(ContextCompat.getColorStateList(this, R.color.colorOk));
-            }else if(question.goodResponse() == Question.mauvaiseReponse){
-                textView.setBackgroundTintList(ContextCompat.getColorStateList(this, R.color.colorBtnDanger));
-            }else {
-                textView.setBackgroundTintList(ContextCompat.getColorStateList(this, R.color.colorPrimary));
+            int backgroundColor;
+
+            if (question.goodResponse() == Question.bonneReponse) {
+                // Bonne réponse : conteneur tertiaire (succès)
+                backgroundColor = MaterialColors.getColor(this, com.google.android.material.R.attr.colorTertiaryContainer, Color.GREEN);
+            } else if (question.goodResponse() == Question.mauvaiseReponse) {
+                // Mauvaise réponse : conteneur d'erreur
+                backgroundColor = MaterialColors.getColor(this, com.google.android.material.R.attr.colorErrorContainer, Color.RED);
+            } else {
+                // État neutre / par défaut : conteneur principal
+                backgroundColor = MaterialColors.getColor(this, com.google.android.material.R.attr.colorPrimaryContainer, Color.GRAY);
             }
+
+            textView.setBackgroundTintList(ColorStateList.valueOf(backgroundColor));
 
             textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
             textView.setBackgroundResource(R.drawable.circle_background);

@@ -15,7 +15,7 @@
             <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" android:id="@+id/themeViewerTextView"
-                    android:textColor="@color/colorText"
+                    android:textColor="?attr/colorOnSurface"
                     android:textSize="18sp"/>
             <TextView
                     android:layout_width="match_parent"
@@ -35,29 +35,29 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" android:id="@+id/respViewer1RadioButton"
                         android:layout_marginBottom="5sp" android:enabled="false"
-                        android:buttonTint="@color/colorText"/>
+                        android:buttonTint="?attr/colorOnSurface"/>
                 <RadioButton
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" android:id="@+id/respViewer2RadioButton"
                         android:layout_marginBottom="5sp" android:enabled="false"
-                        android:buttonTint="@color/colorText"/>
+                        android:buttonTint="?attr/colorOnSurface"/>
                 <RadioButton
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" android:id="@+id/respViewer3RadioButton"
                         android:layout_marginBottom="5sp" android:enabled="false"
-                        android:buttonTint="@color/colorText"/>
+                        android:buttonTint="?attr/colorOnSurface"/>
                 <RadioButton
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" android:id="@+id/respViewer4RadioButton"
                         android:layout_marginBottom="5sp" android:enabled="false"
-                        android:buttonTint="@color/colorText"/>
+                        android:buttonTint="?attr/colorOnSurface"/>
             </RadioGroup>
             <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" android:id="@+id/commentViewTextView"
                     android:background="@drawable/border_left" android:paddingLeft="5sp"
                     android:layout_marginStart="10sp"
-                    android:layout_marginEnd="10sp" android:textColor="@color/colorText" android:visibility="gone"
+                    android:layout_marginEnd="10sp" android:textColor="?attr/colorOnSurface" android:visibility="gone"
             />
             <Button
                     android:text="@string/cours"
