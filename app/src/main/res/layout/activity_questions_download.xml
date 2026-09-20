@@ -1,48 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<androidx.coordinatorlayout.widget.CoordinatorLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".QuestionsDownload" android:orientation="vertical" android:fitsSystemWindows="true">
+        android:fitsSystemWindows="true"
+        android:background="?android:attr/colorBackground"
+        tools:context=".QuestionsDownload">
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-                      android:orientation="vertical">
-            <TextView
-                    android:text="@string/downloadQ"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" android:id="@+id/textView22" android:textSize="24sp"
-                    android:textColor="?attr/colorOnSurface"/>
-            <ProgressBar
-                    style="?android:attr/progressBarStyle"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="24dp">
+
+            <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/textView22"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/progressBar2" android:layout_marginTop="10sp" android:layout_marginBottom="10sp"/>
-            <TextView
+                    android:text="@string/downloadQ"
+                    android:textAppearance="?attr/textAppearanceHeadlineSmall"
+                    android:textColor="?attr/colorOnSurface"/>
+
+            <!-- Vraie barre de progression Material -->
+            <com.google.android.material.progressindicator.LinearProgressIndicator
+                    android:id="@+id/progressBar2"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" android:id="@+id/errrorInfotextView" android:textSize="18sp"
-                    android:textColor="?attr/colorError" android:layout_marginStart="3sp"
-                    android:layout_marginEnd="3sp"
-                    android:layout_marginBottom="3sp"/>
-            <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginBottom="16dp"
+                    app:indicatorColor="?attr/colorPrimary"
+                    app:trackColor="?attr/colorSurfaceVariant"
+                    app:trackCornerRadius="4dp"
+                    android:indeterminate="true" />
+
+            <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/downloadStateTextView"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" android:id="@+id/downloadStateTextView"
-                    android:layout_marginStart="3sp" android:layout_marginEnd="3sp"/>
-            <TextView
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?attr/textAppearanceBodyLarge"
+                    android:textColor="?attr/colorOnSurface"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="8dp"/>
+
+            <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/errrorInfotextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?attr/textAppearanceBodyMedium"
+                    android:textColor="?attr/colorError"
+                    android:layout_marginBottom="24dp"/>
+
+            <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/newTexBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:text="@string/newVersion"
+                    android:textAppearance="?attr/textAppearanceTitleMedium"
+                    android:textColor="?attr/colorOnSurface"
+                    android:layout_marginTop="16dp"/>
+
+            <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/textView27"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" android:id="@+id/newTexBox" android:textSize="18sp"
-                    android:layout_marginStart="3sp" android:layout_marginEnd="3sp"
-                    android:textColor="?attr/colorOnSurface" android:layout_marginTop="16sp"/>
-            <TextView
+                    android:layout_height="wrap_content"
                     android:text="@string/nouvautés"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" android:id="@+id/textView27" android:layout_marginStart="3sp"
-                    android:layout_marginEnd="3sp" android:layout_marginTop="8sp"/>
+                    android:textAppearance="?attr/textAppearanceBodyMedium"
+                    android:textColor="?attr/colorOnSurfaceVariant"
+                    android:layout_marginTop="8dp"/>
         </LinearLayout>
-    </ScrollView>
-</LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

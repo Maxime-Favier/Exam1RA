@@ -1,6 +1,5 @@
 package dev.favier.exam1radioamateur;
 
-import android.util.Log;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
@@ -11,7 +10,6 @@ import com.google.gson.reflect.TypeToken;
 import java.io.Serializable;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Collection;
 
 @Entity(tableName = "Questions")
 public class Question implements Serializable {
@@ -103,19 +101,6 @@ public class Question implements Serializable {
         this.question = question;
     }
 
-    /*
-    public ArrayList<String> getPropositions() {
-        return propositions;
-    }
-
-    public void setPropositions(ArrayList<String> propositions) {
-        this.propositions = propositions;
-    }
-
-    public void addProposition(String proposition){
-        this.propositions.add(proposition);
-    }*/
-
     public ArrayList<String> getPropositions() {
         Gson gson = new Gson();
         Type arrayListType = new TypeToken<ArrayList<String>>() {
@@ -174,7 +159,6 @@ public class Question implements Serializable {
         this.userReponse = userReponse;
     }
 
-
     public int getUid() {
         return uid;
     }
@@ -190,10 +174,6 @@ public class Question implements Serializable {
     public void setPropositionsJson(String propositionsJson) {
         this.propositionsJson = propositionsJson;
     }
-
-    /*public void demo() {
-        Log.w("debug", numero + "-" + question);
-    }*/
 
     public void setReponseAsked(boolean reponseAsked) {
         this.reponseAsked = reponseAsked;

@@ -7,13 +7,17 @@ import androidx.room.RoomDatabase;
 
 @Database(entities = {Question.class}, exportSchema = false, version = 2)
 public abstract class AppDatabase extends RoomDatabase {
-    private static final String dbName = "Questions_db";
-    private static AppDatabase instance;
+    private static final String DB_NAME = "Questions_db";
+    private static volatile AppDatabase instance;
 
     public static synchronized AppDatabase getInstance(Context context) {
         if (instance == null) {
-            instance = Room.databaseBuilder(context.getApplicationContext(), AppDatabase.class, dbName)
-                    .fallbackToDestructiveMigration()
+            instance = Room.databaseBuilder(
+                            context.getApplicationContext(),
+                            AppDatabase.class,
+                            DB_NAME
+                    )
+                    .fallbackToDestructiveMigration(true)
                     .build();
         }
         return instance;

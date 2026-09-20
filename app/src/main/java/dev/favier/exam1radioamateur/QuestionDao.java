@@ -11,7 +11,7 @@ import java.util.List;
 public interface QuestionDao {
 
     @Query("SELECT * from Questions")
-    public List<Question> getAllQuestions();
+   List<Question> getAllQuestions();
 
     @Insert
     void insertQuestion(Question question);
@@ -26,7 +26,7 @@ public interface QuestionDao {
     void clearQuestions();
 
     @Query("SELECT * FROM Questions WHERE themeId = :theme ORDER BY RANDOM() LIMIT :limit")
-    public List<Question> getRandomQuestion(int theme, int limit);
+   List<Question> getRandomQuestion(int theme, int limit);
 
 
 }

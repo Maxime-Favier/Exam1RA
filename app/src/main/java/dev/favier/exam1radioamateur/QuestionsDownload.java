@@ -1,129 +1,128 @@
 package dev.favier.exam1radioamateur;
 
-import android.os.AsyncTask;
+import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import org.json.JSONException;
+import com.google.android.material.progressindicator.LinearProgressIndicator;
+import androidx.activity.OnBackPressedCallback;
 
-import java.io.IOException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class QuestionsDownload extends AppCompatActivity {
+    private static final String TAG = "QuestionsDownload";
+    private TextView downloadStateTextView, errrorInfotextView;
+    private LinearProgressIndicator progressBar;
+    private boolean allowBackQuit = false;
 
-    TextView downloadStateTextView, errrorInfotextView;
-    boolean allowBackQuit = false;
+    private final ExecutorService executorService = Executors.newSingleThreadExecutor();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_questions_download);
-
         setupControls();
 
-        try {
-            downloaderTasker();
-        } catch (IOException | JSONException e) {
-            e.printStackTrace();
-        }
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                if (!allowBackQuit) {
+                    Toast.makeText(QuestionsDownload.this, "Veuillez attendre la fin du téléchargement", Toast.LENGTH_SHORT).show();
+                } else {
+                    finishAffinity();
+                }
+            }
+        });
+        downloaderTasker();
     }
 
     private void setupControls() {
         downloadStateTextView = findViewById(R.id.downloadStateTextView);
         errrorInfotextView = findViewById(R.id.errrorInfotextView);
+        progressBar = findViewById(R.id.progressBar2);
     }
 
-    private void downloaderTasker() throws IOException, JSONException {
-        final DbPopulator dbPopulator = new DbPopulator(getApplicationContext());
-        AsyncTask.execute(new Runnable() {
-            @Override
-            public void run() {
-                final boolean a, b, c, d;
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        downloadStateTextView.setText(R.string.downloadImg);
-                    }
-                });
-                a = dbPopulator.downloadZipImg();
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        downloadStateTextView.setText(R.string.downloadQuestion);
-                    }
-                });
-                b = dbPopulator.downloadJson();
-                try {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            downloadStateTextView.setText(R.string.bddGen);
-                        }
-                    });
+    private void updateProgressUi(int progress) {
+        runOnUiThread(() -> progressBar.setProgressCompat(progress, true));
+    }
 
-                    dbPopulator.populateDbFromJson();
-                } catch (IOException | JSONException e) {
-                    e.printStackTrace();
-                }
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        downloadStateTextView.setText(R.string.unzipProcess);
-                    }
-                });
-                c = dbPopulator.unzipImg();
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        downloadStateTextView.setText(R.string.ajust);
-                    }
-                });
-                // en attente du https sur le site de f6kgl
-                /*runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        downloadStateTextView.setText(R.string.downloadCours);
-                    }
-                });
-                d = dbPopulator.downloadCoursHtml();*/
-
-                if (a && b && c /*&& d*/) {
-                    dbPopulator.setFirstRunFlag();
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            finish();
-                        }
-                    });
-                } else {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            // en attente du https sur le site de f6kgl
-                            downloadStateTextView.setText(getResources().getString(R.string.errorCode, a, b, c/*, d*/));
-                            allowBackQuit = true;
-                            if (!a && !b) {
-                                errrorInfotextView.setText(R.string.pbConnect);
-                            } else {
-                                errrorInfotextView.setText(R.string.pbRestart);
-                            }
-                        }
-                    });
-
-                }
+    private void updateStateUi(int stringResId, boolean isIndeterminate) {
+        runOnUiThread(() -> {
+            downloadStateTextView.setText(stringResId);
+            progressBar.setIndeterminate(isIndeterminate);
+            if (!isIndeterminate) {
+                progressBar.setProgress(0);
             }
         });
     }
 
-    @Override
-    public void onBackPressed() {
-        if (!allowBackQuit) {
-            Toast.makeText(this, "Veuillez attendre la fin du téléchargement", Toast.LENGTH_SHORT).show();
-        } else {
-            finishAffinity();
-            System.exit(0);
-        }
-
-        //super.onBackPressed();
+    private void showErrorUi(String errorMsg) {
+        runOnUiThread(() -> {
+            progressBar.setIndeterminate(false);
+            progressBar.setProgressCompat(100, true);
+            allowBackQuit = true;
+            errrorInfotextView.setText(errorMsg);
+            downloadStateTextView.setText("Échec du téléchargement");
+        });
     }
+
+    private void downloaderTasker() {
+        try {
+            final DbPopulator dbPopulator = new DbPopulator(getApplicationContext());
+
+            executorService.execute(() -> {
+                try {
+                    // 1. Images
+                    updateStateUi(R.string.downloadImg, false);
+                    String errorImg = dbPopulator.downloadZipImg(this::updateProgressUi);
+                    if (errorImg != null) {
+                        showErrorUi("Erreur images : " + errorImg);
+                        return; // Stoppe le processus
+                    }
+
+                    // 2. Questions JSON
+                    updateStateUi(R.string.downloadQuestion, false);
+                    String errorJson = dbPopulator.downloadJson(this::updateProgressUi);
+                    if (errorJson != null) {
+                        showErrorUi("Erreur JSON : " + errorJson);
+                        return;
+                    }
+
+                    // 3. Base de données
+                    updateStateUi(R.string.bddGen, true);
+                    dbPopulator.populateDbFromJson();
+
+                    // 4. Extraction ZIP
+                    updateStateUi(R.string.unzipProcess, true);
+                    boolean isUnzipped = dbPopulator.unzipImg();
+                    if (!isUnzipped) {
+                        showErrorUi("Erreur lors de la décompression des images.");
+                        return;
+                    }
+
+                    // 5. Finalisation
+                    updateStateUi(R.string.ajust, true);
+                    dbPopulator.setFirstRunFlag();
+
+                    runOnUiThread(this::finish);
+
+                } catch (Exception e) {
+                    Log.e(TAG, "Erreur pendant le téléchargement", e);
+                    showErrorUi("Erreur inattendue : " + e.getLocalizedMessage());
+                }
+            });
+        } catch (Exception e) {
+            Log.e(TAG, "Erreur lors du lancement de la tâche", e);
+            showErrorUi("Erreur d'initialisation : " + e.getLocalizedMessage());
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        executorService.shutdownNow(); // Libération des ressources si l'activité est détruite
+    }
+
 }

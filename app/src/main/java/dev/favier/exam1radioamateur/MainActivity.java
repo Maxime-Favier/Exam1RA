@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
-
+    private static final String TAG = "MainActivity";
     LinearLayout legislationRow, techniqueRow;
     TextView legislationTextView, techniqueTextView;
     Button allThemeButton, noThemeButton, startButton;
@@ -42,7 +42,6 @@ public class MainActivity extends AppCompatActivity {
     MaterialAutoCompleteTextView nbrQSpinner;
     MaterialSwitch showRespSwitch, timerSwitch;
 
-    ArrayList<Integer> ThemeList;
     SharedPreferences sharedPref = null;
 
     @Override
@@ -60,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         if (sharedPref.getBoolean("firstrun", true)) {
-            Log.w("debug", "first run!");
+            Log.i(TAG, "first run!");
             Intent intent = new Intent(getBaseContext(), QuestionsDownload.class);
             startActivity(intent);
         }
@@ -364,7 +363,7 @@ public class MainActivity extends AppCompatActivity {
         legislationCheckBox.setChecked(areAllChecked(legislationCheckBoxes));
         techniqueCheckBox.setChecked(areAllChecked(techniqueCheckBoxes));
 
-        Log.w("debug", String.valueOf(themeRegistered) + " themes sont cochés");
+        Log.i(TAG, String.valueOf(themeRegistered) + " themes sont cochés");
         if (themeRegistered == 3) {
             themeRegistered = 6;
         }

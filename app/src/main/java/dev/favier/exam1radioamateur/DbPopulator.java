@@ -4,13 +4,11 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.*;
-import java.net.MalformedURLException;
+import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
@@ -19,214 +17,170 @@ import java.util.zip.ZipInputStream;
  * rempli la base de donne de question
  */
 public class DbPopulator {
+    private static final String TAG = "DbPopulator";
+    private final AppDatabase appDb;
+    private final Context context;
 
-    AppDatabase appDb;
-    Context context;
-
-    public DbPopulator(Context context) throws IOException, JSONException {
+    public DbPopulator(Context context) {
         this.context = context;
-        appDb = AppDatabase.getInstance(context);
-        //populateDbFromJson();
+        this.appDb = AppDatabase.getInstance(context);
+    }
+
+    // Interface pour remonter la progression à l'interface graphique
+    public interface DownloadProgressListener {
+        void onProgressUpdate(int percentage);
     }
 
     /**
      * Ajoute les questions dans la bdd depuis un json
      *
-     * @throws IOException
-     * @throws JSONException
      */
-    public void populateDbFromJson() throws IOException, JSONException {
-        //AppDatabase appDb = AppDatabase.getInstance(context);
-        appDb.questionDao().clearQuestions();
-        InputStream is = context.openFileInput("questions.json"); //context.getResources().openRawResource(R.raw.questions);
-        Writer writer = new StringWriter();
-        char[] buffer = new char[1024];
-        try {
-            Reader reader = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
-            int n;
-            while ((n = reader.read(buffer)) != -1) {
-                writer.write(buffer, 0, n);
+    public void populateDbFromJson() {
+        // Exécute tout le bloc en une seule transaction atomique
+        appDb.runInTransaction(() -> {
+            try {
+                appDb.questionDao().clearQuestions();
+
+                InputStream is = context.openFileInput("questions.json");
+                BufferedReader reader = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
+                StringBuilder builder = new StringBuilder();
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    builder.append(line);
+                }
+                is.close();
+
+                JSONObject mainJSObject = new JSONObject(builder.toString());
+                JSONArray questionsJsonObject = mainJSObject.getJSONArray("questions");
+
+                for (int i = 0; i < questionsJsonObject.length(); i++) {
+                    JSONObject questionObj = questionsJsonObject.getJSONObject(i);
+                    Question question = new Question();
+                    question.setNumero(questionObj.getInt("num"));
+                    question.setQuestion(questionObj.getString("question"));
+
+                    JSONArray propositionArray = questionObj.getJSONArray("propositions");
+                    for (int j = 0; j < propositionArray.length(); j++) {
+                        question.addProposition(propositionArray.getString(j));
+                    }
+
+                    question.setReponse(questionObj.getInt("reponse"));
+                    question.setThemeID(questionObj.getInt("themeNum"));
+                    question.setCommentaire(questionObj.getString("commentaire"));
+                    question.setCoursUrl(questionObj.getString("cours"));
+
+                    appDb.questionDao().insertQuestion(question);
+                }
+            } catch (Exception e) {
+                // Lève une RuntimeException pour forcer le rollback de la transaction
+                throw new RuntimeException("Erreur lors du remplissage de la BDD", e);
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            is.close();
-        }
-
-        JSONObject mainJSObject = new JSONObject(writer.toString());
-        JSONArray questionsJsonObject = mainJSObject.getJSONArray("questions");
-
-        Question question;
-
-        for (int i = 0; i < questionsJsonObject.length(); i++) {
-            JSONObject questionObj = questionsJsonObject.getJSONObject(i);
-
-            question = new Question();
-            question.setNumero(questionObj.getInt("num"));
-            question.setQuestion(questionObj.getString("question"));
-
-            JSONArray propositionArray = questionObj.getJSONArray("propositions");
-            for (int j = 0; j < propositionArray.length(); j++) {
-                question.addProposition(propositionArray.getString(j));
-            }
-
-            question.setReponse(questionObj.getInt("reponse"));
-            question.setThemeID(questionObj.getInt("themeNum"));
-            question.setCommentaire(questionObj.getString("commentaire"));
-            question.setCoursUrl(questionObj.getString("cours"));
-
-            //question.demo();
-
-            appDb.questionDao().insertQuestion(question);
-        }
-        Log.w("debug", "db populated");
-        //appDb.close();
-
+        });
     }
 
     /**
-     * download zip from website
-     * @return error state
+     * Télécharge un fichier générique avec gestion d'erreur HTTP et barre de progression
      */
-    public boolean downloadZipImg() {
+    private String downloadFile(String urlString, String fileName, DownloadProgressListener listener) {
+        File targetFile = new File(context.getFilesDir(), fileName);
+        File tempFile = new File(context.getFilesDir(), fileName + ".tmp");
+
         try {
-            Log.w("debug", "start dowload question zip");
-            URL url = new URL("https://exam1.r-e-f.org/assets/questions.zip");
-            URLConnection connection = url.openConnection();
+            URL url = new URL(urlString);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setConnectTimeout(10000);
+            connection.setReadTimeout(15000);
             connection.connect();
 
-            try (InputStream input = new BufferedInputStream(url.openStream(), 8192)) {
-                File file = new File(context.getFilesDir(), "questions.zip");
-                // save to file
-                try (OutputStream output = new FileOutputStream(file)) {
-                    byte[] buffer = new byte[8192]; // or other buffer size
-                    int read;
-
-                    while ((read = input.read(buffer)) != -1) {
-                        output.write(buffer, 0, read);
-                    }
-                    output.flush();
-                }
+            if (connection.getResponseCode() != HttpURLConnection.HTTP_OK) {
+                return "Erreur HTTP " + connection.getResponseCode();
             }
-            Log.w("debug", "downloaded zip");
+
+            int fileLength = connection.getContentLength();
+
+            try (InputStream input = new BufferedInputStream(connection.getInputStream(), 8192);
+                 OutputStream output = new FileOutputStream(tempFile)) { // Écrit dans le .tmp
+
+                byte[] buffer = new byte[8192];
+                long total = 0;
+                int count;
+
+                while ((count = input.read(buffer)) != -1) {
+                    // Vérifie si le thread a été interrompu par onDestroy()
+                    if (Thread.currentThread().isInterrupted()) {
+                        tempFile.delete();
+                        return "Téléchargement annulé.";
+                    }
+                    total += count;
+                    if (fileLength > 0 && listener != null) {
+                        listener.onProgressUpdate((int) (total * 100 / fileLength));
+                    }
+                    output.write(buffer, 0, count);
+                }
+                output.flush();
+            }
+
+            // Téléchargement réussi : on remplace le fichier final
+            if (tempFile.renameTo(targetFile)) {
+                return null;
+            } else {
+                tempFile.delete();
+                return "Erreur lors de la sauvegarde du fichier.";
+            }
 
         } catch (IOException e) {
-            e.printStackTrace();
-            return false;
+            if (tempFile.exists()) tempFile.delete(); // Nettoyage en cas d'échec
+            return "Erreur réseau : " + e.getLocalizedMessage();
         }
-
-        return true;
-
     }
 
-    /**
-     * download question json
-     * @return
-     */
-    public boolean downloadJson() {
-        try {
-            Log.w("debug", "start download question json");
-            URL url = new URL("https://exam1.r-e-f.org/assets/questions.json");
-            URLConnection connection = url.openConnection();
-            connection.connect();
-
-            try (InputStream input = new BufferedInputStream(url.openStream(), 8192)) {
-                File file = new File(context.getFilesDir(), "questions.json");
-                try (OutputStream output = new FileOutputStream(file)) {
-                    byte[] buffer = new byte[8192]; // or other buffer size
-                    int read;
-
-                    while ((read = input.read(buffer)) != -1) {
-                        output.write(buffer, 0, read);
-                    }
-                    output.flush();
-                }
-            }
-            Log.w("debug", "downloaded json");
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            return false;
-        }
-        return true;
+    public String downloadZipImg(DownloadProgressListener listener) {
+        Log.d(TAG, "start download question zip");
+        return downloadFile("https://exam1.r-e-f.org/assets/questions.zip", "questions.zip", listener);
     }
 
-    // en attente du https sur le site de f6kgl
-    /*public boolean downloadCoursHtml(){
-        try {
-            Log.w("debug", "start download cours");
-            URL url = new URL("http://f6kgl.free.fr/COURS.html");
-            URLConnection connection = url.openConnection();
-            connection.connect();
-
-            try (InputStream input = new BufferedInputStream(url.openStream(), 8192)) {
-                File file = new File(context.getFilesDir(), "COURS.html");
-                try (OutputStream output = new FileOutputStream(file)) {
-                    byte[] buffer = new byte[8192]; // or other buffer size
-                    int read;
-
-                    while ((read = input.read(buffer)) != -1) {
-                        output.write(buffer, 0, read);
-                    }
-                    output.flush();
-                }
-            }
-            Log.w("debug", "downloaded cours");
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            return false;
-        }
-        return true;
-    }*/
+    public String downloadJson(DownloadProgressListener listener) {
+        Log.d(TAG, "start download question json");
+        return downloadFile("https://exam1.r-e-f.org/assets/questions.json", "questions.json", listener);
+    }
 
     public boolean unzipImg() {
-        Log.w("debug", "unzip start");
+        Log.d(TAG, "unzip start");
         try {
             unzip(new File(context.getFilesDir(), "questions.zip"), new File(context.getFilesDir(), ""));
+            // supprime le .zip quand c'est terminé
+            File fileDel = new File(context.getFilesDir(), "questions.zip");
+            fileDel.delete();
+            return true;
         } catch (IOException e) {
-            e.printStackTrace();
+            Log.e(TAG, "Erreur lors de la décompression du fichier ZIP", e);
             return false;
         }
-        Log.w("debug", "unzip end");
-
-        // supprime le .zip quand c'est terminé
-        File fileDel = new File(context.getFilesDir(), "questions.zip");
-        fileDel.delete();
-        return true;
     }
 
     public static void unzip(File zipFile, File targetDirectory) throws IOException {
-        try (ZipInputStream zis = new ZipInputStream(
-                new BufferedInputStream(new FileInputStream(zipFile)))) {
+        try (ZipInputStream zis = new ZipInputStream(new BufferedInputStream(new FileInputStream(zipFile)))) {
             ZipEntry ze;
-            int count;
             byte[] buffer = new byte[8192];
             while ((ze = zis.getNextEntry()) != null) {
                 File file = new File(targetDirectory, ze.getName());
                 File dir = ze.isDirectory() ? file : file.getParentFile();
                 if (!dir.isDirectory() && !dir.mkdirs())
-                    throw new FileNotFoundException("Failed to ensure directory: " +
-                            dir.getAbsolutePath());
-                if (ze.isDirectory())
-                    continue;
+                    throw new FileNotFoundException("Failed to ensure directory: " + dir.getAbsolutePath());
+                if (ze.isDirectory()) continue;
                 try (FileOutputStream fout = new FileOutputStream(file)) {
-                    while ((count = zis.read(buffer)) != -1)
+                    int count;
+                    while ((count = zis.read(buffer)) != -1) {
                         fout.write(buffer, 0, count);
+                    }
                 }
-            /* if time should be restored as well
-            long time = ze.getTime();
-            if (time > 0)
-                file.setLastModified(time);
-            */
             }
         }
     }
 
     public void setFirstRunFlag() {
-        Log.w("debug", "set first run flag done");
-        SharedPreferences sharedPref = context.getSharedPreferences("UIPref" + String.valueOf(BuildConfig.VERSION_CODE), Context.MODE_PRIVATE);
-        sharedPref.edit().putBoolean("firstrun", false).commit();
-
+        Log.d(TAG, "set first run flag done");
+        SharedPreferences sharedPref = context.getSharedPreferences("UIPref" + BuildConfig.VERSION_CODE, Context.MODE_PRIVATE);
+        sharedPref.edit().putBoolean("firstrun", false).apply();
     }
 }
