@@ -14,7 +14,7 @@ public class ResultCalculator implements Serializable {
     private int nbrQuestionParTheme;
 
     /**
-     * retoune le nombre de questions
+     * retourne le nombre de questions
      * @return nombre de question
      */
     public int getNumberOfQuestion(){
@@ -22,7 +22,7 @@ public class ResultCalculator implements Serializable {
     }
 
     /**
-     * retoune la question de la liste à l'index
+     * retourne la question de la liste à l'index
      * @param index index de la question
      * @return obj {@link Question}
      */

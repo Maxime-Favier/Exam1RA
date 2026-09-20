@@ -8,7 +8,7 @@ android {
     compileSdk = 36
     defaultConfig {
         applicationId "dev.favier.exam1radioamateur"
-        minSdkVersion 22
+        minSdkVersion 23
         //noinspection EditedTargetSdkVersion
         targetSdkVersion 36
         versionCode 15
@@ -44,13 +44,13 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.7.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.2.1'
     testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.2.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.6.1'
+    androidTestImplementation 'androidx.test.ext:junit:1.3.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.7.0'
     implementation "androidx.cardview:cardview:1.0.0"
     implementation "androidx.room:room-runtime:$room_version"
     annotationProcessor "androidx.room:room-compiler:$room_version"
-    implementation 'com.google.code.gson:gson:2.10.1'
-    implementation 'com.google.android.material:material:1.9.0'
+    implementation 'com.google.code.gson:gson:2.14.0'
+    implementation "com.google.android.material:material:1.14.0"
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 
 }

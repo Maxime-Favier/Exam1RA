@@ -21,7 +21,7 @@ import com.github.mikephil.charting.data.PieEntry;
 import com.google.android.flexbox.AlignItems;
 import com.google.android.flexbox.FlexboxLayout;
 import com.google.android.material.color.MaterialColors;
-
+import dev.favier.exam1radioamateur.R;
 import java.util.ArrayList;
 
 public class ExamenResults extends AppCompatActivity {
@@ -120,7 +120,7 @@ public class ExamenResults extends AppCompatActivity {
         if (resultCalculator.getNbrOfIncorrect() > 0) {
             dataVals.add(new PieEntry(resultCalculator.getNbrOfIncorrect(), "Incorrect"));
             // Couleur d'erreur native Material 3
-            colorArray.add(MaterialColors.getColor(context, com.google.android.material.R.attr.colorError, Color.RED));
+            colorArray.add(MaterialColors.getColor(this, R.attr.colorError, Color.RED));
         }
         if (resultCalculator.getNbrSsRep() > 0) {
             dataVals.add(new PieEntry(resultCalculator.getNbrSsRep(), "sans réponses"));

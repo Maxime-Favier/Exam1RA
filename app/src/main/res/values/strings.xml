@@ -54,17 +54,12 @@
     <string name="remerciement_F6GPX">Avec Jean-Luc F6GPX qui met à jour la base de questions en plus de publier un
         cours complet sur internet pour passer l\'examen
     </string>
-    <string name="GarageIsep">Garage Isep</string>
-    <string name="logoGarageIsep">Logo Garage Isep</string>
-    <string name="remerciement_Garage">Garage Isep, l\'association d\'innovation de l\'isep pour avoir relu et testé
-        l\'application
-    </string>
     <string name="remerciement_autres">Et bien d\'autres…</string>
     <string name="remerciement_F4HHV">Valentin F4HVV pour sa version web</string>
     <string name="remerciement_F5AXG">René F5AXG pour la version PC</string>
 
     <string name="licences">Licences</string>
-    <string name="licence_Exam1">© Maxime Favier 2020-2026</string>
+    <string name="licence_Exam1">© Maxime F4IQN 2020-2026</string>
     <string name="licence_gnuV3">This program is free software: you can redistribute it and/or modify
         it under the terms of the GNU General Public License as published by
         the Free Software Foundation, either version 3 of the License, or
@@ -145,7 +140,7 @@
     <string name="gotoVideo">vidéos de F6KGL</string>
 
     <string name="newVersion">Nouveautés de la version</string>
-    <string name="nouvautés">* Maj de la base de question\n* MAJ du SDK Android
+    <string name="nouvautés">* Maj de l\'interface en Material design\n* Corrections de bugs
     </string>
 
     <string name="htmlCours">Cour HTML</string>
