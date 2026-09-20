@@ -1,129 +1,168 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
         xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".OpenSource" android:orientation="vertical" android:fitsSystemWindows="true">
+        android:orientation="vertical"
+        android:fitsSystemWindows="true"
+        android:background="?attr/colorSurface"
+        tools:context=".OpenSource">
 
     <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-                      android:orientation="vertical">
-            <androidx.cardview.widget.CardView
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:padding="16dp">
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+            <TextView
+                    android:id="@+id/textViewTitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="3sp" android:layout_marginEnd="3sp" android:layout_marginTop="3sp"
-                    android:paddingStart="1sp" android:layout_marginBottom="3sp" android:paddingEnd="1sp"
-                    android:paddingTop="1sp" android:paddingBottom="1sp">
+                    android:text="@string/licences"
+                    android:textAppearance="?attr/textAppearanceHeadlineMedium"
+                    android:textColor="?attr/colorOnSurface"
+                    android:gravity="center_horizontal"
+                    android:layout_marginBottom="24dp" />
+
+            <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    app:cardBackgroundColor="?attr/colorSurfaceContainer"
+                    app:cardElevation="0dp"
+                    app:strokeWidth="0dp">
+
                 <LinearLayout
-                        android:orientation="vertical"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+
                     <TextView
-                            android:text="@string/licences"
+                            android:id="@+id/textViewAppName"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content" android:id="@+id/textView3"
-                            android:textColor="?attr/colorOnSurface" android:textSize="24sp"
-                            android:gravity="center_horizontal|center_vertical"/>
-                    <androidx.cardview.widget.CardView
+                            android:layout_height="wrap_content"
+                            android:text="@string/app_name"
+                            android:textAppearance="?attr/textAppearanceTitleLarge"
+                            android:textColor="?attr/colorOnSurface"
+                            android:layout_marginBottom="8dp" />
+
+                    <com.google.android.material.divider.MaterialDivider
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent" android:layout_marginStart="3sp"
-                            android:layout_marginEnd="3sp" android:layout_marginTop="3sp"
-                            android:layout_marginBottom="3sp"
-                            android:paddingStart="1sp" android:paddingEnd="1sp" android:paddingTop="1sp"
-                            android:paddingBottom="1sp">
-                        <LinearLayout
-                                android:orientation="vertical"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent">
-                            <TextView
-                                    android:text="@string/app_name"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content" android:id="@+id/textView4"
-                                    android:textColor="?attr/colorOnSurface" android:textSize="18sp"/>
-                            <androidx.constraintlayout.widget.Guideline
-                                    android:orientation="horizontal"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content" android:id="@+id/guideline"/>
-                            <TextView
-                                    android:text="@string/licence_Exam1"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content" android:id="@+id/textView15"
-                                    android:textColor="?attr/colorOnSurface" android:layout_marginStart="3sp"
-                                    android:layout_marginEnd="3sp"/>
-                            <TextView
-                                    android:text="@string/licence_gnuV3"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content" android:id="@+id/textView16"
-                                    android:layout_marginStart="5sp" android:layout_marginEnd="5sp"/>
-                        </LinearLayout>
-                    </androidx.cardview.widget.CardView>
-                    <androidx.cardview.widget.CardView
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="8dp" />
+
+                    <TextView
+                            android:id="@+id/textViewAppLicenseDetails"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent" android:layout_marginStart="3sp"
-                            android:layout_marginTop="3sp" android:layout_marginEnd="3sp"
-                            android:layout_marginBottom="3sp"
-                            android:paddingStart="1sp" android:paddingEnd="1sp" android:paddingTop="1sp"
-                            android:paddingBottom="1sp">
-                        <LinearLayout
-                                android:orientation="vertical"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent">
-                            <TextView
-                                    android:text="@string/licence_materialIcons"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content" android:id="@+id/textView17"
-                                    android:textColor="?attr/colorOnSurface" android:textSize="18sp"/>
-                            <androidx.constraintlayout.widget.Guideline
-                                    android:orientation="horizontal"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content" android:id="@+id/guideline2"/>
-                            <TextView
-                                    android:text="@string/licence_apache"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content" android:id="@+id/textView18"
-                                    android:layout_marginStart="5sp" android:layout_marginEnd="5sp"/>
-                        </LinearLayout>
-                    </androidx.cardview.widget.CardView>
-                    <androidx.cardview.widget.CardView
+                            android:layout_height="wrap_content"
+                            android:text="@string/licence_Exam1"
+                            android:textAppearance="?attr/textAppearanceBodyMedium"
+                            android:textColor="?attr/colorOnSurfaceVariant"
+                            android:layout_marginBottom="4dp" />
+
+                    <TextView
+                            android:id="@+id/textViewAppLicenseType"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent" android:layout_marginStart="3sp"
-                            android:layout_marginEnd="3sp" android:layout_marginTop="3sp"
-                            android:layout_marginBottom="3sp"
-                            android:paddingStart="1sp" android:paddingTop="1sp" android:paddingEnd="1sp"
-                            android:paddingBottom="1sp">
-                        <LinearLayout
-                                android:orientation="vertical"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent">
-                            <TextView
-                                    android:text="@string/MPChart"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content" android:id="@+id/textView19"
-                                    android:textSize="18sp"
-                                    android:textColor="?attr/colorOnSurface"/>
-                            <androidx.constraintlayout.widget.Guideline
-                                    android:orientation="horizontal"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content" android:id="@+id/guideline3"/>
-                            <TextView
-                                    android:text="@string/C_MPChart"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content" android:id="@+id/textView20"
-                                    android:textColor="?attr/colorOnSurface" android:layout_marginStart="3sp"
-                                    android:layout_marginEnd="3sp"/>
-                            <TextView
-                                    android:text="@string/licence_apache"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content" android:id="@+id/textView21"
-                                    android:layout_marginStart="5sp" android:layout_marginEnd="5sp"/>
-                        </LinearLayout>
-                    </androidx.cardview.widget.CardView>
+                            android:layout_height="wrap_content"
+                            android:text="@string/licence_gnuV3"
+                            android:textAppearance="?attr/textAppearanceBodySmall"
+                            android:textColor="?attr/colorOnSurfaceVariant" />
                 </LinearLayout>
-            </androidx.cardview.widget.CardView>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    app:cardBackgroundColor="?attr/colorSurfaceContainer"
+                    app:cardElevation="0dp"
+                    app:strokeWidth="0dp">
+
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+
+                    <TextView
+                            android:id="@+id/textViewMaterialIcons"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/licence_materialIcons"
+                            android:textAppearance="?attr/textAppearanceTitleLarge"
+                            android:textColor="?attr/colorOnSurface"
+                            android:layout_marginBottom="8dp" />
+
+                    <com.google.android.material.divider.MaterialDivider
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="8dp" />
+
+                    <TextView
+                            android:id="@+id/textViewMaterialIconsLicenseType"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/licence_apache"
+                            android:textAppearance="?attr/textAppearanceBodySmall"
+                            android:textColor="?attr/colorOnSurfaceVariant" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    app:cardBackgroundColor="?attr/colorSurfaceContainer"
+                    app:cardElevation="0dp"
+                    app:strokeWidth="0dp">
+
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+
+                    <TextView
+                            android:id="@+id/textViewMPChart"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/MPChart"
+                            android:textAppearance="?attr/textAppearanceTitleLarge"
+                            android:textColor="?attr/colorOnSurface"
+                            android:layout_marginBottom="8dp" />
+
+                    <com.google.android.material.divider.MaterialDivider
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="8dp" />
+
+                    <TextView
+                            android:id="@+id/textViewMPChartDetails"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/C_MPChart"
+                            android:textAppearance="?attr/textAppearanceBodyMedium"
+                            android:textColor="?attr/colorOnSurfaceVariant"
+                            android:layout_marginBottom="4dp" />
+
+                    <TextView
+                            android:id="@+id/textViewMPChartLicenseType"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/licence_apache"
+                            android:textAppearance="?attr/textAppearanceBodySmall"
+                            android:textColor="?attr/colorOnSurfaceVariant" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

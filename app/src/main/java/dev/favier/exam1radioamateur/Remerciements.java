@@ -2,13 +2,9 @@ package dev.favier.exam1radioamateur;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.view.MenuItem;
 import android.view.View;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import androidx.cardview.widget.CardView;
-import androidx.core.app.NavUtils;
 
 public class Remerciements extends AppCompatActivity {
 
