@@ -1,62 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
                                                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                   xmlns:tools="http://schemas.android.com/tools"
                                                    android:layout_width="match_parent"
                                                    android:layout_height="wrap_content"
                                                    android:layout_marginHorizontal="16dp"
                                                    android:layout_marginVertical="8dp"
                                                    app:cardBackgroundColor="?attr/colorSurface"
+                                                   app:cardCornerRadius="16dp"
                                                    app:strokeColor="?attr/colorOutlineVariant"
-                                                   app:strokeWidth="1dp"
-                                                   app:cardCornerRadius="16dp">
+                                                   app:strokeWidth="1dp">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:padding="16dp">
 
-        <!-- En-tête de la question (Thème et Numéro) -->
-        <LinearLayout
-                android:layout_width="match_parent"
+        <!-- En-tête : Thème -->
+        <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/themeQTextView"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:baselineAligned="false"
-                android:layout_marginBottom="12dp">
+                android:layout_marginEnd="16dp"
+                android:textAppearance="?attr/textAppearanceLabelLarge"
+                android:textColor="?attr/colorPrimary"
+                app:layout_constraintBottom_toBottomOf="@+id/numQChip"
+                app:layout_constraintEnd_toStartOf="@+id/numQChip"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/numQChip"
+                tools:text="Thème de la question" />
 
-            <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/themeQTextView"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:textAppearance="?attr/textAppearanceLabelLarge"
-                    android:textColor="?attr/colorPrimary" />
+        <!-- En-tête : Numéro -->
+        <com.google.android.material.chip.Chip
+                android:id="@+id/numQChip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="?attr/colorOnSecondaryContainer"
+                app:chipBackgroundColor="?attr/colorSecondaryContainer"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="# 42" />
 
-            <com.google.android.material.chip.Chip
-                    android:id="@+id/numQChip"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:text="#"
-                    app:chipBackgroundColor="?attr/colorSecondaryContainer"
-                    android:textColor="?attr/colorOnSecondaryContainer"/>
-        </LinearLayout>
+        <!-- Texte de la question (Masqué si c'est une description d'image) -->
+        <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/questionTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:textAppearance="?attr/textAppearanceBodyLarge"
+                android:textColor="?attr/colorOnSurface"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/numQChip"
+                tools:text="Quelle est la valeur de cette résistance ?" />
 
         <!-- Image de la question -->
         <ImageView
                 android:id="@+id/questionImageView"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="180dp"
+                android:layout_marginTop="12dp"
+                android:background="?attr/colorSurfaceContainerLowest"
                 android:scaleType="fitCenter"
-                android:layout_marginBottom="16dp"
-                android:background="?attr/colorSurfaceContainerLowest"/>
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/questionTextView"
+                tools:visibility="visible" />
 
         <!-- Propositions -->
         <RadioGroup
                 android:id="@+id/propoRadioGroupe"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/questionImageView">
 
             <com.google.android.material.radiobutton.MaterialRadioButton
                     android:id="@+id/propo1RadioButton"
@@ -82,12 +101,15 @@
         <!-- Explications (Caché par défaut) -->
         <com.google.android.material.card.MaterialCardView
                 android:id="@+id/commentCardView"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:visibility="gone"
                 app:cardBackgroundColor="?attr/colorTertiaryContainer"
-                app:cardElevation="0dp">
+                app:cardElevation="0dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/propoRadioGroupe">
 
             <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/commentTextView"
@@ -98,42 +120,42 @@
                     android:textColor="?attr/colorOnTertiaryContainer" />
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- Actions -->
-        <LinearLayout
-                android:layout_width="match_parent"
+        <!-- Actions : Effacer -->
+        <com.google.android.material.button.MaterialButton
+                android:id="@+id/delRespButton"
+                style="@style/Widget.Material3.Button.IconButton.Filled.Tonal"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="16dp">
+                android:layout_marginTop="16dp"
+                android:tooltipText="@string/del_resp"
+                app:icon="@drawable/ic_clear_24dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/commentCardView" />
 
-            <com.google.android.material.button.MaterialButton
-                    android:id="@+id/delRespButton"
-                    style="@style/Widget.Material3.Button.IconButton.Filled.Tonal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:icon="@drawable/ic_clear_24dp"
-                    android:tooltipText="@string/del_resp" />
+        <!-- Actions : Voir la réponse -->
+        <com.google.android.material.button.MaterialButton
+                android:id="@+id/reponseQButton"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="@string/reponse"
+                app:layout_constraintBottom_toBottomOf="@+id/delRespButton"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/delRespButton" />
 
-            <android.widget.Space
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1" />
+        <!-- Actions : Cours -->
+        <com.google.android.material.button.MaterialButton
+                android:id="@+id/coursQButton"
+                style="@style/Widget.Material3.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:text="@string/cours"
+                app:icon="@drawable/ic_launch_24dp"
+                app:layout_constraintBottom_toBottomOf="@+id/reponseQButton"
+                app:layout_constraintEnd_toStartOf="@+id/reponseQButton"
+                app:layout_constraintTop_toTopOf="@+id/reponseQButton" />
 
-            <com.google.android.material.button.MaterialButton
-                    android:id="@+id/coursQButton"
-                    style="@style/Widget.Material3.Button.TextButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/cours"
-                    app:icon="@drawable/ic_launch_24dp" />
-
-            <com.google.android.material.button.MaterialButton
-                    android:id="@+id/reponseQButton"
-                    style="@style/Widget.Material3.Button.OutlinedButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/reponse"
-                    android:layout_marginStart="8dp" />
-        </LinearLayout>
-
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

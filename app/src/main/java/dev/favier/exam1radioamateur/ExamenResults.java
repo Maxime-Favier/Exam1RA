@@ -199,10 +199,9 @@ public class ExamenResults extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.gotoHomeItem:
-                navigateUpTo(new Intent(getBaseContext(), MainActivity.class));
-                return true;
+        if (item.getItemId() == R.id.gotoHomeItem) {
+            navigateUpTo(new Intent(getBaseContext(), MainActivity.class));
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }

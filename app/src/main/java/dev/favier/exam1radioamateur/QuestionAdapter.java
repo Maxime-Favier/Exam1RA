@@ -19,6 +19,29 @@ import com.google.android.material.radiobutton.MaterialRadioButton;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import com.bumptech.glide.Glide;
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.RadioGroup;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.card.MaterialCardView;
+import com.google.android.material.chip.Chip;
+import com.google.android.material.color.MaterialColors;
+import com.google.android.material.radiobutton.MaterialRadioButton;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.QuestionViewHolder> {
 
@@ -46,31 +69,56 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.Questi
         Question question = questionList.get(position);
 
         // 1. Initialiser les Textes (Numéro, Thème)
-        holder.numQChip.setText("# " + question.getNumero());
+        holder.numQChip.setText(String.format("# %s", question.getNumero()));
         holder.themeQTextView.setText(getThemeName(question.getThemeID()));
 
-        // 2. Initialiser l'image
-        File file = new File(context.getFilesDir(), question.getNumero() + ".png");
-        if (file.exists()) {
-            holder.questionImageView.setImageURI(Uri.fromFile(file));
-            holder.questionImageView.setContentDescription(question.getQuestion());
-            holder.questionImageView.setVisibility(View.VISIBLE);
+        // 2. Gestion de la question (Texte vs Description d'image)
+        String rawQuestionText = question.getQuestion();
+        // TODO : en attendant l'évolution de valentin pour savoir si c'est une question texte
+        boolean isImageDescription = true; //rawQuestionText != null && rawQuestionText.trim().startsWith("-");
+
+        if (isImageDescription || rawQuestionText == null || rawQuestionText.isEmpty()) {
+            holder.questionTextView.setVisibility(View.GONE);
         } else {
-            holder.questionImageView.setVisibility(View.GONE);
+            holder.questionTextView.setVisibility(View.VISIBLE);
+            holder.questionTextView.setText(rawQuestionText);
         }
 
-        // 3. Définir les textes des propositions
+        // 3. Gestion de l'image
+        // 3. Gestion de l'image
+        File file = new File(context.getFilesDir(), question.getNumero() + ".png");
+        if (file.exists()) {
+            holder.questionImageView.setVisibility(View.VISIBLE);
+
+            // Chargement optimisé de l'image avec Glide
+            Glide.with(context)
+                    .load(file)
+                    .into(holder.questionImageView);
+
+            if (isImageDescription) {
+                // On retire le tiret initial pour la lecture audio (TalkBack)
+                holder.questionImageView.setContentDescription(rawQuestionText.replaceFirst("^-?\\s*", ""));
+            } else {
+                holder.questionImageView.setContentDescription(rawQuestionText);
+            }
+        } else {
+            holder.questionImageView.setVisibility(View.GONE);
+            // Libérer l'image précédente recyclée si le fichier n'existe pas
+            Glide.with(context).clear(holder.questionImageView);
+        }
+
+        // 4. Définir les textes des propositions
         ArrayList<String> propositions = question.getPropositions();
         holder.propo1.setText(propositions.get(0));
         holder.propo2.setText(propositions.get(1));
         holder.propo3.setText(propositions.get(2));
         holder.propo4.setText(propositions.get(3));
 
-        // IMPORTANT : Retirer temporairement le listener pour ne pas fausser les données lors du recyclage de la vue
+        // IMPORTANT : Retirer le listener pour ne pas fausser les données lors du recyclage
         holder.propoRadioGroupe.setOnCheckedChangeListener(null);
         holder.propoRadioGroupe.clearCheck();
 
-        // 4. Restaurer la réponse de l'utilisateur si existante
+        // 5. Restaurer la réponse de l'utilisateur si existante
         switch (question.getUserReponse()) {
             case 0: holder.propo1.setChecked(true); break;
             case 1: holder.propo2.setChecked(true); break;
@@ -85,27 +133,30 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.Questi
             else if (checkedId == holder.propo2.getId()) answer = 1;
             else if (checkedId == holder.propo3.getId()) answer = 2;
             else if (checkedId == holder.propo4.getId()) answer = 3;
+
             examen.setReponse(position, answer);
-            question.setUserReponse(answer); // Mise à jour locale pour le RecyclerView
+            question.setUserReponse(answer);
         });
 
-        // 5. Bouton d'effacement de réponse
+        // 6. Bouton d'effacement de réponse
         holder.delRespButton.setOnClickListener(v -> {
             holder.propoRadioGroupe.clearCheck();
             examen.setReponse(position, -1);
             question.setUserReponse(-1);
         });
 
-        // 6. Bouton Cours
+        // 7. Bouton Cours
         holder.coursQButton.setOnClickListener(v -> {
-            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(question.getCoursUrl()));
-            context.startActivity(browserIntent);
+            if (question.getCoursUrl() != null && !question.getCoursUrl().isEmpty()) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(question.getCoursUrl()));
+                context.startActivity(browserIntent);
+            }
         });
 
-        // 7. Bouton et Logique de Réponse
+        // 8. Bouton et Logique de Réponse (Correction)
         holder.reponseQButton.setEnabled(showResponces);
 
-        // Nettoyage des couleurs (Nécessaire lors du recyclage des vues)
+        // Nettoyage des couleurs systématique
         resetColorsAndState(holder);
 
         if (question.isReponseAsked()) {
@@ -120,18 +171,19 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.Questi
     }
 
     private void showSolutionUI(QuestionViewHolder holder, Question question) {
-        // Afficher le commentaire
-        if (question.getCommentaire() != null && !question.getCommentaire().equals("null")) {
+        // Afficher le commentaire s'il existe et est valide
+        String commentaire = question.getCommentaire();
+        if (commentaire != null && !commentaire.trim().isEmpty() && !commentaire.equalsIgnoreCase("null")) {
             holder.commentCardView.setVisibility(View.VISIBLE);
-            holder.commentTextView.setText(question.getCommentaire());
+            holder.commentTextView.setText(commentaire.replaceAll("\n+$", ""));
         }
 
-        // Désactiver les clics
+        // Désactiver les clics sur le RadioGroup
         for (int i = 0; i < holder.propoRadioGroupe.getChildCount(); i++) {
             holder.propoRadioGroupe.getChildAt(i).setEnabled(false);
         }
 
-        // Appliquer les couleurs de correction (Rouge = Faux, Tertiaire/Primary = Vrai)
+        // Appliquer les couleurs de correction
         int colorError = MaterialColors.getColor(holder.itemView, R.attr.colorError);
         int colorCorrect = MaterialColors.getColor(holder.itemView, R.attr.colorPrimary);
 
@@ -149,7 +201,8 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.Questi
     }
 
     private void resetColorsAndState(QuestionViewHolder holder) {
-        int defaultColor = MaterialColors.getColor(holder.itemView, com.google.android.material.R.attr.colorOnSurface);
+        int defaultColor = MaterialColors.getColor(holder.itemView, R.attr.colorOnSurface);
+
         holder.propo1.setTextColor(defaultColor);
         holder.propo2.setTextColor(defaultColor);
         holder.propo3.setTextColor(defaultColor);
@@ -164,7 +217,7 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.Questi
 
     @Override
     public int getItemCount() {
-        return questionList.size();
+        return questionList != null ? questionList.size() : 0;
     }
 
     private int getThemeName(int themeId) {
@@ -179,12 +232,10 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.Questi
             case Examen.condensateursetBobines: return R.string.theme_condoBob;
             case Examen.transformateursAmpli: return R.string.theme_transfo;
             case Examen.ligneDeTransmis: return R.string.theme_lignes;
-
             case Examen.classesEmission: return R.string.theme_emission;
             case Examen.indicatifs: return R.string.theme_indicatifs;
             case Examen.codeQ: return R.string.theme_codeQ;
             case Examen.epellation: return R.string.theme_epellation;
-            //case Examen.questionsEntrainement: return R.string.theme_entrainement;
             case Examen.sanctions: return R.string.theme_sanctions;
             case Examen.exposition: return R.string.theme_messages;
             case Examen.longueurOnde: return R.string.theme_antennes;
@@ -195,7 +246,7 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.Questi
     }
 
     public static class QuestionViewHolder extends RecyclerView.ViewHolder {
-        TextView themeQTextView, commentTextView;
+        TextView themeQTextView, commentTextView, questionTextView;
         Chip numQChip;
         ImageView questionImageView;
         RadioGroup propoRadioGroupe;
@@ -206,6 +257,7 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.Questi
         public QuestionViewHolder(@NonNull View itemView) {
             super(itemView);
             themeQTextView = itemView.findViewById(R.id.themeQTextView);
+            questionTextView = itemView.findViewById(R.id.questionTextView);
             numQChip = itemView.findViewById(R.id.numQChip);
             questionImageView = itemView.findViewById(R.id.questionImageView);
             propoRadioGroupe = itemView.findViewById(R.id.propoRadioGroupe);
