@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
 import androidx.core.content.ContextCompat;
+import com.bumptech.glide.Glide;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.PieData;
@@ -23,6 +24,7 @@ import com.google.android.flexbox.FlexboxLayout;
 import com.google.android.material.color.MaterialColors;
 import dev.favier.exam1radioamateur.R;
 import java.util.ArrayList;
+import java.util.concurrent.Executors;
 
 public class ExamenResults extends AppCompatActivity {
 
@@ -211,5 +213,15 @@ public class ExamenResults extends AppCompatActivity {
         // empeche de retouner aux question d'examens et va à l'accueil
         navigateUpTo(new Intent(getBaseContext(), MainActivity.class));
         //super.onBackPressed();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        // Suppression du cache et cache disque
+        Glide.get(getApplicationContext()).clearMemory();
+        Executors.newSingleThreadExecutor().execute(() -> {
+            Glide.get(getApplicationContext()).clearDiskCache();
+        });
     }
 }

@@ -20,28 +20,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import com.bumptech.glide.Glide;
-import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.RadioGroup;
-import android.widget.TextView;
-
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
-
-import com.google.android.material.button.MaterialButton;
-import com.google.android.material.card.MaterialCardView;
-import com.google.android.material.chip.Chip;
-import com.google.android.material.color.MaterialColors;
-import com.google.android.material.radiobutton.MaterialRadioButton;
-
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 
 public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.QuestionViewHolder> {
 
@@ -49,12 +27,14 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.Questi
     private final List<Question> questionList;
     private final Examen examen;
     private final boolean showResponces;
+    private final boolean isViewerMode;
 
-    public QuestionAdapter(Context context, List<Question> questionList, Examen examen, boolean showResponces) {
+    public QuestionAdapter(Context context, List<Question> questionList, Examen examen, boolean showResponces, boolean isViewerMode) {
         this.context = context;
         this.questionList = questionList;
         this.examen = examen;
         this.showResponces = showResponces;
+        this.isViewerMode = isViewerMode;
     }
 
     @NonNull
@@ -74,7 +54,7 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.Questi
 
         // 2. Gestion de la question (Texte vs Description d'image)
         String rawQuestionText = question.getQuestion();
-        // TODO : en attendant l'évolution de valentin pour savoir si c'est une question texte
+        // TODO : en attendant l'évolution de Valentin pour savoir si c'est une question texte
         boolean isImageDescription = true; //rawQuestionText != null && rawQuestionText.trim().startsWith("-");
 
         if (isImageDescription || rawQuestionText == null || rawQuestionText.isEmpty()) {
@@ -85,18 +65,15 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.Questi
         }
 
         // 3. Gestion de l'image
-        // 3. Gestion de l'image
         File file = new File(context.getFilesDir(), question.getNumero() + ".png");
         if (file.exists()) {
             holder.questionImageView.setVisibility(View.VISIBLE);
-
             // Chargement optimisé de l'image avec Glide
             Glide.with(context)
                     .load(file)
                     .into(holder.questionImageView);
-
             if (isImageDescription) {
-                // On retire le tiret initial pour la lecture audio (TalkBack)
+                // On retire le tiret initial pour la lecture audio
                 holder.questionImageView.setContentDescription(rawQuestionText.replaceFirst("^-?\\s*", ""));
             } else {
                 holder.questionImageView.setContentDescription(rawQuestionText);
@@ -114,7 +91,7 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.Questi
         holder.propo3.setText(propositions.get(2));
         holder.propo4.setText(propositions.get(3));
 
-        // IMPORTANT : Retirer le listener pour ne pas fausser les données lors du recyclage
+        // Retirer le listener pour ne pas fausser les données lors du recyclage
         holder.propoRadioGroupe.setOnCheckedChangeListener(null);
         holder.propoRadioGroupe.clearCheck();
 
@@ -134,16 +111,26 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.Questi
             else if (checkedId == holder.propo3.getId()) answer = 2;
             else if (checkedId == holder.propo4.getId()) answer = 3;
 
-            examen.setReponse(position, answer);
+            // On vérifie que on écrit pas la réponse en dehors des champs
+            if (examen != null && examen.getQuestions() != null && position < examen.getQuestions().size()) {
+                examen.setReponse(position, answer);
+            }
             question.setUserReponse(answer);
         });
 
         // 6. Bouton d'effacement de réponse
         holder.delRespButton.setOnClickListener(v -> {
+            // L'appel à clearCheck() va mettre l'ID à -1 et déclencher le listener ci-dessus.
+            // Le listener s'occupera tout seul, et en toute sécurité, de mettre les réponses à -1.
             holder.propoRadioGroupe.clearCheck();
-            examen.setReponse(position, -1);
-            question.setUserReponse(-1);
         });
+
+        //holder.delRespButton.setVisibility(View.GONE);
+
+        // On fige les boutons radio pour empêcher la modification de la réponse
+        for (int i = 0; i < holder.propoRadioGroupe.getChildCount(); i++) {
+            holder.propoRadioGroupe.getChildAt(i).setEnabled(false);
+        }
 
         // 7. Bouton Cours
         holder.coursQButton.setOnClickListener(v -> {
@@ -155,6 +142,7 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.Questi
 
         // 8. Bouton et Logique de Réponse (Correction)
         holder.reponseQButton.setEnabled(showResponces);
+
 
         // Nettoyage des couleurs systématique
         resetColorsAndState(holder);
@@ -211,7 +199,13 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.Questi
         for (int i = 0; i < holder.propoRadioGroupe.getChildCount(); i++) {
             holder.propoRadioGroupe.getChildAt(i).setEnabled(true);
         }
-
+        // 1. On réaffiche le bouton effacer par défaut
+        holder.commentCardView.setVisibility(View.GONE);
+        if (isViewerMode) {
+            holder.delRespButton.setVisibility(View.GONE);
+        } else {
+            holder.delRespButton.setVisibility(View.VISIBLE);
+        }
         holder.commentCardView.setVisibility(View.GONE);
     }
 

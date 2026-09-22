@@ -108,4 +108,12 @@ public class Examen {
         currentQuestion.setReponseAsked(true);
         questions.set(index, currentQuestion);
     }
+
+    /**
+     * Retourne la liste complète des questions de l'examen.
+     * @return liste des objets Question
+     */
+    public ArrayList<Question> getQuestions() {
+        return questions;
+    }
 }

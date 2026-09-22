@@ -21,12 +21,14 @@
         <activity
                 android:name=".QuestionViewer"
                 android:label="@string/question"
+                android:theme="@style/Theme.Material3.DayNight.NoActionBar"
                 android:configChanges="keyboardHidden|orientation|screenSize"
                 android:exported="false"
         />
         <activity
                 android:name=".ExamenResults"
                 android:label="@string/resultats"
+
                 android:configChanges="keyboardHidden|orientation|screenSize"
                 android:exported="false">
 

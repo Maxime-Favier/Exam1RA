@@ -15,6 +15,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import com.bumptech.glide.Glide;
 import com.google.android.material.color.MaterialColors;
 
 import java.util.ArrayList;
@@ -100,7 +101,7 @@ public class ExamenActivity extends AppCompatActivity {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                adapter = new QuestionAdapter(ExamenActivity.this, questionList, examen, showResponces);
+                                adapter = new QuestionAdapter(ExamenActivity.this, questionList, examen, showResponces, false);
                                 questionsRecyclerView.setAdapter(adapter);
                             }
                         });
@@ -220,5 +221,14 @@ public class ExamenActivity extends AppCompatActivity {
         finish();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        // Suppression du cache et cache disque
+        Glide.get(getApplicationContext()).clearMemory();
+        Executors.newSingleThreadExecutor().execute(() -> {
+            Glide.get(getApplicationContext()).clearDiskCache();
+        });
+    }
 }
 
