@@ -171,6 +171,8 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.Questi
             holder.propoRadioGroupe.getChildAt(i).setEnabled(false);
         }
 
+        holder.delRespButton.setEnabled(false);
+
         // Appliquer les couleurs de correction
         int colorError = MaterialColors.getColor(holder.itemView, R.attr.colorError);
         int colorCorrect = MaterialColors.getColor(holder.itemView, R.attr.colorPrimary);
@@ -199,14 +201,17 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.Questi
         for (int i = 0; i < holder.propoRadioGroupe.getChildCount(); i++) {
             holder.propoRadioGroupe.getChildAt(i).setEnabled(true);
         }
+
         // 1. On réaffiche le bouton effacer par défaut
         holder.commentCardView.setVisibility(View.GONE);
+        holder.delRespButton.setEnabled(true);
+
         if (isViewerMode) {
             holder.delRespButton.setVisibility(View.GONE);
+            holder.reponseQButton.setVisibility(View.GONE);
         } else {
             holder.delRespButton.setVisibility(View.VISIBLE);
         }
-        holder.commentCardView.setVisibility(View.GONE);
     }
 
     @Override

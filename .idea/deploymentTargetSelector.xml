@@ -4,7 +4,7 @@
     <selectionStates>
       <SelectionState runConfigName="Exam'1_Radioamateur.app">
         <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2026-09-13T18:55:50.755276340Z">
+        <DropdownSelection timestamp="2026-09-24T19:46:46.099149740Z">
           <Target type="DEFAULT_BOOT">
             <handle>
               <DeviceId pluginId="PhysicalDevice" identifier="serial=42210DLJH001U1" />

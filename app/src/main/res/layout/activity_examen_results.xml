@@ -1,95 +1,183 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<androidx.coordinatorlayout.widget.CoordinatorLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
         xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ExamenResults" android:orientation="vertical" android:fitsSystemWindows="true">
+        android:background="?attr/colorSurface"
+        android:fitsSystemWindows="true"
+        tools:context=".ExamenResults">
 
-    <ScrollView
+    <!-- 1. La barre d'application Material Design -->
+    <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-                      android:orientation="vertical">
-            <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" android:id="@+id/examStatusTextView" android:textSize="24sp"
-                    android:gravity="center_horizontal|center_vertical"/>
-            <TextView
-                    android:text="@string/exam_Conclu"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" android:id="@+id/examConcluTextView"
-                    android:textSize="18sp" android:textColor="?attr/colorOnSurface"/>
-            <TextView
-                    android:text="@string/ptsBonneRep"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:id="@+id/textView24"
-                    android:textColor="?attr/colorTertiary" android:layout_marginStart="30sp"
-                    android:layout_marginEnd="30sp"/>
-            <TextView
-                    android:text="@string/ptsRepVide"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:id="@+id/textView25"
-                    android:textColor="?attr/colorPrimary" android:layout_marginStart="30sp"
-                    android:layout_marginEnd="30sp"/>
-            <TextView
-                    android:text="@string/ptsRepMauvaise"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:id="@+id/textView26"
-                    android:textColor="?attr/colorError" android:layout_marginStart="30sp"
-                    android:layout_marginEnd="30sp"/>
-            <TextView
-                    android:text="@string/total"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:id="@+id/totalTextView"
-                    android:textSize="18sp" android:textColor="?attr/colorOnSurface"/>
-            <TextView
-                    android:text="@string/corrects"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:id="@+id/totalCorrectTextView"
-                    android:layout_marginStart="10sp" android:textColor="?attr/colorTertiary"/>
-            <TextView
-                    android:text="@string/ss_Rep"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:id="@+id/totalSsRepTextView"
-                    android:layout_marginStart="10sp" android:textColor="?attr/colorPrimary"/>
-            <TextView
-                    android:text="@string/incorrects"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:id="@+id/totalIncorrectsTextView"
-                    android:layout_marginStart="10sp" android:textColor="?attr/colorError"/>
-            <TextView
-                    android:text="@string/totalLeg"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:id="@+id/totalLegTextView"
-                    android:layout_marginStart="10sp" android:layout_marginEnd="10sp"/>
-            <TextView
-                    android:text="@string/totalTech"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:id="@+id/totalTechTextView"
-                    android:layout_marginStart="10sp" android:layout_marginEnd="10sp"/>
-            <TextView
-                    android:text="@string/temps"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:id="@+id/totalTempsTextView"
-                    android:layout_marginStart="10sp" android:layout_marginEnd="10sp"/>
-            <com.github.mikephil.charting.charts.PieChart
-                    android:id="@+id/pieChart" android:layout_height="250sp"
-                    android:layout_width="match_parent"/>
-            <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" android:gravity="center_horizontal|center_vertical">
-                <com.google.android.flexbox.FlexboxLayout android:layout_height="wrap_content"
-                                                          android:layout_width="match_parent"
-                                                          app:flexWrap="wrap"
-                                                          android:id="@+id/flexResult"
-                                                          app:justifyContent="space_evenly"
-                >
+            android:layout_height="wrap_content"
+            android:background="?attr/colorSurfaceContainer"
+            app:liftOnScroll="true">
 
-                </com.google.android.flexbox.FlexboxLayout>
-            </LinearLayout>
-        </LinearLayout>
-    </ScrollView>
-</LinearLayout>
+        <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/topAppBar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:title="Résultats de l'examen"
+                app:menu="@menu/results_menu" /> <!-- Charge le menu directement ici -->
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            android:clipToPadding="false"
+            android:paddingBottom="24dp"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/mainConstraintLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp">
+
+            <TextView
+                    android:id="@+id/examStatusTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textAppearance="?attr/textAppearanceHeadlineMedium"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="Examen Réussi" />
+
+            <TextView
+                    android:id="@+id/examConcluTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center"
+                    android:textAppearance="?attr/textAppearanceBodyLarge"
+                    android:textColor="?attr/colorOnSurfaceVariant"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/examStatusTextView"
+                    tools:text="Conclusion de l'examen..." />
+
+            <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/statsCard"
+                    style="?attr/materialCardViewElevatedStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    app:cardElevation="2dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/examConcluTextView">
+
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+
+                    <TextView
+                            android:id="@+id/totalTextView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="?attr/textAppearanceTitleMedium"
+                            android:textStyle="bold" />
+
+                    <TextView
+                            android:id="@+id/totalLegTextView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:textAppearance="?attr/textAppearanceBodyMedium" />
+
+                    <TextView
+                            android:id="@+id/totalTechTextView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:textAppearance="?attr/textAppearanceBodyMedium" />
+
+                    <TextView
+                            android:id="@+id/totalTempsTextView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:textAppearance="?attr/textAppearanceBodyMedium" />
+
+                    <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:baselineAligned="false"
+                            android:orientation="horizontal">
+
+                        <TextView
+                                android:id="@+id/totalCorrectTextView"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:textColor="?attr/colorPrimary"
+                                android:textAppearance="?attr/textAppearanceLabelLarge" />
+
+                        <TextView
+                                android:id="@+id/totalIncorrectsTextView"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:textColor="?attr/colorError"
+                                android:textAppearance="?attr/textAppearanceLabelLarge" />
+
+                        <TextView
+                                android:id="@+id/totalSsRepTextView"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:textColor="?attr/colorTertiary"
+                                android:textAppearance="?attr/textAppearanceLabelLarge" />
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.github.mikephil.charting.charts.PieChart
+                    android:id="@+id/pieChart"
+                    android:layout_width="0dp"
+                    android:layout_height="250dp"
+                    android:layout_marginTop="24dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/statsCard" />
+
+            <TextView
+                    android:id="@+id/questionsLabel"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:text="Détail des questions"
+                    android:textAppearance="?attr/textAppearanceTitleLarge"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/pieChart" />
+
+            <androidx.constraintlayout.helper.widget.Flow
+                    android:id="@+id/flowResult"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    app:flow_wrapMode="chain"
+                    app:flow_horizontalGap="12dp"
+                    app:flow_verticalGap="12dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/questionsLabel" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -1,5 +1,6 @@
 package dev.favier.exam1radioamateur;
 
+import android.os.Build;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -35,7 +36,17 @@ public class QuestionViewer extends AppCompatActivity {
         // 3. Récupération des données et liaison avec l'Adapter
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
-            Question question = (Question) bundle.getSerializable("question");
+            Question question;
+
+            // Pour Android 13 et supérieur (API 33+)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                question = bundle.getSerializable("question", Question.class);
+            } else {
+                // Pour les anciennes versions
+                @SuppressWarnings("deprecation")
+                Question legacyQuestion = (Question) bundle.getSerializable("question");
+                question = legacyQuestion;
+            }
 
             if (question != null) {
                 question.setReponseAsked(true);
