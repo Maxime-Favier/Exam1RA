@@ -10,6 +10,7 @@ import org.json.JSONObject;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Collections;
 
 
 public class Examen {
@@ -23,7 +24,8 @@ public class Examen {
     AppDatabase appDb;
 
     // les settings de l'examen
-    private int nbrQuestionParTheme; // le nombre de question de l'examen pour chaque theme
+    //private int nbrQuestionParTheme; // le nombre de question de l'examen pour chaque theme
+    private int totalQuestions; // Remplace nbrQuestionParTheme
     private boolean showReponse; // active l'affichage des réponses
     private boolean timerEnable; // active le compte à rebour
     private int timer; // le temps en seconde restant
@@ -50,10 +52,10 @@ public class Examen {
     public static final int adaptation = 309;
     public static final int cem = 310;
 
-    public Examen(Context context, ArrayList<Integer> themesList, int nbrQuestionParTheme) {
+    public Examen(Context context, ArrayList<Integer> themesList, int totalQuestions) {
         this.context = context;
         this.themesList = themesList;
-        this.nbrQuestionParTheme = nbrQuestionParTheme;
+        this.totalQuestions = totalQuestions;
         questions = new ArrayList<>();
         appDb = AppDatabase.getInstance(context);
     }
@@ -62,20 +64,42 @@ public class Examen {
      * retourne l'obj de calcul de résulatats
      * @return
      */
-    public ResultCalculator getResults(){
-        return new ResultCalculator(questions, themesList, nbrQuestionParTheme);
+    public ResultCalculator getResults() {
+        return new ResultCalculator(questions, themesList);
     }
 
     /**
-     * Genène les question de l'examen aléatoirement
+     * Génère les questions de l'examen en répartissant équitablement le nombre
+     * total de questions sur tous les thèmes sélectionnés.
      */
     public void genrateQuestions() {
-        //Log.w("debug", String.valueOf(nbrQuestionParTheme));
-        for (int theme : themesList) {
-            //Log.w("debug", String.valueOf(theme));
-            questions.addAll(appDb.questionDao().getRandomQuestion(theme, nbrQuestionParTheme));
+        int nbThemes = themesList.size();
+        if (nbThemes == 0) return;
+
+        // Calcul de la base et du reste
+        int baseCount = totalQuestions / nbThemes;
+        int remainder = totalQuestions % nbThemes;
+
+        // On mélange la liste des thèmes pour que les questions "supplémentaires"
+        // (le reste) ne soient pas toujours attribuées aux mêmes thèmes.
+        ArrayList<Integer> randomizedThemes = new ArrayList<>(themesList);
+        Collections.shuffle(randomizedThemes);
+
+        for (int i = 0; i < nbThemes; i++) {
+            int theme = randomizedThemes.get(i);
+
+            // Le reste premiers thèmes reçoivent 1 question de plus
+            int questionsForThisTheme = baseCount + (i < remainder ? 1 : 0);
+
+            if (questionsForThisTheme > 0) {
+                questions.addAll(appDb.questionDao().getRandomQuestion(theme, questionsForThisTheme));
+            }
         }
-        Log.w("debug", "nbr de questions " + String.valueOf(questions.size()));
+
+        // On mélange la liste finale pour ne pas avoir les questions triées par thème
+        Collections.shuffle(questions);
+
+        Log.w("debug", "nbr de questions générées : " + questions.size());
     }
 
 

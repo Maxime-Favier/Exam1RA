@@ -70,14 +70,18 @@ public class ExamenActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             ArrayList<Integer> themeList = bundle.getIntegerArrayList("ThemeList");
-            indexMaxQuestion = bundle.getInt("numberOfQuestions") - 1;
-            int numberOfQuestionParTheme = (indexMaxQuestion + 1) / themeList.size();
+
+            // On récupère le nombre total de questions
+            int totalQuestions = bundle.getInt("numberOfQuestions");
+            indexMaxQuestion = totalQuestions - 1;
 
             examTimerEnable = bundle.getBoolean("examTimerEnable");
             examTime = bundle.getInt("timer");
             showResponces = bundle.getBoolean("showResponces");
 
-            examen = new Examen(this, themeList, numberOfQuestionParTheme);
+            // On passe 'totalQuestions' au lieu de 'numberOfQuestionParTheme'
+            examen = new Examen(this, themeList, totalQuestions);
+
             if (!examTimerEnable) {
                 timerContainer.setVisibility(View.GONE);
             } else {

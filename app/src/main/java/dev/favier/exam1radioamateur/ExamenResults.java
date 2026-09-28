@@ -94,6 +94,7 @@ public class ExamenResults extends AppCompatActivity {
             Log.d("ExamenResults", "Time spent: " + timeSpent + "s");
         }
     }
+
     private void setupControls() {
         examStatusTextView = findViewById(R.id.examStatusTextView);
         examConcluTextView = findViewById(R.id.examConcluTextView);
@@ -162,28 +163,29 @@ public class ExamenResults extends AppCompatActivity {
                     resultCalculator.getNbrOfCorrect(),
                     getString(R.string.corrects, resultCalculator.getNbrOfCorrect())
             ));
-            colorArray.add(MaterialColors.getColor(this, R.attr.colorPrimary, Color.GREEN));
+            colorArray.add(MaterialColors.getColor(this, R.attr.colorPrimaryContainer, Color.GREEN));
         }
         if (resultCalculator.getNbrOfIncorrect() > 0) {
             dataVals.add(new PieEntry(
                     resultCalculator.getNbrOfIncorrect(),
                     getString(R.string.incorrects, resultCalculator.getNbrOfIncorrect())
             ));
-            colorArray.add(MaterialColors.getColor(this, R.attr.colorError, Color.RED));
+            colorArray.add(MaterialColors.getColor(this, R.attr.colorErrorContainer, Color.RED));
         }
         if (resultCalculator.getNbrSsRep() > 0) {
             dataVals.add(new PieEntry(
                     resultCalculator.getNbrSsRep(),
                     getString(R.string.ss_Rep, resultCalculator.getNbrSsRep())
             ));
-            colorArray.add(MaterialColors.getColor(this, R.attr.colorTertiaryContainer, Color.LTGRAY));
+            colorArray.add(MaterialColors.getColor(this, R.attr.colorSurfaceVariant, Color.LTGRAY));
         }
 
         PieDataSet pieDataSet = new PieDataSet(dataVals, "");
         pieDataSet.setColors(colorArray);
-        pieDataSet.setSliceSpace(3f); // Espacement entre les parts
+        pieDataSet.setSliceSpace(3f);
         pieDataSet.setSelectionShift(5f);
 
+        pieChart.setHoleColor(Color.TRANSPARENT);
         PieData pieData = new PieData(pieDataSet);
         pieData.setDrawValues(false);
 
@@ -254,12 +256,6 @@ public class ExamenResults extends AppCompatActivity {
         }
         flowResult.setReferencedIds(referencedIds);
     }
-
-    /*@Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.results_menu, menu);
-        return true;
-    }*/
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {

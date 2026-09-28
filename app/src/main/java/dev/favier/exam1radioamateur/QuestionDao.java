@@ -26,7 +26,7 @@ public interface QuestionDao {
     void clearQuestions();
 
     @Query("SELECT * FROM Questions WHERE themeId = :theme ORDER BY RANDOM() LIMIT :limit")
-   List<Question> getRandomQuestion(int theme, int limit);
+    List<Question> getRandomQuestion(int theme, int limit);
 
 
 }

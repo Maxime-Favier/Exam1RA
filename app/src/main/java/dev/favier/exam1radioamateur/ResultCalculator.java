@@ -9,13 +9,22 @@ import java.util.ArrayList;
  * Calcule les stats et résultats de l'examen
  */
 public class ResultCalculator implements Serializable {
-    private ArrayList<Question> questions; // la liste de questions posés à l'examen
-    private ArrayList<Integer> themesList; // la liste des themes
-    private int nbrQuestionParTheme;
+    private ArrayList<Question> questions; // la liste de questions posées à l'examen
+    private ArrayList<Integer> themesList; // la liste des thèmes
+
+    /**
+     * Constructeur de {@link ResultCalculator}
+     * @param questions la liste de questions posées
+     * @param themesList la liste des thèmes
+     */
+    public ResultCalculator(ArrayList<Question> questions, ArrayList<Integer> themesList) {
+        this.questions = questions;
+        this.themesList = themesList;
+    }
 
     /**
      * retourne le nombre de questions
-     * @return nombre de question
+     * @return nombre de questions
      */
     public int getNumberOfQuestion(){
         return questions.size();
@@ -32,16 +41,10 @@ public class ResultCalculator implements Serializable {
 
     /**
      * retourne le nombre de points de l'examen
-     *
-     * @return nombre de point à l'examen
+     * @return nombre de points à l'examen
      */
     public int pointCalculation() {
-        int points = 0;
-        points += (getNbrOfCorrect() * 1);
-        /*if(malusEnable){
-            points -= getNbrOfIncorrect();
-        }*/
-        return points;
+        return getNbrOfCorrect();
     }
 
     /**
@@ -55,19 +58,14 @@ public class ResultCalculator implements Serializable {
                 if(question.goodResponse() == Question.bonneReponse){
                     pts += 1;
                 }
-                /*else if(question.goodResponse() == Question.mauvaiseReponse){
-                    if(malusEnable){
-                        pts--;
-                    }
-                }*/
             }
         }
         return pts;
     }
 
     /**
-     * calcule le nombre de points pour les questions legislation
-     * @return nbr de points partie legislation
+     * calcule le nombre de points pour les questions législation
+     * @return nbr de points partie législation
      */
     public int pointsLegislation(){
         int pts = 0;
@@ -76,51 +74,39 @@ public class ResultCalculator implements Serializable {
                 if(question.goodResponse() == Question.bonneReponse){
                     pts += 1;
                 }
-                /*else if(question.goodResponse() == Question.mauvaiseReponse){
-                    if(malusEnable){
-                        pts--;
-                    }
-                }*/
             }
         }
         return pts;
     }
 
     /**
-     * retourne le nombre maximal de points de l'exam
-     * 1pts/bonne réponse
+     * retourne le nombre maximal de points de l'exam (1 pt par question)
      * @return nbr de points max
      */
     public int maxPoints() {
-        return nbrQuestionParTheme * themesList.size() * 1;
+        return questions.size();
     }
 
     /**
-     * retourne true si l'examen est réussi
-     *
+     * retourne true si l'examen est réussi (>= 50%)
      * @return examen réussi state
      */
     public boolean examGood() {
-        //Log.w("debug", String.valueOf(pointCalculation()) + "nbr de poinst");
-        //Log.w("debug", String.valueOf(maxPoints()) + "max points");
+        if (maxPoints() == 0) return false;
         double d = ((double) pointCalculation()) / maxPoints();
-
-        //Log.w("debug", String.valueOf(d));
         return d >= 0.5;
     }
 
     /**
      * retourne le nombre de questions dans l'exam
-     *
      * @return nombre de questions de l'exam
      */
     public int getNbrOfQuestions() {
-        return nbrQuestionParTheme * themesList.size();
+        return questions.size();
     }
 
     /**
-     * retourne le nombre de bonne réponse
-     *
+     * retourne le nombre de bonnes réponses
      * @return nombre de bonnes réponses
      */
     public int getNbrOfCorrect() {
@@ -135,7 +121,6 @@ public class ResultCalculator implements Serializable {
 
     /**
      * retourne le nombre de questions incorrectes
-     *
      * @return nbr de questions fausses
      */
     public int getNbrOfIncorrect() {
@@ -150,29 +135,15 @@ public class ResultCalculator implements Serializable {
 
     /**
      * retourne le nombre de questions sans réponse
-     *
-     * @return nbr de question sans réponses
+     * @return nbr de questions sans réponse
      */
     public int getNbrSsRep() {
         int k = 0;
-        for (Question question:questions) {
-            if(question.goodResponse() == Question.noReponse){
+        for (Question question : questions) {
+            if (question.goodResponse() == Question.noReponse) {
                 k++;
             }
         }
         return k;
     }
-
-    /**
-     * Contructeur de {@link ResultCalculator}
-     * @param questions la liste de question posée
-     * @param themesList la liste des themes
-     * @param nbrQuestionParTheme le nombre de questions par themes
-     */
-    public ResultCalculator(ArrayList<Question> questions, ArrayList<Integer> themesList, int nbrQuestionParTheme) {
-        this.questions = questions;
-        this.themesList = themesList;
-        this.nbrQuestionParTheme = nbrQuestionParTheme;
-    }
-
 }

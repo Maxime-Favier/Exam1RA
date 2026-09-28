@@ -346,59 +346,65 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void updateNbrofQSpinner() {
-        //if (nbrQSpinner == null) return;
-
+        // 1. Compter les thèmes sélectionnés
         int themeRegistered = 0;
         for (CheckBox cb : legislationCheckBoxes) {
-            if (cb.isChecked()) {
-                themeRegistered++;
-            }
+            if (cb.isChecked()) themeRegistered++;
         }
         for (CheckBox cb : techniqueCheckBoxes) {
-            if (cb.isChecked()) {
-                themeRegistered++;
-            }
+            if (cb.isChecked()) themeRegistered++;
         }
 
         legislationCheckBox.setChecked(areAllChecked(legislationCheckBoxes));
         techniqueCheckBox.setChecked(areAllChecked(techniqueCheckBoxes));
 
-        Log.i(TAG, String.valueOf(themeRegistered) + " themes sont cochés");
-        if (themeRegistered == 3) {
-            themeRegistered = 6;
-        }
-        if (themeRegistered < 4) {
-            themeRegistered = 4;
-        }
+        Log.i(TAG, themeRegistered + " thèmes sont cochés");
 
+        int[] standardOptions = {10, 20, 40, 80, 100};
         List<String> spinnerArray = new ArrayList<>();
-        int nearTwentyPos = 0;
-        int delta = 100;
-        int savedNumQ = sharedPref != null ? sharedPref.getInt("numberOfQuestions", 20) : 20;
-        int savedMatchPos = -1;
 
-        for (int i = 1; i <= 5; i++) {
-            int val = i * themeRegistered;
-            spinnerArray.add(String.valueOf(val));
-
-            if (val == savedNumQ) {
-                savedMatchPos = i - 1;
+        for (int option : standardOptions) {
+            if (option >= themeRegistered) {
+                spinnerArray.add(String.valueOf(option));
             }
+        }
 
-            if (delta > Math.abs(20 - val)) {
-                nearTwentyPos = i - 1;
-                delta = Math.abs(20 - val);
+        if (spinnerArray.isEmpty()) {
+            spinnerArray.add(String.valueOf(themeRegistered + 10));
+        }
+
+        // 4. Déterminer la valeur cible (sélection actuelle > préférence sauvegardée > 20 par défaut)
+        int targetVal = 20; // Valeur par défaut
+
+        String currentText = nbrQSpinner.getText() != null ? nbrQSpinner.getText().toString().trim() : "";
+        if (!currentText.isEmpty()) {
+            try {
+                targetVal = Integer.parseInt(currentText);
+            } catch (NumberFormatException e) {
+                if (sharedPref != null) {
+                    targetVal = sharedPref.getInt("numberOfQuestions", 20);
+                }
+            }
+        } else if (sharedPref != null) {
+            targetVal = sharedPref.getInt("numberOfQuestions", 20);
+        }
+
+        String bestMatch = spinnerArray.get(0);
+        int minDelta = Integer.MAX_VALUE;
+
+        for (String sVal : spinnerArray) {
+            int val = Integer.parseInt(sVal);
+            int delta = Math.abs(targetVal - val);
+
+            if (delta < minDelta) {
+                minDelta = delta;
+                bestMatch = sVal;
             }
         }
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, spinnerArray);
         nbrQSpinner.setAdapter(adapter);
-
-        if (savedMatchPos != -1 && savedMatchPos < spinnerArray.size()) {
-            nbrQSpinner.setText(spinnerArray.get(savedMatchPos), false);
-        } else if (nearTwentyPos < spinnerArray.size()) {
-            nbrQSpinner.setText(spinnerArray.get(nearTwentyPos), false);
-        }
+        nbrQSpinner.setText(bestMatch, false);
         nbrQSpinner.clearFocus();
     }
 

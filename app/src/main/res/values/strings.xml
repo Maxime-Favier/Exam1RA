@@ -11,7 +11,7 @@
     <string name="theme_emission">Définition et autorisation des classes d’émission</string>
     <string name="theme_cem">Gammes d’onde, décibels, CEM, protection</string>
     <string name="theme_indicatifs">Indicatifs d\'appel français et préfixes européens</string>
-    <string name="theme_entrainement">Questions entrainement</string>
+    <string name="theme_entrainement">Fréquences et puissances autorisées"</string>
     <string name="theme_sanctions">Sanctions, examen, perturbation, bande passante</string>
     <string name="theme_epellation">Table d\'épellation internationale</string>
     <string name="theme_messages">Teneur des messages, matériel obligatoire, exposition</string>
