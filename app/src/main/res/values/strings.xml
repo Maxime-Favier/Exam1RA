@@ -129,7 +129,7 @@
     <string name="errorCode">Un erreur s\'est produite: code %1$b/%2$b/%3$b</string>
 
     <string name="pbConnect">Verifiez votre connexion et redémarrez l\'application</string>
-    <string name="pbRestart">Verifiez si il reste du stockage disponible (70Mo) puis essayez de redémarrer
+    <string name="pbRestart">Verifiez s\'il reste du stockage disponible (70Mo) puis essayez de redémarrer
         l\'application ou contactez le développeur si le problème persiste
     </string>
 
@@ -144,6 +144,10 @@
     <string name="nouvautés">* Maj de l\'interface en Material design\n* Corrections de bugs
     </string>
 
+
     <string name="htmlCours">Cour HTML</string>
+    <string name="downloadFailed">Échec du téléchargement</string>
+    <string name="retry">Réessayer</string>
+    <string name="QmoreInfo">Détail des questions</string>
 
 </resources>

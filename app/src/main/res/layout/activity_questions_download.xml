@@ -28,7 +28,6 @@
                     android:textAppearance="?attr/textAppearanceHeadlineSmall"
                     android:textColor="?attr/colorOnSurface"/>
 
-            <!-- Vraie barre de progression Material -->
             <com.google.android.material.progressindicator.LinearProgressIndicator
                     android:id="@+id/progressBar2"
                     android:layout_width="match_parent"
@@ -55,7 +54,18 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?attr/textAppearanceBodyMedium"
                     android:textColor="?attr/colorError"
-                    android:layout_marginBottom="24dp"/>
+                    android:layout_marginBottom="16dp"/>
+
+            <com.google.android.material.button.MaterialButton
+                    android:id="@+id/retryButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="24dp"
+                    android:text="@string/retry"
+                    android:visibility="gone"
+                    app:icon="@android:drawable/stat_notify_sync"
+                    tools:visibility="visible" />
 
             <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/newTexBox"

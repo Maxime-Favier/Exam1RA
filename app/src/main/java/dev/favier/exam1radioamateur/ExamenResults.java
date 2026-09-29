@@ -1,8 +1,6 @@
 package dev.favier.exam1radioamateur;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
@@ -194,7 +192,7 @@ public class ExamenResults extends AppCompatActivity {
     }
 
     private void printQuestions() {
-        int marginPx = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 6, getResources().getDisplayMetrics());
+        //int marginPx = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 6, getResources().getDisplayMetrics());
         int sizePx = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 48, getResources().getDisplayMetrics());
         // Tableau pour stocker les IDs des vues générées
         int[] referencedIds = new int[resultCalculator.getNbrOfQuestions()];

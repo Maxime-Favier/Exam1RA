@@ -1,12 +1,18 @@
 package dev.favier.exam1radioamateur;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
-import androidx.appcompat.app.AppCompatActivity;
-import android.os.Bundle;
-import com.google.android.material.progressindicator.LinearProgressIndicator;
+
 import androidx.activity.OnBackPressedCallback;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.progressindicator.LinearProgressIndicator;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -15,6 +21,7 @@ public class QuestionsDownload extends AppCompatActivity {
     private static final String TAG = "QuestionsDownload";
     private TextView downloadStateTextView, errrorInfotextView;
     private LinearProgressIndicator progressBar;
+    private MaterialButton retryButton;
     private boolean allowBackQuit = false;
 
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
@@ -42,6 +49,9 @@ public class QuestionsDownload extends AppCompatActivity {
         downloadStateTextView = findViewById(R.id.downloadStateTextView);
         errrorInfotextView = findViewById(R.id.errrorInfotextView);
         progressBar = findViewById(R.id.progressBar2);
+        retryButton = findViewById(R.id.retryButton);
+
+        retryButton.setOnClickListener(v -> retryDownload());
     }
 
     private void updateProgressUi(int progress) {
@@ -64,8 +74,16 @@ public class QuestionsDownload extends AppCompatActivity {
             progressBar.setProgressCompat(100, true);
             allowBackQuit = true;
             errrorInfotextView.setText(errorMsg);
-            downloadStateTextView.setText("Échec du téléchargement");
+            downloadStateTextView.setText(R.string.downloadFailed);
+            retryButton.setVisibility(View.VISIBLE);
         });
+    }
+
+    private void retryDownload() {
+        retryButton.setVisibility(View.GONE);
+        errrorInfotextView.setText("");
+        allowBackQuit = false;
+        downloaderTasker();
     }
 
     private void downloaderTasker() {
@@ -74,15 +92,15 @@ public class QuestionsDownload extends AppCompatActivity {
 
             executorService.execute(() -> {
                 try {
-                    // 1. Images
+                    // Images
                     updateStateUi(R.string.downloadImg, false);
                     String errorImg = dbPopulator.downloadZipImg(this::updateProgressUi);
                     if (errorImg != null) {
                         showErrorUi("Erreur images : " + errorImg);
-                        return; // Stoppe le processus
+                        return;
                     }
 
-                    // 2. Questions JSON
+                    // Questions JSON
                     updateStateUi(R.string.downloadQuestion, false);
                     String errorJson = dbPopulator.downloadJson(this::updateProgressUi);
                     if (errorJson != null) {
@@ -90,11 +108,15 @@ public class QuestionsDownload extends AppCompatActivity {
                         return;
                     }
 
-                    // 3. Base de données
+                    // Base de données
+                    SharedPreferences sharedPref;
+                    Context context = getApplicationContext();
+                    sharedPref = context.getSharedPreferences("UIPref" + String.valueOf(BuildConfig.VERSION_CODE), Context.MODE_PRIVATE);
+                    sharedPref.edit().putBoolean("firstrun", true).apply();
                     updateStateUi(R.string.bddGen, true);
                     dbPopulator.populateDbFromJson();
 
-                    // 4. Extraction ZIP
+                    // Extraction ZIP
                     updateStateUi(R.string.unzipProcess, true);
                     boolean isUnzipped = dbPopulator.unzipImg();
                     if (!isUnzipped) {
@@ -122,7 +144,6 @@ public class QuestionsDownload extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        executorService.shutdownNow(); // Libération des ressources si l'activité est détruite
+        executorService.shutdownNow();
     }
-
 }
