@@ -5,7 +5,7 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-@Database(entities = {Question.class}, exportSchema = false, version = 2)
+@Database(entities = {Question.class, SerieEntity.class, SerieQuestionLkup.class}, exportSchema = false, version = 3)
 public abstract class AppDatabase extends RoomDatabase {
     private static final String DB_NAME = "Questions_db";
     private static volatile AppDatabase instance;
@@ -24,5 +24,7 @@ public abstract class AppDatabase extends RoomDatabase {
     }
 
     public abstract QuestionDao questionDao();
+
+    public abstract SerieDao serieDao();
 
 }
