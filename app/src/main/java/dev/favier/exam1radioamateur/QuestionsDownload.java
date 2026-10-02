@@ -102,9 +102,17 @@ public class QuestionsDownload extends AppCompatActivity {
 
                     // Questions JSON
                     updateStateUi(R.string.downloadQuestion, false);
-                    String errorJson = dbPopulator.downloadJson(this::updateProgressUi);
-                    if (errorJson != null) {
-                        showErrorUi("Erreur JSON : " + errorJson);
+                    String errorJsonQ = dbPopulator.downloadQJson(this::updateProgressUi);
+                    if (errorJsonQ != null) {
+                        showErrorUi("Erreur JSON Questions : " + errorJsonQ);
+                        return;
+                    }
+
+                    // Serie JSON
+                    updateStateUi(R.string.downloadSeries, false);
+                    String errorJsonS = dbPopulator.downloadSeriesJson(this::updateProgressUi);
+                    if (errorJsonS != null){
+                        showErrorUi("Erreur JSON Series :" + errorJsonS);
                         return;
                     }
 
@@ -114,7 +122,8 @@ public class QuestionsDownload extends AppCompatActivity {
                     sharedPref = context.getSharedPreferences("UIPref" + String.valueOf(BuildConfig.VERSION_CODE), Context.MODE_PRIVATE);
                     sharedPref.edit().putBoolean("firstrun", true).apply();
                     updateStateUi(R.string.bddGen, true);
-                    dbPopulator.populateDbFromJson();
+                    dbPopulator.populateQDbFromJson();
+                    dbPopulator.populateSeriesFromJson();
 
                     // Extraction ZIP
                     updateStateUi(R.string.unzipProcess, true);

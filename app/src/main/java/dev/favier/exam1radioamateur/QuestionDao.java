@@ -1,9 +1,6 @@
 package dev.favier.exam1radioamateur;
 
-import androidx.room.Delete;
-import androidx.room.Insert;
-import androidx.room.Query;
-import androidx.room.Update;
+import androidx.room.*;
 
 import java.util.List;
 
@@ -11,10 +8,13 @@ import java.util.List;
 public interface QuestionDao {
 
     @Query("SELECT * from Questions")
-   List<Question> getAllQuestions();
+    List<Question> getAllQuestions();
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertQuestion(Question question);
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insertQuestions(List<Question> questions);
 
     @Update
     void updateQuestion(Question question);

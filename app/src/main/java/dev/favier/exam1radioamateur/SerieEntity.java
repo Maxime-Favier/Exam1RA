@@ -1,6 +1,7 @@
 package dev.favier.exam1radioamateur;
 
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "series")
@@ -12,6 +13,7 @@ public class SerieEntity {
 
     public SerieEntity() {}
 
+    @Ignore
     public SerieEntity(int num, String nom, String type) {
         this.num = num;
         this.nom = nom;

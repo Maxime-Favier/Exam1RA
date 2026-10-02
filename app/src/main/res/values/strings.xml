@@ -122,6 +122,7 @@
     <string name="downloadQ">Téléchargement des questions</string>
     <string name="downloadImg">Téléchargement des images ~30Mo. Cela peut prendre beaucoup de temps…</string>
     <string name="downloadQuestion">Téléchargement des question</string>
+    <string name="downloadSeries">Téléchargement des series</string>
     <string name="downloadCours">Téléchargement du cours de F6KGL</string>
     <string name="unzipProcess">Décompression en cours</string>
     <string name="bddGen">Génération de la base de données</string>

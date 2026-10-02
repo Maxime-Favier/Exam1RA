@@ -12,11 +12,11 @@ public class SerieWithQuestions {
 
     @Relation(
             parentColumn = "num",
-            entityColumn = "imgNum",
+            entityColumn = "uid",
             associateBy = @Junction(
                     value = SerieQuestionLkup.class,
                     parentColumn = "serieNum",
-                    entityColumn = "questionNumero"
+                    entityColumn = "questionUid"
             )
     )
     public List<Question> questions;

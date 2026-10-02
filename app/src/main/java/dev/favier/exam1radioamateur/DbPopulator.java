@@ -3,6 +3,10 @@ package dev.favier.exam1radioamateur;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -10,6 +14,10 @@ import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
@@ -35,7 +43,7 @@ public class DbPopulator {
      * Ajoute les questions dans la bdd depuis un json
      *
      */
-    public void populateDbFromJson() {
+    public void populateQDbFromJson() {
         // Exécute tout le bloc en une seule transaction atomique
         appDb.runInTransaction(() -> {
             try {
@@ -74,6 +82,100 @@ public class DbPopulator {
             } catch (Exception e) {
                 // Lève une RuntimeException pour forcer le rollback de la transaction
                 throw new RuntimeException("Erreur lors du remplissage de la BDD", e);
+            }
+        });
+    }
+
+
+    /**
+     * Ajoute les séries et leurs liaisons dans la BDD.
+     */
+    public void populateSeriesFromJson() {
+        List<SerieEntity> seriesList = new ArrayList<>();
+        Map<Integer, List<Integer>> seriesQuestionsMap = new HashMap<>();
+
+        // Ouvre le fichier téléchargé dans le stockage interne (filesDir)
+        try (FileInputStream is = context.openFileInput("series.json");
+             InputStreamReader reader = new InputStreamReader(is, StandardCharsets.UTF_8)) {
+
+            JsonObject root = JsonParser.parseReader(reader).getAsJsonObject();
+
+            if (root.has("series") && root.get("series").isJsonArray()) {
+                JsonArray seriesArray = root.getAsJsonArray("series");
+
+                for (JsonElement element : seriesArray) {
+                    if (!element.isJsonObject()) continue;
+
+                    JsonObject seriesObj = element.getAsJsonObject();
+                    int num = seriesObj.get("num").getAsInt();
+                    String nom = seriesObj.get("nom").getAsString();
+                    String type = seriesObj.get("type").getAsString();
+
+                    seriesList.add(new SerieEntity(num, nom, type));
+
+                    if (seriesObj.has("questions") && seriesObj.get("questions").isJsonArray()) {
+                        JsonArray questionsArray = seriesObj.getAsJsonArray("questions");
+                        List<Integer> questionNumeros = new ArrayList<>();
+
+                        for (JsonElement qElem : questionsArray) {
+                            questionNumeros.add(qElem.getAsInt());
+                        }
+                        seriesQuestionsMap.put(num, questionNumeros);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "Erreur lors de la lecture de series.json depuis le stockage interne", e);
+            return;
+        }
+
+        appDb.runInTransaction(() -> {
+            try {
+                List<Question> allQuestions = appDb.questionDao().getAllQuestions();
+                Log.d(TAG, "Nombre de questions en BDD : " + allQuestions.size());
+
+                if (allQuestions.isEmpty()) {
+                    Log.w(TAG, "Attention : La table Questions est vide !");
+                }
+
+                // Map : imgNum (numero) -> Liste des UIDs correspondants
+                Map<Integer, List<Integer>> imgNumToUidsMap = new HashMap<>();
+                for (Question q : allQuestions) {
+                    int imgNum = q.getNumero();
+                    if (!imgNumToUidsMap.containsKey(imgNum)) {
+                        imgNumToUidsMap.put(imgNum, new ArrayList<>());
+                    }
+                    imgNumToUidsMap.get(imgNum).add(q.getUid());
+                }
+
+                // Construction des liaisons CrossRef
+                List<SerieQuestionLkup> crossRefs = new ArrayList<>();
+                for (Map.Entry<Integer, List<Integer>> entry : seriesQuestionsMap.entrySet()) {
+                    int serieNum = entry.getKey();
+                    List<Integer> questionImgNums = entry.getValue();
+
+                    for (int imgNum : questionImgNums) {
+                        List<Integer> uids = imgNumToUidsMap.get(imgNum);
+                        if (uids != null) {
+                            for (int uid : uids) {
+                                crossRefs.add(new SerieQuestionLkup(serieNum, uid));
+                            }
+                        } else {
+                            Log.w(TAG, "Question avec imgNum=" + imgNum + " introuvable pour la série " + serieNum);
+                        }
+                    }
+                }
+
+                // Insertion en base
+                appDb.serieDao().clearAllSeriesData();
+                appDb.serieDao().insertSeries(seriesList);
+                appDb.serieDao().insertCrossRefs(crossRefs);
+
+                Log.d(TAG, "Insertion réussie : " + seriesList.size() + " séries et " + crossRefs.size() + " liaisons.");
+
+            } catch (Exception e) {
+                Log.e(TAG, "Erreur lors de la transaction d'insertion des séries", e);
+                throw new RuntimeException("Transaction annulée", e);
             }
         });
     }
@@ -134,14 +236,21 @@ public class DbPopulator {
         }
     }
 
+
+
     public String downloadZipImg(DownloadProgressListener listener) {
         Log.d(TAG, "start download question zip");
         return downloadFile("https://exam1.r-e-f.org/assets/questions.zip", "questions.zip", listener);
     }
 
-    public String downloadJson(DownloadProgressListener listener) {
+    public String downloadQJson(DownloadProgressListener listener) {
         Log.d(TAG, "start download question json");
         return downloadFile("https://exam1.r-e-f.org/assets/questions.json", "questions.json", listener);
+    }
+
+    public String downloadSeriesJson(DownloadProgressListener listener){
+        Log.d(TAG, "start download serie json");
+        return downloadFile("https://exam1.r-e-f.org/assets/series.json", "series.json", listener);
     }
 
     public boolean unzipImg() {
